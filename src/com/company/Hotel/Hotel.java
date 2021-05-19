@@ -17,7 +17,7 @@ import java.util.UUID;
 
         public void checkIn(Pasajero pasajero,Habitacion habitacion,float pago){
             this.actualizarHabitacion(habitacion);
-            Reserva reserva = new Reserva(pasajero,habitacion,pago);
+            Reserva reserva = new Reserva(pasajero,habitacion,Reserva.obtenerDur());
             this.reservas.add(reserva);
         }
 

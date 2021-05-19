@@ -33,4 +33,9 @@ public class Duracion {
     public void setDuracionDias(int duracionDias) {
         this.duracionDias = duracionDias;
     }
+
+    public static LocalDateTime obtenerFechaTermino(){
+        System.out.println("Ingresar la fecha de egreso en el siguiente formato: ");
+
+    }
 }
