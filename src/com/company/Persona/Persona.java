@@ -1,4 +1,4 @@
-package com.company.persona;
+package com.company.Persona;
 
 import java.util.Objects;
 
@@ -7,6 +7,8 @@ public abstract class Persona {
     private String apellido;
     private String password;
     private String dni;
+
+    public Persona(){}
 
     public Persona(String nombre, String apellido, String password, String dni) {
         this.nombre = nombre;
