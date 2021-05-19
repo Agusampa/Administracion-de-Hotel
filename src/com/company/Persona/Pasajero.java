@@ -1,8 +1,11 @@
-package com.company.persona;
+package com.company.Persona;
 
 public class Pasajero extends Persona{
     private String origen;
     private String domicilio;
+
+    public Pasajero(){
+    }
 
     public Pasajero(String nombre, String apellido, String password, String dni, String origen, String domicilio) {
         super(nombre, apellido, password, dni);
