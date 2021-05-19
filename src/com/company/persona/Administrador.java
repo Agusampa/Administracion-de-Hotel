@@ -38,4 +38,6 @@ public class Administrador extends Empleado{
     public int hashCode() {
         return Objects.hash(super.hashCode(), getPasswordAdministrador());
     }
+
+
 }
