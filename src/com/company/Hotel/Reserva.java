@@ -56,4 +56,5 @@ public class Reserva {
         Duracion duracion = new Duracion(inicio,finalizacion,dur);
         return  duracion;
     }
+    
 }
