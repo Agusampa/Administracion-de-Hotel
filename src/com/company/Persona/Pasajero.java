@@ -32,6 +32,10 @@ public class Pasajero extends Persona{
     @Override
     public String toString() {
         return "Pasajero{" +
+                "nombre='" + super.getNombre() + '\'' +
+                ", apellido='" + super.getApellido() + '\'' +
+                ", password='" + super.getPassword() + '\'' +
+                ", dni='" + super.getDni() + '\'' +
                 "origen='" + origen + '\'' +
                 ", domicilio='" + domicilio + '\'' +
                 '}';

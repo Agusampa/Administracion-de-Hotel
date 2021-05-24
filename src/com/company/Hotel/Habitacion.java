@@ -3,61 +3,65 @@ package com.company.Hotel;
 import com.company.Persona.*;
 
 public class Habitacion {
-    private Estado status;
-    private int num;
-    private Pasajero hospedante;
+    private TipoHabitacion tipoHabitacion;
+    private int numero;
+    private int capacidad;
+    private double precioPorNoche;
 
-    public enum Estado{
-        DISPONIBLE,
-        EN_LIMPIEZA,
-        EN_REPARACION,
-        EN_DESINFECCION,
-        OCUPADO;
+
+    public enum TipoHabitacion{
+        Suite,
+        Premiun,
+        Estandar
+    }
+
+    public Habitacion(TipoHabitacion tipoHabitacion, int numero, int capacidad, double precioPorNoche) {
+        this.numero = numero;
+        this.tipoHabitacion = tipoHabitacion;
+        this.capacidad = capacidad;
+        this.precioPorNoche = precioPorNoche;
     }
 
 
-    public Habitacion(){
-        this.status = Estado.DISPONIBLE;
-        this.num = 0;
-        this.hospedante = new Pasajero();
+    public TipoHabitacion getTipoHabitacion() {
+        return tipoHabitacion;
     }
 
-    public Habitacion(Estado status, int num, Pasajero hospedante) {
-        this.status = status;
-        this.num = num;
-        this.hospedante = hospedante;
+    public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
+        this.tipoHabitacion = tipoHabitacion;
     }
 
-    public Estado getStatus() {
-        return this.status;
+    public int getNumero() {
+        return numero;
     }
 
-    public void setStatus(Estado status) {
-        this.status = status;
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
-    public int getNum() {
-        return this.num;
+    public int getCapacidad() {
+        return capacidad;
     }
 
-    public void setNum(int num) {
-        this.num = num;
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
     }
 
-    public Pasajero getHospedante() {
-        return this.hospedante;
+    public double getPrecioPorNoche() {
+        return precioPorNoche;
     }
 
-    public void setHospedante(Pasajero hospedante) {
-        this.hospedante = hospedante;
+    public void setPrecioPorNoche(double precioPorNoche) {
+        this.precioPorNoche = precioPorNoche;
     }
 
     @Override
     public String toString() {
         return "Habitacion:" +
-                "\n Status=" + this.status +
-                "\n Numero:" + this.num +
-                "\n Hospedante=" + this.hospedante;
+                "\n Numero:" + this.numero +
+                "\n Tipo de habitacion:"+this.tipoHabitacion+
+                "\n Precio por noche: "+ this.precioPorNoche+
+                "\n Capacidad: "+ this.capacidad;
     }
 
 }
