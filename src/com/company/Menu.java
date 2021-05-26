@@ -194,10 +194,10 @@ public class Menu {
         }
     }
 
-    public void menuNuevaReserva(Hotel hotel){
+    /*public void menuNuevaReserva(Hotel hotel){
         System.out.println("Que dias desea realizar la reserva?");
         Duracion duracion = Duracion.obtenerDur();
-    }
+    }*/
 
     //////////////////////////////////////////////////////MENUS EMPLEADO//////////////
     public void menuPrimerolEmpleado(Hotel hotel){
