@@ -37,6 +37,7 @@ public class Administrador extends Recepcionista{
         return Objects.hash(super.hashCode(), getPasswordAdministrador());
     }
 
+
     @Override
     public String toString() {
         return "Administrador{" +
@@ -44,3 +45,4 @@ public class Administrador extends Recepcionista{
                 '}';
     }
 }
+
