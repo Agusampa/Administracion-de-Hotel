@@ -3,27 +3,36 @@ package com.company.Hotel;
 import com.company.Persona.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
 public class Reserva {
-    private final UUID id = UUID.randomUUID();
     private Pasajero pasajero;
     private Habitacion habitacion;
     private float pago;
-    private Duracion duracion;
+    private LocalDateTime inicio;
+    private LocalDateTime din;
+    private List<GastoAdicional>gastosAdicionales;
 
     public Reserva(){}
-    public Reserva(Pasajero pasajero, Habitacion habitacion, float pago,Duracion duracion) {
+
+    public Reserva(Pasajero pasajero, Habitacion habitacion, float pago, LocalDateTime inicio, LocalDateTime din) {
         this.pasajero = pasajero;
         this.habitacion = habitacion;
         this.pago = pago;
-        this.duracion = obtenerDur();
+        this.inicio = inicio;
+        this.din = din;
+        this.gastosAdicionales = new ArrayList<>();
     }
 
-
-    public UUID getId() {
-        return this.id;
+    public enum TipoDeReserva{
+        DISPONIBLE,
+        EN_LIMPIEZA,
+        EN_REPARACION,
+        EN_DESINFECCION,
+        OCUPADO
     }
 
     public Pasajero getPasajero() {
@@ -47,13 +56,32 @@ public class Reserva {
         this.pago = pago;
     }
 
-    public static Duracion obtenerDur(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Ingrese la fecha de finalizacion con el siguiente formato: AÑO//MES//DIA HH/MM");
-        LocalDateTime finalizacion = LocalDateTime.of(sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.nextInt());
-        LocalDateTime inicio = LocalDateTime.now();
-        int dur = finalizacion.getDayOfMonth() - inicio.getDayOfMonth();
-        Duracion duracion = new Duracion(inicio,finalizacion,dur);
-        return  duracion;
+    public LocalDateTime getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(LocalDateTime inicio) {
+        this.inicio = inicio;
+    }
+
+    public LocalDateTime getDin() {
+        return din;
+    }
+
+    public void setDin(LocalDateTime din) {
+        this.din = din;
+    }
+
+    //public int retornarCantidadDeDias(LocalTimeDate inicio, LocalTimeDate fin){}
+
+    public void agregarGastoAdicional(GastoAdicional gastoAdicional){
+        this.gastosAdicionales.add(gastoAdicional);
+    }
+    public double calcularTotalGastosAdicionales(){
+        double gastosTotales = 0;
+        for(GastoAdicional gastosAux : this.gastosAdicionales) {
+            gastosTotales = gastosAux.getPrecio() + gastosTotales;
+        }
+        return gastosTotales;
     }
 }

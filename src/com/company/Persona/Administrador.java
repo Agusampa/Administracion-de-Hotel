@@ -2,11 +2,16 @@ package com.company.Persona;
 
 import java.util.Objects;
 
-public class Administrador extends Empleado{
+public class Administrador extends Recepcionista{
     private String passwordAdministrador;
 
-    public Administrador(String nombre, String apellido, String password, String dni, double sueldo, String idEmpleado, String passwordAdministrador) {
-        super(nombre, apellido, password, dni, sueldo, idEmpleado);
+    public Administrador(String passwordConserje, double sueldo, String idEmpleado, String passwordAdministrador) {
+        super(passwordConserje, sueldo, idEmpleado);
+        this.passwordAdministrador = passwordAdministrador;
+    }
+
+    public Administrador(String nombre, String apellido, String password, String dni, String passwordConserje, double sueldo, String idEmpleado, String passwordAdministrador) {
+        super(nombre, apellido, password, dni, passwordConserje, sueldo, idEmpleado);
         this.passwordAdministrador = passwordAdministrador;
     }
 
@@ -16,13 +21,6 @@ public class Administrador extends Empleado{
 
     public void setPasswordAdministrador(String passwordAdministrador) {
         this.passwordAdministrador = passwordAdministrador;
-    }
-
-    @Override
-    public String toString() {
-        return "Administrador{" +
-                "passwordAdministrador='" + passwordAdministrador + '\'' +
-                '}';
     }
 
     @Override
@@ -39,5 +37,15 @@ public class Administrador extends Empleado{
         return Objects.hash(super.hashCode(), getPasswordAdministrador());
     }
 
+<<<<<<< HEAD
 
 }
+=======
+    @Override
+    public String toString() {
+        return "Administrador{" +
+                "passwordAdministrador='" + passwordAdministrador + '\'' +
+                '}';
+    }
+}
+>>>>>>> 331926e1db1e016291d652fa9f608c7f72596644

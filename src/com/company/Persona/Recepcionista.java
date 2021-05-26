@@ -1,24 +1,21 @@
 package com.company.Persona;
 
 public class Recepcionista extends Persona {
-    private String password;
     private String passwordConserje;
+    private double sueldo;
+    private String idEmpleado;
 
-    public Recepcionista(String nombre, String apellido, int dni, String password, String passwordConserje) {
-        super(nombre, apellido, dni);
-        this.password = password;
+    public Recepcionista(String passwordConserje, double sueldo, String idEmpleado) {
         this.passwordConserje = passwordConserje;
-
-
+        this.sueldo = sueldo;
+        this.idEmpleado = idEmpleado;
     }
 
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public Recepcionista(String nombre, String apellido, String password, String dni, String passwordConserje, double sueldo, String idEmpleado) {
+        super(nombre, apellido, password, dni);
+        this.passwordConserje = passwordConserje;
+        this.sueldo = sueldo;
+        this.idEmpleado = idEmpleado;
     }
 
     public String getpasswordConserje() {
@@ -33,7 +30,8 @@ public class Recepcionista extends Persona {
     public String toString() {
         return "Conserje:" +"\n"
                 + super.toString()+
-                "\n Password:'" + this.password  +
-                "\n Password Conserje: " + this.passwordConserje ;
+                "\n Password Conserje: " + this.passwordConserje+
+                "\nSueldo: "+ this.sueldo+
+                "\nId Empleado: "+ this.idEmpleado;
     }
 }
