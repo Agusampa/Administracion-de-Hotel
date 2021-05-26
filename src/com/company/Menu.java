@@ -8,13 +8,11 @@ import java.util.Scanner;
 
 public class Menu {
 
+
+
     public void menuPrincipal() {
         Hotel hotel = new Hotel();
         Pasajero pasajero1 = new Pasajero("Peter", "Pan","PeterPan1","3","Argentina","Colon 1542");
-
-
-        Pasajero pasajero = hotel.retornarPasajeroXDNI("3");
-        System.out.println(pasajero.toString());
 
 
         boolean salir = false;
@@ -192,11 +190,6 @@ public class Menu {
                     System.err.println("Las opciones son 1-2-3");
             }
         }
-    }
-
-    public void menuNuevaReserva(Hotel hotel){
-        System.out.println("Que dias desea realizar la reserva?");
-        Duracion duracion = Duracion.obtenerDur();
     }
 
     //////////////////////////////////////////////////////MENUS EMPLEADO//////////////
