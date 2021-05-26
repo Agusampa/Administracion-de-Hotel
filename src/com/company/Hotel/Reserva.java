@@ -5,8 +5,6 @@ import com.company.Persona.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
 
 public class Reserva {
     private Pasajero pasajero;
@@ -14,7 +12,7 @@ public class Reserva {
     private float pago;
     private LocalDateTime inicio;
     private LocalDateTime din;
-    private List<GastoAdicional>gastosAdicionales;
+    private List<GastoAdicional> gastosAdicionales;
 
     public Reserva(){}
 

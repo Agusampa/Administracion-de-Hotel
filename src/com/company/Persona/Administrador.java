@@ -2,7 +2,7 @@ package com.company.Persona;
 
 import java.util.Objects;
 
-public class Administrador extends Recepcionista{
+public class Administrador extends Recepcionista {
     private String passwordAdministrador;
 
     public Administrador(String passwordConserje, double sueldo, String idEmpleado, String passwordAdministrador) {
@@ -36,6 +36,7 @@ public class Administrador extends Recepcionista{
     public int hashCode() {
         return Objects.hash(super.hashCode(), getPasswordAdministrador());
     }
+
 
     @Override
     public String toString() {
