@@ -1,10 +1,10 @@
 package com.company.Persona;
 
-public class Recepcionista extends Persona {
-    protected float sueldo;
+public class Recepcion extends Persona{
+    private float sueldo;
 
-    ///CONSTRUCTOR
-    public Recepcionista(String nombre,String apellido,String password,String dni,float sueldo) {
+    //CONSTRUCTOR
+    public Recepcion(String nombre, String apellido, String password, String dni,float sueldo) {
         super(nombre,apellido,password,dni);
         this.sueldo = sueldo;
     }
@@ -17,11 +17,12 @@ public class Recepcionista extends Persona {
         this.sueldo = sueldo;
     }
 
+
     ///METODOS
     @Override
     public String toString() {
-        return this.getClass().getSimpleName()+": " +
-               super.toString()+
-               "\nSueldo: "+ this.sueldo;
+        return  this.getClass().getSimpleName()
+                + super.toString()+
+                "\nSueldo: "+ this.sueldo;
     }
 }

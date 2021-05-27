@@ -2,7 +2,7 @@ package com.company.Persona;
 
 import java.util.Objects;
 
-public class Administrador extends Recepcionista {
+public class Administrador extends Recepcion {
 
     ///CONSTRUCTOR
     public Administrador(String nombre, String apellido, String password, String dni,float sueldo) {
