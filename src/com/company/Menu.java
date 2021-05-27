@@ -13,9 +13,6 @@ public class Menu {
         Pasajero pasajero1 = new Pasajero("Peter", "Pan","PeterPan1","3","Argentina","Colon 1542");
 
 
-        Pasajero pasajero = hotel.retornarPasajeroXDNI("3");
-        System.out.println(pasajero.toString());
-
 
         boolean salir = false;
 
@@ -194,10 +191,6 @@ public class Menu {
         }
     }
 
-    /*public void menuNuevaReserva(Hotel hotel){
-        System.out.println("Que dias desea realizar la reserva?");
-        Duracion duracion = Duracion.obtenerDur();
-    }*/
 
     //////////////////////////////////////////////////////MENUS EMPLEADO//////////////
     public void menuPrimerolEmpleado(Hotel hotel){
