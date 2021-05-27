@@ -16,11 +16,11 @@ public class Menu {
         boolean salir = false;
 
         do {
-            System.out.println("Bienvenido al sistema del Hotel ...\n" +
-                    "Como desea ingresar al sistema?\n\t1_Como PASAJERO\n\t2_Como EMPLEADO\n\t3_Salir ");
-            Scanner scInt = new Scanner(System.in);
-            int opcion = scInt.nextInt();
             try {
+                System.out.println("Bienvenido al sistema del Hotel ...\n" +
+                        "Como desea ingresar al sistema?\n\t1_Como PASAJERO\n\t2_Como EMPLEADO\n\t3_Salir ");
+                Scanner scInt = new Scanner(System.in);
+                int opcion = scInt.nextInt();
                 switch (opcion) {
 
                     case 1:
@@ -38,10 +38,9 @@ public class Menu {
                     default:
                         System.err.println("Las opciones son 1-2-3\n\n");
                 }
-            } catch(java.util.InputMismatchException e) { //Hay que arreglar esto
+            } catch(java.util.InputMismatchException e) {
                 System.err.println("Ingreso una opcion no valida");
             }
-            salir = Cuestion();
         }while(!salir);
     }
 
@@ -50,12 +49,12 @@ public class Menu {
     public void menuPrimeroPasajero(Hotel hotel){
         boolean salir = false;
         do {
+            try {
             System.out.println("MENU PASAJERO PRIMERO" +
                     "\nQue accion desea realizar?\n\t1_Registrarse\n\t2_Ingresar\n\t3_Volver");
             Scanner scInt = new Scanner(System.in);
             int opcion = scInt.nextInt();
             Pasajero pasajero = null;
-            try {
                 switch (opcion) {
                     case 1:
                         pasajero = menuPasajeroRegistro(hotel);
@@ -81,7 +80,6 @@ public class Menu {
             }catch (java.util.InputMismatchException e){
                 System.err.println("Ingreso una opcion no valida");
             }
-            salir = Cuestion();
         }while(!salir);
     }
     public Pasajero menuLogginPasajero(Hotel hotel){
@@ -212,18 +210,19 @@ public class Menu {
             }
         }
     }
+    /*
     public static boolean Cuestion(){
         Scanner sc = new Scanner(System.in);
         char option = '0';
         do {
                 System.out.println("Desea realizar otra operacion? s/n");
                 option = sc.nextLine().charAt(0);
-                if (Character.compare(option, 's') == 0) return false;
+                if (Character.compare(option, 's') == 0){ return false;}
                 if (Character.compare(option, 's') != 0 || Character.compare(option, 'n') !=0 )
                     System.err.println("INGRESO UNA OPCION NO VALIDA");
+
         }while(option != 's' || option != 'n');
-        return true;
-    }
+    }*/
 }
 
 

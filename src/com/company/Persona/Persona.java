@@ -2,14 +2,14 @@ package com.company.Persona;
 
 import java.util.Objects;
 
-public abstract class Persona {             ///SE DEBE AGREGAR UNA CLASE TRABAJADOR? EMPLEA MAYORIA DE ENUMS
-    private String nombre;
-    private String apellido;
-    private String password;
-    private String dni;
+public abstract class Persona {
+    protected String nombre;
+    protected String apellido;
+    protected String password;
+    protected String dni;
 
+    ///CONSTRUCTORES
     public Persona(){}
-
     public Persona(String nombre, String apellido, String password, String dni) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -17,10 +17,10 @@ public abstract class Persona {             ///SE DEBE AGREGAR UNA CLASE TRABAJA
         this.dni = dni;
     }
 
+    //SETTER AND GETTER
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -28,7 +28,6 @@ public abstract class Persona {             ///SE DEBE AGREGAR UNA CLASE TRABAJA
     public String getApellido() {
         return apellido;
     }
-
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
@@ -36,7 +35,6 @@ public abstract class Persona {             ///SE DEBE AGREGAR UNA CLASE TRABAJA
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -44,19 +42,17 @@ public abstract class Persona {             ///SE DEBE AGREGAR UNA CLASE TRABAJA
     public String getDni() {
         return dni;
     }
-
     public void setDni(String dni) {
         this.dni = dni;
     }
 
+    ///METODOS
     @Override
     public String toString() {
-        return "Persona{" +
-                "nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", password='" + password + '\'' +
-                ", dni='" + dni + '\'' +
-                '}';
+        return "\nNombre: " + this.nombre +
+               "\nApellido: " + this.apellido +
+               "\nPassword" + this.password +
+               "\nDni='" + this.dni;
     }
 
     @Override
@@ -69,6 +65,5 @@ public abstract class Persona {             ///SE DEBE AGREGAR UNA CLASE TRABAJA
 
     @Override
     public int hashCode() {
-        return Objects.hash(getNombre(), getApellido(), getPassword(), getDni());
-    }
+        return Objects.hash(getNombre(), getApellido(), getPassword(), getDni());}
 }

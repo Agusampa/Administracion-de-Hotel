@@ -11,17 +11,18 @@ public class Reserva {
     private Habitacion habitacion;
     private float pago;
     private LocalDateTime inicio;
-    private LocalDateTime din;
+    private LocalDateTime fin;
     private List<GastoAdicional> gastosAdicionales;
 
-    public Reserva(){}
 
-    public Reserva(Pasajero pasajero, Habitacion habitacion, float pago, LocalDateTime inicio, LocalDateTime din) {
+    ///CONSTRUCTORES
+    public Reserva(){}
+    public Reserva(Pasajero pasajero, Habitacion habitacion, float pago, LocalDateTime inicio, LocalDateTime fin) {
         this.pasajero = pasajero;
         this.habitacion = habitacion;
         this.pago = pago;
         this.inicio = inicio;
-        this.din = din;
+        this.fin = fin;
         this.gastosAdicionales = new ArrayList<>();
     }
 
@@ -33,6 +34,7 @@ public class Reserva {
         OCUPADO
     }
 
+    ///GETTER AND SETTER
     public Pasajero getPasajero() {
         return this.pasajero;
     }
@@ -55,26 +57,25 @@ public class Reserva {
     }
 
     public LocalDateTime getInicio() {
-        return inicio;
+        return this.inicio;
     }
-
     public void setInicio(LocalDateTime inicio) {
         this.inicio = inicio;
     }
 
-    public LocalDateTime getDin() {
-        return din;
+    public LocalDateTime getFin() {
+        return this.fin;
     }
+    public void setFin(LocalDateTime fin) { this.fin = fin;}
 
-    public void setDin(LocalDateTime din) {
-        this.din = din;
-    }
+    ///METODOS
 
     //public int retornarCantidadDeDias(LocalTimeDate inicio, LocalTimeDate fin){}
 
     public void agregarGastoAdicional(GastoAdicional gastoAdicional){
         this.gastosAdicionales.add(gastoAdicional);
     }
+
     public double calcularTotalGastosAdicionales(){
         double gastosTotales = 0;
         for(GastoAdicional gastosAux : this.gastosAdicionales) {
@@ -82,4 +83,17 @@ public class Reserva {
         }
         return gastosTotales;
     }
+
+    @Override
+    public String toString() {
+        return "Reserva: " +
+                "\nPasajero=" + this.pasajero +
+                "\nHabitacion=" + this.habitacion +
+                "\nPago: " + this.pago +
+                "\nInicio: " + this.inicio +
+                "\nFin: " + this.fin +
+                "\nGastos Adicionales: " + this.gastosAdicionales;
+    }
+
+
 }
