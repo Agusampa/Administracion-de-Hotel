@@ -2,7 +2,7 @@ package com.company.Persona;
 
 import java.util.Objects;
 
-public abstract class Persona {
+public abstract class Persona {             ///SE DEBE AGREGAR UNA CLASE TRABAJADOR? EMPLEA MAYORIA DE ENUMS
     private String nombre;
     private String apellido;
     private String password;

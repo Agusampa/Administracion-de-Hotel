@@ -1,13 +1,13 @@
 package com.company.Hotel;
 
 import com.company.Persona.*;
+import org.joda.time.Interval;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
-    public class Hotel {
+public class Hotel {
         private List<Persona> personas;
         private List<Habitacion> habitaciones;
         private List<Reserva> reservas;
@@ -72,12 +72,18 @@ import java.util.UUID;
 
 
         ///Metodos Reserva
-       /* public List<Habitacion>listHabitacionesDisponibles(Duracion duracion, String tipoDeHabitacion){
+       public List<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin){
             List<Habitacion>habitacionesDisponibles = new ArrayList<>();
-            for(Reserva reservasAux : this.reservas){
+            for(Reserva reservasAux : this.reservas) {
+               // Interval intervalReservaExistente = reservasAux.getInicio();
+
+
+
+
+
             }
             return habitacionesDisponibles;
-        }*/
+        }
 
         ///Metodos Personas
         public List<Pasajero> reservasDelPasajero(Pasajero pasajero){
