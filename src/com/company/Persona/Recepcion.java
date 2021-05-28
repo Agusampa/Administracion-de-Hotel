@@ -8,6 +8,9 @@ public class Recepcion extends Persona{
         super(nombre,apellido,password,dni);
         this.sueldo = sueldo;
     }
+    public Recepcion(String nombre, String apellido, String password, String dni) {
+        super(nombre,apellido,password,dni);
+    }
 
     ///GETTER AND SETTER
     public float getSueldo() {
@@ -16,7 +19,6 @@ public class Recepcion extends Persona{
     public void setSueldo(float sueldo) {
         this.sueldo = sueldo;
     }
-
 
     ///METODOS
     @Override

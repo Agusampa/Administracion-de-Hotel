@@ -1,7 +1,9 @@
 package com.company;
 
 import com.company.Hotel.Hotel;
+import com.company.Persona.Administrador;
 import com.company.Persona.Pasajero;
+import com.company.Persona.Recepcion;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -54,7 +56,7 @@ public class Menu {
                     "\nQue accion desea realizar?\n\t1_Registrarse\n\t2_Ingresar\n\t3_Volver");
             Scanner scInt = new Scanner(System.in);
             int opcion = scInt.nextInt();
-            Pasajero pasajero = null;
+            Pasajero pasajero;
                 switch (opcion) {
                     case 1:
                         pasajero = menuPasajeroRegistro(hotel);
@@ -68,7 +70,6 @@ public class Menu {
                         } else {
                             System.err.println("Error de loggin, intenlo nuevamente");
                         }
-
                         break;
 
                     case 3:
@@ -81,31 +82,6 @@ public class Menu {
                 System.err.println("Ingreso una opcion no valida");
             }
         }while(!salir);
-    }
-    public Pasajero menuLogginPasajero(Hotel hotel){
-        Pasajero pasajero = null;
-
-        boolean aceptado = false;
-        int control = 0;
-        while (control != 3) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Ingrese su dni: ");
-            String dni = scanner.nextLine();
-            System.out.println("Ingrese su contraseña:");
-            String password = scanner.nextLine();
-            pasajero = hotel.retornarPasajeroXDNI(dni);
-            if (pasajero != null) {
-                if (pasajero.getPassword().compareTo(password) == 0) {
-                    return pasajero;
-                }
-                System.err.println("La contraseña es incorrecta");
-                control++;
-            } else {
-                System.err.println("El dni no corresponde a ningun pasajero registrado en el sistema");
-                control++;
-            }
-        }
-        return pasajero;
     }
 
     public Pasajero menuPasajeroRegistro(Hotel hotel){
@@ -156,32 +132,65 @@ public class Menu {
         return nuevoPasajero;
     }
 
+    public Pasajero menuLogginPasajero(Hotel hotel){
+        Pasajero pasajero = null;
 
-    public void menuPrincipalPasajero(Hotel hotel, Pasajero pasajero){
-        boolean salir = false;
-        while (!salir) {
-            System.out.println("MENU PRINCIPAL PASAJERO\nQue accion desea realizar?\n\t1_Nueva reserva\n\t2_Ver perfil\n\t3_Reserva activa\n\t4_Volver");
-
-            Scanner scInt = new Scanner(System.in);
-            int opcion = scInt.nextInt();
-
-            switch (opcion) {
-                case 1:
-
-                    break;
-
-                case 2:
-
-                    break;
-
-                case 3:
-                    salir = true;
-                    break;
-
-                default:
-                    System.err.println("Las opciones son 1-2-3");
+        int control = 0;
+        while (control != 3) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Ingrese su dni: ");
+            String dni = scanner.nextLine();
+            System.out.println("Ingrese su contraseña:");
+            String password = scanner.nextLine();
+            pasajero = hotel.retornarPasajeroXDNI(dni);
+            if (pasajero != null) {
+                if (pasajero.getPassword().compareTo(password) == 0) {
+                    return pasajero;
+                }
+                System.err.println("La contraseña es incorrecta");
+                control++;
+            } else {
+                System.err.println("El dni no corresponde a ningun pasajero registrado en el sistema");
+                control++;
             }
         }
+        return pasajero;
+    }
+
+    ///abajo falta crear reserva
+    public void menuPrincipalPasajero(Hotel hotel, Pasajero pasajero){
+        boolean salir = false;
+        do{
+            try {
+                System.out.println("MENU PRINCIPAL PASAJERO\n" +
+                        "Que accion desea realizar?\n\t1_Nueva reserva\n\t2_Ver perfil\n\t3_Reserva activa\n\t4_Volver");
+                Scanner scInt = new Scanner(System.in);
+                int opcion = scInt.nextInt();
+
+                switch (opcion) {
+                    case 1:
+
+                        break;
+
+                    case 2:
+                        System.out.println(pasajero.toString());
+                        break;
+
+                    case 3:
+                        hotel.mostrarReservaActiva(pasajero);
+                        break;
+
+                    case 4:
+                        salir = true;
+                        break;
+
+                    default:
+                        System.err.println("Las opciones son 1-2-3");
+                }
+            }catch (java.util.InputMismatchException e){
+                System.err.println("Ingreso una opcion no valida");
+            }
+        }while (!salir);
     }
 
     //////////////////////////////////////////////////////MENUS EMPLEADO//////////////
@@ -198,7 +207,8 @@ public class Menu {
                     break;
 
                 case 2:
-
+                    Recepcion rec = MenuLogginRecepcionista(hotel);
+                    if(rec != null) System.out.println();
                     break;
 
                 case 3:
@@ -210,6 +220,249 @@ public class Menu {
             }
         }
     }
+
+    public Recepcion menuRecepcionistaRegistro(Hotel hotel){
+        System.out.println("MENU REGISTRO PASAJERO");
+        Recepcion recepcion = null;
+        boolean aceptado = false;
+        while (!aceptado) {
+            recepcion = nuevoRecepcionista();
+            aceptado = hotel.validacionRecepcionista(recepcion);
+            if(aceptado){
+                System.err.println("El usuario ya se encuentra registrado");
+            }else {
+                aceptado = true;
+            }
+        }
+        return recepcion;
+    }
+
+    public Recepcion nuevoRecepcionista(){
+        Scanner scannerPasajero = new Scanner(System.in);
+        System.out.println("Ingrese su nombre: ");
+        String nombre = scannerPasajero.nextLine();
+        System.out.println("Ingrese su apellido: ");
+        String apellido = scannerPasajero.nextLine();
+        System.out.println("Ingrese su dni: ");
+        String dni = scannerPasajero.nextLine();
+        String password = null;
+
+        boolean aceptada = false;
+        while (!aceptada) {
+            System.out.println("Ingrese una nueva contraseña: ");
+            password = scannerPasajero.nextLine();
+            System.out.println("Repita la contraseña:");
+            String passwordSeguridad = scannerPasajero.nextLine();
+            if(password.compareTo(passwordSeguridad)==0){
+                aceptada = true;
+            }else{
+                System.err.println("Las contraseñas no coinciden, ingresela de nuevo");
+            }
+        }
+
+        Recepcion nuevoRecepcionista = new Recepcion(nombre,apellido,password,dni);
+
+        return nuevoRecepcionista;
+    }
+
+    public static Recepcion MenuLogginRecepcionista(Hotel hotel){
+        Recepcion recepcion = null;
+
+        int control = 0;
+        while (control != 3) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Ingrese su dni: ");
+            String dni = scanner.nextLine();
+            System.out.println("Ingrese su contraseña:");
+            String password = scanner.nextLine();
+            recepcion = hotel.retornarRecepcionistaXDNI(dni);
+            if (recepcion != null) {
+                if (recepcion.getPassword().compareTo(password) == 0) {
+                    return recepcion;
+                }
+                System.err.println("La contraseña es incorrecta");
+                control++;
+            } else {
+                System.err.println("El dni no corresponde a ningun recepcionista registrado en el sistema");
+                control++;
+            }
+        }
+        return recepcion;
+    }
+
+    ///abajo falta crear reserva y ademas,cuando mostremos historia de reservas,tenemos otra lista en hotel con el backup?
+    public void MenuPrincipalRecepcionista(Hotel hotel, Recepcion recepcion){
+        boolean salir = false;
+        do{
+            try {
+                System.out.println("MENU PRINCIPAL RECEPCIONISTA\n" +
+                        "Que accion desea realizar?\n\t1_Nueva reserva\n\t2_Crear Pasajero\n\t3_Ver lista de Usuarios\n\t4_Ver perfil\n\t4_Ver Reservas Vigentes\n\t5_Volver");
+                Scanner scInt = new Scanner(System.in);
+                int opcion = scInt.nextInt();
+
+                switch (opcion) {
+                    case 1:
+
+                        break;
+
+                    case 2:
+                        Pasajero nuevo = menuPasajeroRegistro(hotel);
+                        break;
+
+                    case 3:
+                        hotel.mostrarUsuarios();
+                        break;
+
+                    case 4:
+                        System.out.println(recepcion.toString());
+                        break;
+                    case 5:
+                        hotel.mostrarReservasVigentes();
+                        break;
+
+                    case 6:
+                        salir = true;
+                        break;
+
+                    default:
+                        System.err.println("Las opciones son 1-2-3-4-5-6");
+                }
+            }catch (java.util.InputMismatchException e){
+                System.err.println("Ingreso una opcion no valida");
+            }
+        }while (!salir);
+    }
+
+    public Administrador menuAdministradorRegistro(Hotel hotel){
+        System.out.println("MENU REGISTRO PASAJERO");
+        Administrador administrador = null;
+        boolean aceptado = false;
+        while (!aceptado) {
+            administrador = nuevoAdministrador();
+            aceptado = hotel.validacionRecepcionista(administrador);
+            if(aceptado){
+                System.err.println("El usuario ya se encuentra registrado");
+            }else {
+                aceptado = true;
+            }
+        }
+        return administrador;
+    }
+
+    public Administrador nuevoAdministrador(){
+        Scanner scannerPasajero = new Scanner(System.in);
+        System.out.println("Ingrese su nombre: ");
+        String nombre = scannerPasajero.nextLine();
+        System.out.println("Ingrese su apellido: ");
+        String apellido = scannerPasajero.nextLine();
+        System.out.println("Ingrese su dni: ");
+        String dni = scannerPasajero.nextLine();
+        String password = null;
+
+        boolean aceptada = false;
+        while (!aceptada) {
+            System.out.println("Ingrese una nueva contraseña: ");
+            password = scannerPasajero.nextLine();
+            System.out.println("Repita la contraseña:");
+            String passwordSeguridad = scannerPasajero.nextLine();
+            if(password.compareTo(passwordSeguridad)==0){
+                aceptada = true;
+            }else{
+                System.err.println("Las contraseñas no coinciden, ingresela de nuevo");
+            }
+        }
+
+
+        Administrador nuevoAdministrador = new Administrador(nombre,apellido,password,dni);
+
+        return nuevoAdministrador;
+    }
+
+    public static Administrador MenuLogginAdministrador(Hotel hotel){
+        Administrador administrador = null;
+
+        int control = 0;
+        while (control != 3) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Ingrese su dni: ");
+            String dni = scanner.nextLine();
+            System.out.println("Ingrese su contraseña:");
+            String password = scanner.nextLine();
+            administrador = hotel.retornarAdministradorXDNI(dni);
+            if (administrador != null) {
+                if (administrador.getPassword().compareTo(password) == 0) {
+                    return administrador;
+                }
+                System.err.println("La contraseña es incorrecta");
+                control++;
+            } else {
+                System.err.println("El dni no corresponde a ningun recepcionista registrado en el sistema");
+                control++;
+            }
+        }
+        return administrador;
+    }
+
+    ///abajo falta crear reserva y ademas,cuando mostremos historia de reservas,tenemos otra lista en hotel con el backup?
+    public void MenuPrincipalAdministrador(Hotel hotel, Administrador administrador){
+        boolean salir = false;
+        do{
+            try {
+                System.out.println("MENU PRINCIPAL RECEPCIONISTA\n" +
+                "Que accion desea realizar?\n\t1_Nueva reserva\n\t2_Crear Pasajero\n\t3_Crear Recepcionista\n\t4_Crear Administrador" +
+                "\n\t5_Ver lista de Usuarios\n\t6_Ver lista recepcionista\n\t7_Ver lista Administradores\n\t8_Ver perfil" +
+                "\n\t9_Ver Reservas Vigentes\n\t10_Volver");
+                Scanner scInt = new Scanner(System.in);
+                int opcion = scInt.nextInt();
+
+                switch (opcion) {
+                    case 1:
+
+                        break;
+
+                    case 2:
+                        Pasajero nuevoP = menuPasajeroRegistro(hotel);
+                        ///falta ver que hacer con este nuevoP
+                        break;
+
+                    case 3:
+                        Recepcion nuevoR = menuRecepcionistaRegistro(hotel);
+                        ///falta ver que hacer con este nuevoR
+                        break;
+                    case 4:
+                        Administrador nuevoA =menuAdministradorRegistro(hotel);
+                        ///falta ver que hacer con este nuevoA
+                        break;
+                    case 5:
+                        hotel.mostrarUsuarios();
+                        break;
+                    case 6:
+                        hotel.mostrarRecepcionistas();
+                        break;
+                    case 7:
+                        hotel.mostrarAdminstradores();
+                        break;
+                    case 9:
+                        System.out.println(administrador.toString());
+                    case 10:
+                        hotel.mostrarReservasVigentes();
+                        break;
+                    case 11:
+                        salir = true;
+                        break;
+
+                    default:
+                        System.err.println("Las opciones son 1-2-3-4-5-6");
+                }
+            }catch (java.util.InputMismatchException e){
+                System.err.println("Ingreso una opcion no valida");
+            }
+        }while (!salir);
+    }
+
+
+
+
     /*
     public static boolean Cuestion(){
         Scanner sc = new Scanner(System.in);

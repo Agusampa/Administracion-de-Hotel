@@ -14,8 +14,7 @@ public class Main {
         for(Platillo b : Platillo.values()){
             System.out.println(b.toString());
         }*/
-        Administrador administrador = new Administrador("pedro","gallese","papitas","48478978",158000);
-        System.out.println(administrador.toString());
+
 
 
 
