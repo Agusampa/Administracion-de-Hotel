@@ -1,10 +1,15 @@
 package com.company.Hotel;
 
 import com.company.Persona.*;
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Hotel {
@@ -14,7 +19,6 @@ public class Hotel {
 
         //Constructor
         public Hotel(){
-
             this.personas = new ArrayList<>();
             this.habitaciones = new ArrayList<>();
             this.reservas = new ArrayList<>();
@@ -23,7 +27,6 @@ public class Hotel {
         public List<Persona> getPersonas() {
             return personas;
         }
-
         public void setPersonas(List<Persona> personas) {
             this.personas = personas;
         }
@@ -31,7 +34,6 @@ public class Hotel {
         public List<Habitacion> getHabitaciones() {
             return habitaciones;
         }
-
         public void setHabitaciones(List<Habitacion> habitaciones) {
             this.habitaciones = habitaciones;
         }
@@ -39,10 +41,10 @@ public class Hotel {
         public List<Reserva> getReservas() {
             return reservas;
         }
-
         public void setReservas(List<Reserva> reservas) {
             this.reservas = reservas;
         }
+
 
         ///Metodos
        /* public void checkIn(Pasajero pasajero,Habitacion habitacion,float pago){
@@ -72,10 +74,19 @@ public class Hotel {
 
 
         ///Metodos Reserva
+        public int retornarCantidadDeDias(LocalDate inicio, LocalDate fin){
+            long cantidadDeDias = ChronoUnit.DAYS.between(inicio,fin);
+            return (int)cantidadDeDias;
+        }
+
        public List<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin){
             List<Habitacion>habitacionesDisponibles = new ArrayList<>();
             for(Reserva reservasAux : this.reservas) {
-               // Interval intervalReservaExistente = reservasAux.getInicio();
+
+
+                Interval intervalReservaExistente = new Interval(reservasAux.getInicio(),reservasAux.getFin());
+                Interval intervalNuevaReserva = new Interval(inicio,fin);
+
 
 
 
@@ -85,7 +96,15 @@ public class Hotel {
             return habitacionesDisponibles;
         }
 
-        ///Metodos Personas
+        public void mostrarReservasVigentes(){
+            for(Reserva reservaAux : this.reservas){
+                if(reservaAux.getFin().isBefore(LocalDate.now()) || reservaAux.equals(LocalDate.now())){
+                    System.out.println(reservaAux.toString());
+                }
+            }
+        }
+
+        ///METODOS PASAJERO
         public List<Pasajero> reservasDelPasajero(Pasajero pasajero){
             List reservasPasajero = new ArrayList<>();
             for(Reserva reservaAux : this.reservas){
@@ -95,6 +114,7 @@ public class Hotel {
             }
             return reservasPasajero;
         }
+
         public boolean validacionPasajero(Pasajero pasajero){
             for(Persona pasajeroAux : this.personas) {
                 if (pasajeroAux instanceof Pasajero) {
@@ -105,6 +125,7 @@ public class Hotel {
             }
             return false;
         }
+
         public Pasajero retornarPasajeroXDNI(String dni){
             for (Persona personasAux : this.personas) {
                 if (personasAux instanceof Pasajero) {
@@ -116,5 +137,82 @@ public class Hotel {
             }
             return null;
         }
+
+        public void mostrarUsuarios(){
+            for(Persona personaAux : this.personas){
+                if(personaAux instanceof Pasajero){
+                    Pasajero pasajeroAux = (Pasajero) personaAux;
+                    System.out.println(pasajeroAux.toString());
+                }
+            }
+        }
+
+        public void mostrarReservaActiva(Pasajero pasajero){
+            for(Reserva reservaAux : this.reservas){
+                if(reservaAux.getFin().isBefore(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
+                    if(reservaAux.getPasajero().equals(pasajero)) {
+                        System.out.println(reservaAux.toString());
+                    }
+                }
+            }
+        }
+
+        ///METODOS RECEPCIONISTA
+       public Recepcion retornarRecepcionistaXDNI(String dni){
+           for (Persona personasAux : this.personas) {
+               if (personasAux instanceof Recepcion) {
+                   if (personasAux.getDni().compareToIgnoreCase(dni) == 0) {
+                       Recepcion recepcionAux = (Recepcion) personasAux;
+                       return recepcionAux;
+                   }
+               }
+           }
+           return null;
+       }
+
+       public boolean validacionRecepcionista(Recepcion recepcionista){
+           for(Persona pasajeroAux : this.personas) {
+               if (pasajeroAux instanceof Recepcion) {
+                   if (pasajeroAux.equals(recepcionista)) {
+                       return true;
+                   }
+               }
+           }
+           return false;
+       }
+
+       public void mostrarRecepcionistas(){
+        for(Persona personaAux : this.personas){
+            if(personaAux instanceof Recepcion){
+                Recepcion recepcionistaAux = (Recepcion) personaAux;
+                System.out.println(recepcionistaAux.toString());
+            }
+        }
     }
+
+
+    ///METODOS ADMINISTRADOR
+       public Administrador retornarAdministradorXDNI(String dni){
+           for (Persona personasAux : this.personas) {
+               if (personasAux instanceof Administrador) {
+                   if (personasAux.getDni().compareToIgnoreCase(dni) == 0) {
+                       Administrador administradorAux = (Administrador) personasAux;
+                       return administradorAux;
+                   }
+               }
+           }
+           return null;
+       }
+
+       public void mostrarAdminstradores(){
+        for(Persona personaAux : this.personas){
+            if(personaAux instanceof Administrador){
+                Administrador administradorAux = (Administrador) personaAux;
+                System.out.println(administradorAux.toString());
+            }
+        }
+    }
+
+
+}
 

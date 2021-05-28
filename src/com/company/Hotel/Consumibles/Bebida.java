@@ -24,7 +24,7 @@ public enum Bebida {
     @Override
     public String toString() {
         return "Bebida: " + this.name() +
-               "    Precio: " + this.precio ;
+               "  Precio: " + this.precio ;
     }
 
 }

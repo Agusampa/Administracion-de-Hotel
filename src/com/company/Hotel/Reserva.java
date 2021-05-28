@@ -18,20 +18,30 @@ public class Reserva {
     private Pasajero pasajero;
     private Habitacion habitacion;
     private float pago;
-    private Date inicio;
-    private Date fin;
+
+    private LocalDate inicio;
+    private LocalDate fin;
     private List<GastoAdicional> gastosAdicionales;
     private TipoDeReserva reserva;
 
-    public Reserva(){}
+
 
     public Reserva(Pasajero pasajero, Habitacion habitacion, float pago, Date inicio, Date fin) {
+
+    }
+
+
+    ///CONSTRUCTORES
+
+
+    public Reserva(Pasajero pasajero, Habitacion habitacion, float pago, LocalDate inicio, LocalDate fin, List<GastoAdicional> gastosAdicionales, TipoDeReserva reserva) {
         this.pasajero = pasajero;
         this.habitacion = habitacion;
         this.pago = pago;
         this.inicio = inicio;
         this.fin = fin;
-        this.gastosAdicionales = new ArrayList<>();
+        this.gastosAdicionales = gastosAdicionales;
+        this.reserva = reserva;
     }
 
     public enum TipoDeReserva{
@@ -42,61 +52,72 @@ public class Reserva {
         OCUPADO
     }
 
+    ///GETTER AND SETTER
+
     public Pasajero getPasajero() {
-        return this.pasajero;
+        return pasajero;
     }
+
     public void setPasajero(Pasajero pasajero) {
         this.pasajero = pasajero;
     }
 
     public Habitacion getHabitacion() {
-        return this.habitacion;
+        return habitacion;
     }
+
     public void setHabitacion(Habitacion habitacion) {
         this.habitacion = habitacion;
     }
 
     public float getPago() {
-        return this.pago;
+        return pago;
     }
+
     public void setPago(float pago) {
         this.pago = pago;
     }
 
-    public Date getInicio() {
+    public LocalDate getInicio() {
         return inicio;
     }
 
-    public void setInicio(Date inicio) {
+    public void setInicio(LocalDate inicio) {
         this.inicio = inicio;
     }
 
-    public Date getfin() {
+    public LocalDate getFin() {
         return fin;
     }
 
-    public void setfin(Date fin) {
+    public void setFin(LocalDate fin) {
         this.fin = fin;
     }
-/*
-    public long retornarCantidadDeDias(DateTime inicio, DateTime fin) throws Exception{
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-        Date firstDate = sdf.parse(inicio);
-        Date secondDate = sdf.parse(fin);
+    public List<GastoAdicional> getGastosAdicionales() {
+        return gastosAdicionales;
+    }
 
-        long diferecia = firstDate.getTime() - secondDate.getTime();
-        TimeUnit time = TimeUnit.DAYS;
+    public void setGastosAdicionales(List<GastoAdicional> gastosAdicionales) {
+        this.gastosAdicionales = gastosAdicionales;
+    }
 
-        long cantidadDeDias = time.convert(diferecia, TimeUnit.MILLISECONDS);
+    public TipoDeReserva getReserva() {
+        return reserva;
+    }
 
-        return cantidadDeDias;
-    }*/
+    public void setReserva(TipoDeReserva reserva) {
+        this.reserva = reserva;
+    }
 
 
+
+
+    ///METODOS
     public void agregarGastoAdicional(GastoAdicional gastoAdicional){
         this.gastosAdicionales.add(gastoAdicional);
     }
+
     public double calcularTotalGastosAdicionales(){
         double gastosTotales = 0;
         for(GastoAdicional gastosAux : this.gastosAdicionales) {
@@ -104,4 +125,17 @@ public class Reserva {
         }
         return gastosTotales;
     }
+
+    @Override
+    public String toString() {
+        return "Reserva: " +
+                "\nPasajero=" + this.pasajero +
+                "\nHabitacion=" + this.habitacion +
+                "\nPago: " + this.pago +
+                "\nInicio: " + this.inicio +
+                "\nFin: " + this.fin +
+                "\nGastos Adicionales: " + this.gastosAdicionales;
+    }
+
+
 }
