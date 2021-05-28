@@ -77,8 +77,7 @@ public class Hotel {
 
         public void mostrarReservasVigentes(){
             for(Reserva reservaAux : this.reservas){
-                LocalDate aux = reservaAux.getFin().toLocalDate();
-                if(aux.isBefore(LocalDate.now()) || aux.equals(LocalDateTime.now())){
+                if(reservaAux.getFin().isBefore(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
                     System.out.println(reservaAux.toString());
                 }
             }
@@ -129,8 +128,7 @@ public class Hotel {
 
         public void mostrarReservaActiva(Pasajero pasajero){
             for(Reserva reservaAux : this.reservas){
-                LocalDate aux = reservaAux.getFin().toLocalDate();
-                if(aux.isBefore(LocalDate.now()) || aux.equals(LocalDateTime.now())){
+                if(reservaAux.getFin().isBefore(LocalDate.now()) || reservaAux.getFin().equals(LocalDateTime.now())){
                     if(reservaAux.getPasajero().equals(pasajero)) {
                         System.out.println(reservaAux.toString());
                     }
@@ -184,6 +182,17 @@ public class Hotel {
            }
            return null;
        }
+
+    public boolean validacionAdministrador(Administrador administrador){
+        for(Persona pasajeroAux : this.personas) {
+            if (pasajeroAux instanceof Administrador) {
+                if (pasajeroAux.equals(administrador)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
        public void mostrarAdminstradores(){
         for(Persona personaAux : this.personas){

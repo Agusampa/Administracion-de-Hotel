@@ -2,7 +2,7 @@ package com.company.Hotel;
 
 import com.company.Persona.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +10,14 @@ public class Reserva {
     private Pasajero pasajero;
     private Habitacion habitacion;
     private float pago;
-    private LocalDateTime inicio;
-    private LocalDateTime fin;
+    private LocalDate inicio;
+    private LocalDate fin;
     private List<GastoAdicional> gastosAdicionales;
 
 
     ///CONSTRUCTORES
     public Reserva(){}
-    public Reserva(Pasajero pasajero, Habitacion habitacion, float pago, LocalDateTime inicio, LocalDateTime fin) {
+    public Reserva(Pasajero pasajero, Habitacion habitacion, float pago, LocalDate inicio, LocalDate fin) {
         this.pasajero = pasajero;
         this.habitacion = habitacion;
         this.pago = pago;
@@ -56,17 +56,17 @@ public class Reserva {
         this.pago = pago;
     }
 
-    public LocalDateTime getInicio() {
+    public LocalDate getInicio() {
         return this.inicio;
     }
-    public void setInicio(LocalDateTime inicio) {
+    public void setInicio(LocalDate inicio) {
         this.inicio = inicio;
     }
 
-    public LocalDateTime getFin() {
+    public LocalDate getFin() {
         return this.fin;
     }
-    public void setFin(LocalDateTime fin) { this.fin = fin;}
+    public void setFin(LocalDate fin) { this.fin = fin;}
 
     ///METODOS
 
