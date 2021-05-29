@@ -1,24 +1,18 @@
 package com.company.Hotel;
 
 import com.company.Persona.*;
-import org.joda.time.DateTime;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+
+
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
+
 
 public class Reserva {
     private Pasajero pasajero;
     private Habitacion habitacion;
     private float pago;
-
     private LocalDate inicio;
     private LocalDate fin;
     private List<GastoAdicional> gastosAdicionales;
@@ -32,9 +26,9 @@ public class Reserva {
 
 
     ///CONSTRUCTORES
+    public Reserva(){}
+    public Reserva(Pasajero pasajero, Habitacion habitacion, float pago, LocalDate inicio, LocalDate fin) {
 
-
-    public Reserva(Pasajero pasajero, Habitacion habitacion, float pago, LocalDate inicio, LocalDate fin, List<GastoAdicional> gastosAdicionales, TipoDeReserva reserva) {
         this.pasajero = pasajero;
         this.habitacion = habitacion;
         this.pago = pago;
@@ -53,6 +47,7 @@ public class Reserva {
     }
 
     ///GETTER AND SETTER
+
 
     public Pasajero getPasajero() {
         return pasajero;
@@ -109,9 +104,6 @@ public class Reserva {
     public void setReserva(TipoDeReserva reserva) {
         this.reserva = reserva;
     }
-
-
-
 
     ///METODOS
     public void agregarGastoAdicional(GastoAdicional gastoAdicional){

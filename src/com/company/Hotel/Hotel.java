@@ -7,8 +7,10 @@ import org.joda.time.Interval;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -79,26 +81,31 @@ public class Hotel {
             return (int)cantidadDeDias;
         }
 
-       public List<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin){
-            List<Habitacion>habitacionesDisponibles = new ArrayList<>();
-            for(Reserva reservasAux : this.reservas) {
+       public List<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin) {
+           List<Habitacion> habitacionesDisponibles = new ArrayList<>();
+           for (Habitacion habitacionAux : this.habitaciones) {
 
+               boolean disponible = true;
 
-                Interval intervalReservaExistente = new Interval(reservasAux.getInicio(),reservasAux.getFin());
-                Interval intervalNuevaReserva = new Interval(inicio,fin);
+               for (Reserva reservasAux : this.reservas) {
+                    if (reservasAux.getHabitacion().equals(habitacionAux)) {
+                        //if(fecha)
+                        disponible = false;
+                        break;
+                    }
 
-
-
-
-
-
-            }
+               }
+               if (disponible){
+                   habitacionesDisponibles.add(habitacionAux);
+           }
+       }
             return habitacionesDisponibles;
         }
 
+
         public void mostrarReservasVigentes(){
             for(Reserva reservaAux : this.reservas){
-                if(reservaAux.getFin().isBefore(LocalDate.now()) || reservaAux.equals(LocalDate.now())){
+                if(reservaAux.getFin().isBefore(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
                     System.out.println(reservaAux.toString());
                 }
             }
@@ -203,6 +210,17 @@ public class Hotel {
            }
            return null;
        }
+
+    public boolean validacionAdministrador(Administrador administrador){
+        for(Persona pasajeroAux : this.personas) {
+            if (pasajeroAux instanceof Administrador) {
+                if (pasajeroAux.equals(administrador)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
        public void mostrarAdminstradores(){
         for(Persona personaAux : this.personas){
