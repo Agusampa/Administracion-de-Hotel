@@ -178,7 +178,7 @@ public class Menu {
         do{
             try {
                 System.out.println("MENU PRINCIPAL PASAJERO\n" +
-                        "Que accion desea realizar?\n\t1_Nueva reserva\n\t2_Ver perfil\n\t3_Reserva activa\n\t4_Volver");
+                        "Que accion desea realizar?\n\t1_Nueva reserva\n\t2_Ver perfil\n\t3_Reserva activa\n\t4_Salir");
                 Scanner scInt = new Scanner(System.in);
                 int opcion = scInt.nextInt();
 
@@ -191,7 +191,7 @@ public class Menu {
                         break;
 
                     case 3:
-                        //hotel.mostrarReservaActiva(pasajero);
+                        hotel.mostrarReservaActiva(pasajero);
                         break;
 
                     case 4:
@@ -393,8 +393,6 @@ public class Menu {
             }
         }while (!salir);
     }
-
-
 
 
 

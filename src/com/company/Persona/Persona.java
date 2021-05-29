@@ -51,8 +51,8 @@ public abstract class Persona {
     public String toString() {
         return "\nNombre: " + this.nombre +
                "\nApellido: " + this.apellido +
-               "\nPassword" + this.password +
-               "\nDni='" + this.dni;
+               "\nPassword: " + this.password +
+               "\nDni: " + this.dni;
     }
 
     @Override
