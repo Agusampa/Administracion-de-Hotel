@@ -83,6 +83,15 @@ public class Hotel {
             }
         }
 
+        //////////METODO PRUEBA
+        public Persona retornarPersonaXDNI(String dni){
+            for (Persona personaAux : this.personas) {
+                    if (personaAux.getDni().compareToIgnoreCase(dni) == 0) {
+                        return personaAux;
+                    }
+            }
+            return null;
+        }
         ///METODOS PASAJERO
         public List<Pasajero> reservasDelPasajero(Pasajero pasajero){
             List reservasPasajero = new ArrayList<>();
