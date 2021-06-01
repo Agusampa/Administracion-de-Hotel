@@ -202,8 +202,10 @@ public class Menu {
 
 
     //////////////////////////////////////////////////////MENUS EMPLEADO//////////////
+
     public void menuPrimerolEmpleado(Hotel hotel){
         boolean salir = false;
+        Persona persona;
         do{
             try {
                 System.out.println("MENU EMPLEADO PRIMERO\nComo desea ingresar?" +
@@ -215,9 +217,19 @@ public class Menu {
 
                 switch (opcion) {
                     case 1:
+<<<<<<< HEAD
                         Administrador administrador = (Administrador) MenuLoggin(hotel);
                         if (administrador != null) {
                             MenuPrincipalAdministrador(hotel, administrador);
+=======
+                        //Administrador adm = MenuLogginAdministrador(hotel);
+                        persona = MENULOGGINEMPLEADO(hotel);
+                        if (persona != null) {
+                            if(persona instanceof Administrador){
+                                Administrador administrador = (Administrador) persona;
+                                MenuPrincipalAdministrador(hotel, administrador);
+                            }
+>>>>>>> e2f4f259e3e19d9edc788471a12e2f99febbb178
                         } else {
                             System.err.println("Error de loggin, intenlo nuevamente");
                         }
@@ -225,10 +237,20 @@ public class Menu {
                         break;
 
                     case 2:
+<<<<<<< HEAD
                         Recepcion recepcion = (Recepcion) MenuLoggin(hotel);
 
                         if (recepcion != null) {
                             MenuPrincipalRecepcionista(hotel, recepcion);
+=======
+                        //Recepcion rec = MenuLogginRecepcionista(hotel);
+                        persona = MENULOGGINEMPLEADO(hotel);
+                        if (persona != null) {
+                            if(persona instanceof Recepcion){
+                                Recepcion recepcion = (Recepcion) persona;
+                                MenuPrincipalRecepcionista(hotel, recepcion);
+                            }
+>>>>>>> e2f4f259e3e19d9edc788471a12e2f99febbb178
                         } else {
                             System.err.println("Error de loggin, intenlo nuevamente");
                         }
@@ -248,6 +270,41 @@ public class Menu {
     }
 
 
+<<<<<<< HEAD
+=======
+
+
+    public static Persona MENULOGGINEMPLEADO(Hotel hotel){
+        Persona persona = null;
+        int control = 0;
+        do{
+            try {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Ingrese su dni: ");
+                String dni = scanner.nextLine();
+                System.out.println("Ingrese su contraseña:");
+                String password = scanner.nextLine();
+                persona = hotel.retornarPersonaXDNI(dni);
+                if (persona != null) {
+                    if (persona.getPassword().compareTo(password) == 0) {
+                        return persona;
+                    }
+                    System.err.println("La contraseña es incorrecta");
+                    control++;
+                } else {
+                    System.err.println("El dni no corresponde a ningun recepcionista registrado en el sistema");
+                    control++;
+                }
+            }catch (java.util.InputMismatchException e) {
+                System.err.println("Ingreso una opcion no valida");
+            }
+        }while (control != 3);
+        return persona;
+    }
+
+
+
+>>>>>>> e2f4f259e3e19d9edc788471a12e2f99febbb178
     public Recepcion menuRecepcionistaRegistro(Hotel hotel){
         System.out.println("MENU REGISTRO RECEPCIONISTA");
         Recepcion recepcion = null;
