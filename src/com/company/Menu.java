@@ -73,7 +73,7 @@ public class Menu {
                         break;
 
                     case 2:
-                        pasajero = menuLogginPasajero(hotel);
+                        pasajero = (Pasajero) MenuLoggin(hotel);
                         if (pasajero != null) {
                             menuPrincipalPasajero(hotel, pasajero);
                         } else {
@@ -143,34 +143,6 @@ public class Menu {
         return nuevoPasajero;
     }
 
-    public Pasajero menuLogginPasajero(Hotel hotel){
-        Pasajero pasajero = null;
-
-        int control = 0;
-        do{
-            try {
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("Ingrese su dni: ");
-                String dni = scanner.nextLine();
-                System.out.println("Ingrese su contraseña:");
-                String password = scanner.nextLine();
-                pasajero = hotel.retornarPasajeroXDNI(dni);
-                if (pasajero != null) {
-                    if (pasajero.getPassword().compareTo(password) == 0) {
-                        return pasajero;
-                    }
-                    System.err.println("La contraseña es incorrecta");
-                    control++;
-                } else {
-                    System.err.println("El dni no corresponde a ningun pasajero registrado en el sistema");
-                    control++;
-                }
-            }catch (java.util.InputMismatchException e) {
-                System.err.println("Ingreso una opcion no valida");
-            }
-        }while (control != 3);
-        return pasajero;
-    }
 
     ///abajo falta crear reserva
     public void menuPrincipalPasajero(Hotel hotel, Pasajero pasajero){
@@ -243,9 +215,9 @@ public class Menu {
 
                 switch (opcion) {
                     case 1:
-                        Administrador adm = MenuLogginAdministrador(hotel);
-                        if (adm != null) {
-                            MenuPrincipalAdministrador(hotel, adm);
+                        Administrador administrador = (Administrador) MenuLoggin(hotel);
+                        if (administrador != null) {
+                            MenuPrincipalAdministrador(hotel, administrador);
                         } else {
                             System.err.println("Error de loggin, intenlo nuevamente");
                         }
@@ -253,10 +225,10 @@ public class Menu {
                         break;
 
                     case 2:
-                        Recepcion rec = MenuLogginRecepcionista(hotel);
+                        Recepcion recepcion = (Recepcion) MenuLoggin(hotel);
 
-                        if (rec != null) {
-                            MenuPrincipalRecepcionista(hotel, rec);
+                        if (recepcion != null) {
+                            MenuPrincipalRecepcionista(hotel, recepcion);
                         } else {
                             System.err.println("Error de loggin, intenlo nuevamente");
                         }
@@ -320,8 +292,8 @@ public class Menu {
         return nuevoRecepcionista;
     }
 
-    public static Recepcion MenuLogginRecepcionista(Hotel hotel){
-        Recepcion recepcion = null;
+    public static Persona MenuLoggin(Hotel hotel){
+        Persona persona = null;
 
         int control = 0;
         do{
@@ -331,10 +303,10 @@ public class Menu {
                 String dni = scanner.nextLine();
                 System.out.println("Ingrese su contraseña:");
                 String password = scanner.nextLine();
-                recepcion = hotel.retornarRecepcionistaXDNI(dni);
-                if (recepcion != null) {
-                    if (recepcion.getPassword().compareTo(password) == 0) {
-                        return recepcion;
+                persona = hotel.retornarRecepcionistaXDNI(dni);
+                if (persona != null) {
+                    if (persona.getPassword().compareTo(password) == 0) {
+                        return persona;
                     }
                     System.err.println("La contraseña es incorrecta");
                     control++;
@@ -346,7 +318,7 @@ public class Menu {
                 System.err.println("Ingreso una opcion no valida");
             }
         }while (control != 3);
-            return recepcion;
+            return persona;
     }
 
     ///abajo falta crear reserva y ademas,cuando mostremos historia de reservas,tenemos otra lista en hotel con el backup?
@@ -443,34 +415,7 @@ public class Menu {
         return nuevoAdministrador;
     }
 
-    public static Administrador MenuLogginAdministrador(Hotel hotel){
-        Administrador administrador = null;
-        int control = 0;
-        do{
-            try {
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("Ingrese su dni: ");
-                String dni = scanner.nextLine();
-                System.out.println("Ingrese su contraseña:");
-                String password = scanner.nextLine();
-                //if(Persona instanceof )
-                administrador = hotel.retornarAdministradorXDNI(dni);//return persona
-                if (administrador != null) {
-                    if (administrador.getPassword().compareTo(password) == 0) {
-                        return administrador;
-                    }
-                    System.err.println("La contraseña es incorrecta");
-                    control++;
-                } else {
-                    System.err.println("El dni no corresponde a ningun administrador registrado en el sistema");
-                    control++;
-                }
-            }catch (java.util.InputMismatchException e){
-                System.err.println("Ingreso una opcion no valida");
-            }
-        }while (control != 3);
-        return administrador;
-    }
+
 
     ///abajo falta crear reserva y ademas,cuando mostremos historia de reservas,tenemos otra lista en hotel con el backup?
     public void MenuPrincipalAdministrador(Hotel hotel, Administrador administrador){

@@ -89,16 +89,22 @@ public class Hotel {
 
                for (Reserva reservasAux : this.reservas) {
                     if (reservasAux.getHabitacion().equals(habitacionAux)) {
-                        //if(fecha)
-                        disponible = false;
-                        break;
-                    }
+                        if(reservasAux.getInicio().isAfter(inicio) && reservasAux.getInicio().isAfter(fin) || reservasAux.getFin().isBefore(inicio) && reservasAux.getFin().isBefore(fin)) {
 
+                            disponible = false;
+                            break;
+                        }
+                    }
+               }
+               for(Habitacion habitacionAux2: habitacionesDisponibles){
+                   if(habitacionAux2.equals(habitacionAux)){
+                       disponible = false;
+                   }
                }
                if (disponible){
-                   habitacionesDisponibles.add(habitacionAux);
-           }
-       }
+                    habitacionesDisponibles.add(habitacionAux);
+               }
+            }
             return habitacionesDisponibles;
         }
 
