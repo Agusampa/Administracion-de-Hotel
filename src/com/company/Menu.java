@@ -1,4 +1,4 @@
-package com.company.Sistema;
+package com.company;
 
 import com.company.Hotel.Consumibles.*;
 import com.company.Hotel.Hotel;
@@ -6,6 +6,7 @@ import com.company.Hotel.Reserva;
 import com.company.Hotel.Servicios.Servicio;
 import com.company.Hotel.Servicios.TiposServicios;
 import com.company.Persona.*;
+import com.company.Sistema.Backup;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,8 +32,7 @@ public class Menu {
                     "Como desea ingresar al sistema?\n\t1_Como PASAJERO\n\t2_Como EMPLEADO\n\t3_Salir ");
             Scanner scInt = new Scanner(System.in);
             int opcion = scInt.nextInt();
-
-
+            
                 switch (opcion) {
 
                     case 1:
@@ -79,7 +79,7 @@ public class Menu {
                         break;
 
                     case 2:
-                        pasajero = (Pasajero) MenuLoggin(hotel);
+                        pasajero = (Pasajero) menuLoggin(hotel);
                         if (pasajero != null) {
                             menuPrincipalPasajero(hotel, pasajero);
                         } else {
@@ -199,7 +199,7 @@ public class Menu {
 
                 switch (opcion) {
                     case 1:
-                        MENURESERVACTUAL(hotel,pasajero);
+                        menuReservaActual(hotel,pasajero);
                         break;
                     case 2:
                         ArrayList<Reserva> activas = hotel.RetornarReservasActiva(pasajero); //corregir y ver que hacer en caso de que no haya reservas antiguas
@@ -228,27 +228,27 @@ public class Menu {
         }while (!salir);
     }
 
-    public void MENURESERVACTUAL(Hotel hotel, Pasajero pasajero){
+    public void menuReservaActual(Hotel hotel, Pasajero pasajero){
         Reserva actual = reservaActual(hotel,pasajero);
         boolean salir = false;
         if(actual != null) {
             do {
                 try {
                     System.out.println("MENU RESERVA ACTUAL: " +
-                            "\nQue accion desea realizar?\n\t1_Ver Reserva Actual\n\t2_Solicitar Consumible " +
-                            "\n\t3_Solicitar Servicio\n\t4_Salir");
+                    "\nQue accion desea realizar?\n\t1_Ver Reserva Actual\n\t2_Solicitar Consumible " +
+                    "\n\t3_Solicitar Servicio\n\t4_Salir");
                     Scanner scInt = new Scanner(System.in);
-                    int opcion = scInt.nextInt();
-                    switch (opcion) {
+                    int seleccion = scInt.nextInt();
+                    switch (seleccion) {
                         case 1:
                             System.out.println(actual.toString());
                             break;
                         case 2:
-                            actual = MENUCONSUMIBLES(actual);
+                            actual = menuConsumibles(actual);
                             break;
 
                         case 3:
-                            actual = MENUSERVICIOS(actual);
+                            actual = menuServicios(actual);
                             break;
 
                         case 4:
@@ -269,7 +269,7 @@ public class Menu {
     }
 
     ////OPERACIONES CON CONSUMIBLES
-    public Reserva MENUCONSUMIBLES(Reserva reserva){
+    public Reserva menuConsumibles(Reserva reserva){
         boolean salir = false;
         ArrayList<Consumible> consumibles = new ArrayList<>();
         do{
@@ -279,25 +279,24 @@ public class Menu {
                 "\nQue categoria desea ver?\n\t1_BEBIDAS\n\t2_SNACKS" +
                 "\n\t3_PLATILLOS\n\t4_Salir");
                 Scanner scInt = new Scanner(System.in);
-                int cantidad,seguidora;
-                int opcion = scInt.nextInt();
+                int seleccion = scInt.nextInt();
 
-                switch (opcion) {
+                switch (seleccion) {
                     case 1:
-                        consumibles = SelBebidas();
+                        consumibles = seleccionBebidas();
                         for(Consumible consumibleAux : consumibles){
                             reserva.agregarGastoAdicional(consumibleAux);
                         }
                         break;
                     case 2:
-                        consumibles = SelSnacks();
+                        consumibles = seleccionSnacks();
                         for(Consumible consumibleAux : consumibles){
                             reserva.agregarGastoAdicional(consumibleAux);
                         }
                         break;
 
                     case 3:
-                        consumibles = SelPlatillos();
+                        consumibles = seleccionPlatillos();
                         for(Consumible comidaAux : consumibles){
                             reserva.agregarGastoAdicional(comidaAux);
                         }
@@ -317,7 +316,7 @@ public class Menu {
         return reserva;
     }
 
-    public ArrayList<Consumible> SelBebidas(){
+    public ArrayList<Consumible> seleccionBebidas(){
         boolean salir = false;
         Scanner scInt = new Scanner(System.in);
         int i=1,seleccion,cantidad;
@@ -362,7 +361,7 @@ public class Menu {
                         consumible = new Consumible(LocalDateTime.now(), Bebida.TEQUILA.name(), Bebida.TEQUILA.getPrecio(), cantidad);
                         break;
                     default:
-                        System.err.println("Las opciones son 1-2-3");
+                        System.err.println("Las opciones son 1 al 10");
                 }
             } catch (java.util.InputMismatchException e) {
                 System.err.println("Ingreso una opcion no valida");
@@ -374,7 +373,7 @@ public class Menu {
 return bebidas;
     }
 
-    public ArrayList<Consumible> SelSnacks(){
+    public ArrayList<Consumible> seleccionSnacks(){
         boolean salir = false;
         Scanner scInt = new Scanner(System.in);
         int i=1,seleccion,cantidad;
@@ -433,7 +432,7 @@ return bebidas;
         return snacks;
     }
 
-    public ArrayList<Consumible> SelPlatillos(){
+    public ArrayList<Consumible> seleccionPlatillos(){
         boolean salir = false;
         Scanner scInt = new Scanner(System.in);
         int i=1,seleccion,cantidad;
@@ -500,7 +499,7 @@ return bebidas;
 
 
     ///OPERACIONES CON SERVICIOS
-    public Reserva MENUSERVICIOS(Reserva reserva){
+    public Reserva menuServicios(Reserva reserva){
         boolean salir = false;
         Scanner scInt = new Scanner(System.in);
         int i=1,seleccion,cantidad;
@@ -508,9 +507,9 @@ return bebidas;
         Servicio servicio = null;
         do {
             try {
-                System.out.println("Ingrese el numero de Bebida");
+                System.out.println("Ingrese el numero de Servicio");
                 seleccion = scInt.nextInt();
-                System.out.println("Ingrese la cantidad");
+                System.out.println("Ingrese la cantidad de horas");
                 cantidad = scInt.nextInt();
                 switch (seleccion) {
                     case 1:
@@ -538,7 +537,7 @@ return bebidas;
                         servicio = new Servicio(LocalDateTime.now(), TiposServicios.SALA_DE_REUNIONES.name(), TiposServicios.SALA_DE_REUNIONES.getPrecio(), cantidad);
                         break;
                     case 9:
-                        servicio = new Servicio(LocalDateTime.now(), TiposServicios.SALA_TENIS.name(), TiposServicios.SALA_TENIS.getPrecio(), cantidad);
+                    /*sacar*/    servicio = new Servicio(LocalDateTime.now(), TiposServicios.SALA_TENIS.name(), TiposServicios.SALA_TENIS.getPrecio(), cantidad);
                         break;
                     case 10:
                         servicio = new Servicio(LocalDateTime.now(), TiposServicios.PAINTBALL.name(), TiposServicios.PAINTBALL.getPrecio(), cantidad);
@@ -562,7 +561,6 @@ return bebidas;
 
 
 
-
     public Reserva reservaActual(Hotel hotel,Pasajero pasajero){
         for(Reserva reservaAux : hotel.getReservas()){
             if(reservaAux.getPasajero().equals(pasajero)){
@@ -573,6 +571,7 @@ return bebidas;
         }
         return null;
     }
+
     public void menuNuevaReserva(Hotel hotel, Pasajero pasajero){
         Scanner sc = new Scanner(System.in);
         int anio,mes,dia;
@@ -596,11 +595,10 @@ return bebidas;
     }
 
 
-    //////////////////////////////////////////////////////MENUS EMPLEADO//////////////
+    /////////////////MENUS EMPLEADO//////////////
 
     public void menuPrimerolEmpleado(Hotel hotel){
         boolean salir = false;
-        Persona persona;
         do{
             try {
                 System.out.println("MENU EMPLEADO PRIMERO\nComo desea ingresar?" +
@@ -613,7 +611,7 @@ return bebidas;
                 switch (opcion) {
                     case 1:
 
-                        Administrador administrador = (Administrador) MenuLoggin(hotel);
+                        Administrador administrador = (Administrador) menuLoggin(hotel);
                         if (administrador != null) {
                             MenuPrincipalAdministrador(hotel, administrador);
                         } else {
@@ -623,7 +621,7 @@ return bebidas;
                         break;
 
                     case 2:
-                        Recepcion recepcion = (Recepcion) MenuLoggin(hotel);
+                        Recepcion recepcion = (Recepcion) menuLoggin(hotel);
 
                         if (recepcion != null) {
                             MenuPrincipalRecepcionista(hotel, recepcion);
@@ -646,7 +644,7 @@ return bebidas;
     }
 
 
-    public static Persona MENULOGGINEMPLEADO(Hotel hotel){
+    /*public static Persona MENULOGGINEMPLEADO(Hotel hotel){
         Persona persona = null;
         int control = 0;
         do{
@@ -672,9 +670,7 @@ return bebidas;
             }
         }while (control != 3);
         return persona;
-    }
-
-
+    }*/
 
     public Recepcion menuRecepcionistaRegistro(Hotel hotel){
         System.out.println("MENU REGISTRO RECEPCIONISTA");
@@ -720,7 +716,7 @@ return bebidas;
         return nuevoRecepcionista;
     }
 
-    public static Persona MenuLoggin(Hotel hotel){
+    public static Persona menuLoggin(Hotel hotel){
         Persona persona = null;
 
         int control = 0;
@@ -731,7 +727,7 @@ return bebidas;
                 String dni = scanner.nextLine();
                 System.out.println("Ingrese su contraseña:");
                 String password = scanner.nextLine();
-                persona = hotel.retornarRecepcionistaXDNI(dni);
+                persona = hotel.retornarPersonaXDNI(dni);
                 if (persona != null) {
                     if (persona.getPassword().compareTo(password) == 0) {
                         return persona;
@@ -739,7 +735,7 @@ return bebidas;
                     System.err.println("La contraseña es incorrecta");
                     control++;
                 } else {
-                    System.err.println("El dni no corresponde a ningun recepcionista registrado en el sistema");
+                    System.err.println("El dni no corresponde a ninguna Persona registrado en el sistema");
                     control++;
                 }
             }catch (java.util.InputMismatchException e) {
