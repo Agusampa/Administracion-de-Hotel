@@ -1,10 +1,13 @@
 package com.company;
 
+import com.company.Hotel.Habitacion;
 import com.company.Hotel.Hotel;
+import com.company.Hotel.Reserva;
 import com.company.Persona.*;
+import com.sun.xml.internal.ws.server.ServerRtException;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,9 +16,39 @@ public class Menu {
 
     public void menuPrincipal() {
         Hotel hotel = new Hotel();
-        Pasajero pasajero1 = new Pasajero("Peter", "Pan","PeterPan1","3","Argentina","Colon 1542");
+        Pasajero pasajero1 = new Pasajero("Peter", "Pan","P1","3","Argentina","Colon 1542");
         hotel.getPersonas().add(pasajero1);
+
+        Habitacion habitacion1 = new Habitacion(Habitacion.TipoHabitacion.Suite,01,2,3000);
+        Habitacion habitacion2 = new Habitacion(Habitacion.TipoHabitacion.Suite,02,4,3500);
+        Habitacion habitacion3 = new Habitacion(Habitacion.TipoHabitacion.Premiun,03,2,2000);
+        Habitacion habitacion4 = new Habitacion(Habitacion.TipoHabitacion.Premiun,04,4,2500);
+        Habitacion habitacion5 = new Habitacion(Habitacion.TipoHabitacion.Estandar,05,2,1000);
+        Habitacion habitacion6 = new Habitacion(Habitacion.TipoHabitacion.Estandar,06,4,1500);
+        Habitacion habitacion7 = new Habitacion(Habitacion.TipoHabitacion.Estandar,06,4,1500);
+
+        hotel.getHabitaciones().add(habitacion1);
+        hotel.getHabitaciones().add(habitacion2);
+        hotel.getHabitaciones().add(habitacion3);
+        hotel.getHabitaciones().add(habitacion4);
+        hotel.getHabitaciones().add(habitacion5);
+        hotel.getHabitaciones().add(habitacion6);
+        hotel.getHabitaciones().add(habitacion7);
+
+        LocalDate inicio = LocalDate.of(2021,3,25);
+        LocalDate finalizacion = LocalDate.of(2021,3,29);
+
+        ArrayList<Habitacion> habitacionesDisponibles = hotel.listHabitacionesDisponibles(inicio,finalizacion);
+
+        for(Habitacion habitacion : habitacionesDisponibles) {
+            System.out.println(habitacion.toString());
+        }
+
+        System.out.println("\nPress Any Key To Continue...");
+        new java.util.Scanner(System.in).nextLine();
+
         boolean salir = false;
+
 
         do {
             try {
@@ -34,7 +67,6 @@ public class Menu {
 
                     case 2:
                         menuPrimerolEmpleado(hotel);
-                        salir = true;
                         break;
 
                     case 3:
@@ -73,7 +105,7 @@ public class Menu {
                         break;
 
                     case 2:
-                        pasajero = (Pasajero) MenuLoggin(hotel);
+                        pasajero = (Pasajero) menuLoggin(hotel);
                         if (pasajero != null) {
                             menuPrincipalPasajero(hotel, pasajero);
                         } else {
@@ -113,21 +145,21 @@ public class Menu {
 
     public Pasajero nuevoPasajero(){
         Scanner scannerPasajero = new Scanner(System.in);
-        System.out.println("Ingrese su nombre: ");
+        System.out.println("Nombre: ");
         String nombre = scannerPasajero.nextLine();
-        System.out.println("Ingrese su apellido: ");
+        System.out.println("Apellido: ");
         String apellido = scannerPasajero.nextLine();
-        System.out.println("Ingrese su dni: ");
+        System.out.println("DNI: ");
         String dni = scannerPasajero.nextLine();
-        System.out.println("Ingrese su pais de origen: ");
+        System.out.println("Pais de origen: ");
         String paisOrigen = scannerPasajero.nextLine();
-        System.out.println("Ingrese su domicilio: ");
+        System.out.println("Domicilio: ");
         String domicilio = scannerPasajero.nextLine();
         String password = null;
 
         boolean aceptada = false;
         while (!aceptada) {
-            System.out.println("Ingrese una nueva contraseña: ");
+            System.out.println("Contraseña: ");
             password = scannerPasajero.nextLine();
             System.out.println("Repita la contraseña:");
             String passwordSeguridad = scannerPasajero.nextLine();
@@ -150,20 +182,23 @@ public class Menu {
         do{
             try {
                 System.out.println("MENU PRINCIPAL PASAJERO\n" +
-                        "Que accion desea realizar?\n\t1_Nueva reserva\n\t2_Ver perfil\n\t3_Reserva activa\n\t4_Salir");
+                        "Que accion desea realizar?\n\t1_Nueva reserva\n\t2_Perfil\n\t3_Reserva activa\n\t4_Salir");
                 Scanner scInt = new Scanner(System.in);
                 int opcion = scInt.nextInt();
 
                 switch (opcion) {
                     case 1:
-
+                        menuNuevaReserva(hotel, pasajero);
                         break;
                     case 2:
-                        System.out.println(pasajero.toString());
+                        menuPerfilPasajero(hotel, pasajero);
+
                         break;
 
                     case 3:
                         hotel.mostrarReservaActiva(pasajero);
+                        System.out.println("\nPress Any Key To Continue...");
+                        new java.util.Scanner(System.in).nextLine();
                         break;
 
                     case 4:
@@ -178,25 +213,162 @@ public class Menu {
             }
         }while (!salir);
     }
+    public void menuPerfilPasajero(Hotel hotel,Pasajero pasajero){
+        boolean salir = false;
+        do {
+            try {
+                System.out.println("Perfil de " + pasajero.getNombre() + " " + pasajero.getApellido() +
+                        "\nQue accion desea realizar?\n\t1_Ver perfil\n\t2_Editar perfil\n\t3_Volver");
+                Scanner scInt = new Scanner(System.in);
+                int opcion = scInt.nextInt();
+
+                switch (opcion) {
+                    case 1:
+                        System.out.println(pasajero.toString());
+                        System.out.println("\nPress Any Key To Continue...");
+                        new java.util.Scanner(System.in).nextLine();
+                        break;
+                    case 2:
+                        menuEditarPerfil(hotel,pasajero);
+                        break;
+                    case 3:
+                        salir = true;
+                        break;
+                }
+            }catch (java.util.InputMismatchException e) {
+                System.err.println("Ingreso una opcion no valida");
+            }
+        }while (!salir);
+    }
+    public void menuEditarPerfil(Hotel hotel,Pasajero pasajero){
+        boolean salir = false;
+        do {
+            try {
+                System.out.println("Perfil de " + pasajero.getNombre() + " " + pasajero.getApellido() +
+                        "\nQue desea editar?\n\t1_Nombre\n\t2_Apellido\n\t3_DNI\n\t4_Contraseña\n\t5_Pais de origen\n\t6_Domicilio\n\t7_Volver");
+                Scanner scInt = new Scanner(System.in);
+                Scanner scString = new Scanner(System.in);
+                int opcion = scInt.nextInt();
+                String cambios;
+
+                switch (opcion) {
+                    case 1:
+                        System.out.println("Nombre actual: "+ pasajero.getNombre() +"\n\tIngrese su nuevo nombre: ");
+                        pasajero.setNombre(scString.nextLine());
+                        System.out.println("Nombre cambiado con exito! Nuevo nombre : "+pasajero.getNombre());
+                        System.out.println("\nPress Any Key To Continue...");
+                        new java.util.Scanner(System.in).nextLine();
+                        break;
+
+                    case 2:
+                        System.out.println("Apellido actual: "+ pasajero.getApellido() +"\n\tIngrese su nuevo apellido: ");
+                        pasajero.setApellido(scString.nextLine());
+                        System.out.println("Apellido cambiado con exito! Nuevo apellido :" + pasajero.getApellido());
+                        System.out.println("\nPress Any Key To Continue...");
+                        new java.util.Scanner(System.in).nextLine();
+                        break;
+
+                    case 3:
+                        System.out.println("Dni actual: "+ pasajero.getDni() +"\n\tIngrese su nuevo dni: ");
+                        cambios = scString.nextLine();
+                        if (!hotel.existeDNI(cambios)){
+                            System.err.println("El dni ingresado ya pertenece a un usuario registrado en el sistema");
+                        }else{
+                            pasajero.setDni(cambios);
+                        }
+                        System.out.println("DNI cambiado con exito! Nuevo dni: " + pasajero.getDni());
+                        System.out.println("\nPress Any Key To Continue...");
+                        new java.util.Scanner(System.in).nextLine();
+                        break;
+
+                    case 4:
+                        boolean control = false;
+                        while (!control){
+                            System.out.println("Contraseña actual: "+ pasajero.getPassword() +"\n\tIngrese su nueva contraseña: ");
+                            cambios = scString.nextLine();
+                            System.out.println("Ingrese nuevamente su contraseña: ");
+                            String contraseñaComprobar = scString.nextLine();
+                            if(!hotel.comprobarContrasenias(cambios,contraseñaComprobar)) {
+                                System.err.println("Las contraseñas no coinciden");
+                            }else{
+                                if(!hotel.comprobarContrasenias(pasajero.getPassword(), cambios)){
+                                    System.err.println("La contraseña es igual a la anterior");
+                                }else {
+                                    pasajero.setPassword(cambios);
+                                    System.out.println("Contraseña modificada con exito! Nueva contraseña: "+ pasajero.getPassword());
+                                    System.out.println("\nPress Any Key To Continue...");
+                                    new java.util.Scanner(System.in).nextLine();
+                                }
+                                control = true;
+                            }
+                        }
+
+                        break;
+                    case 5:
+                        System.out.println("Pais actual: "+ pasajero.getNombre() +"\n\tIngrese su nuevo pais: ");
+                        pasajero.setOrigen(scString.nextLine());
+                        System.out.println("Pais cambiado con exito! Nuevo Pais : "+pasajero.getOrigen());
+                        System.out.println("\nPress Any Key To Continue...");
+                        new java.util.Scanner(System.in).nextLine();
+
+                        break;
+                    case 6:
+                        System.out.println("Domicilio actual: "+ pasajero.getNombre() +"\n\tIngrese su nuevo domicilio: ");
+                        pasajero.setDomicilio(scString.nextLine());
+                        System.out.println("Domicilio cambiado con exito! Nuevo Domicilio : "+pasajero.getDomicilio());
+                        System.out.println("\nPress Any Key To Continue...");
+                        new java.util.Scanner(System.in).nextLine();
+                        break;
+                    case 7:
+                        salir = true;
+                        break;
+                    default:
+                        System.out.println("Las opciones son del 1 al 7");
+                }
+            }catch (java.util.InputMismatchException e) {
+                System.err.println("Ingreso una opcion no valida");
+            }
+        }while (!salir);
+    }
+
     public void menuNuevaReserva(Hotel hotel, Pasajero pasajero){
         Scanner sc = new Scanner(System.in);
         int anio,mes,dia;
+        //try
         System.out.println("Ingresar el AÑO en que desea realizar su reserva.");
         anio = sc.nextInt();
-        System.out.println("Ingresar el MES en que desea realizar su reserva.");
+        System.out.println("Ingresar el numero de MES en que desea realizar su reserva.");
         mes = sc.nextInt();
         System.out.println("Ingresar el DIA en que desea realizar su reserva.");
         dia = sc.nextInt();
         LocalDate inicio = LocalDate.of(anio,mes,dia);
         System.out.println("Ingresar el AÑO hasta el que se desea hospedar");
         anio = sc.nextInt();
-        System.out.println("Ingresar el MES hasta el que se desea hospedar");
+        System.out.println("Ingresar el numero de MES hasta el que se desea hospedar");
         mes = sc.nextInt();
         System.out.println("Ingresar el DIA hasta el que se desea hospedar");
         dia = sc.nextInt();
         LocalDate finalizacion = LocalDate.of(anio,mes,dia);
         int cantidadDeDias = hotel.retornarCantidadDeDias(inicio,finalizacion);
+        ArrayList<Habitacion> habitacionesDisponibles = hotel.listHabitacionesDisponibles(inicio,finalizacion);
+        //try
+        System.out.println("Ingrese la capacidad de la habitacion que desea alquilar (2 o 4 Personas)");
+        int capacidad = sc.nextInt();
 
+        for(Habitacion habitacion : habitacionesDisponibles) {
+            if(habitacion.getCapacidad() == capacidad) {
+                System.out.println(habitacion.toString());
+            }
+        }
+
+        System.out.println("Que numero de habitacion desea alquilar?");
+        int numeroDeHabitacion = sc.nextInt();
+
+        Habitacion habitacion1 = hotel.retornarHabitacionXNumero(numeroDeHabitacion);
+
+        Reserva nuevaReserva = new Reserva(pasajero,habitacion1,0f,inicio,finalizacion);
+
+        hotel.getReservas().add(nuevaReserva);
 
     }
 
@@ -217,19 +389,15 @@ public class Menu {
 
                 switch (opcion) {
                     case 1:
-<<<<<<< HEAD
-                        Administrador administrador = (Administrador) MenuLoggin(hotel);
-                        if (administrador != null) {
-                            MenuPrincipalAdministrador(hotel, administrador);
-=======
-                        //Administrador adm = MenuLogginAdministrador(hotel);
-                        persona = MENULOGGINEMPLEADO(hotel);
+                        persona = menuLoggin(hotel);
                         if (persona != null) {
                             if(persona instanceof Administrador){
                                 Administrador administrador = (Administrador) persona;
                                 MenuPrincipalAdministrador(hotel, administrador);
+                            }else{
+                                System.err.println("El usuario ingresado no esta registrado como administrador");
                             }
->>>>>>> e2f4f259e3e19d9edc788471a12e2f99febbb178
+
                         } else {
                             System.err.println("Error de loggin, intenlo nuevamente");
                         }
@@ -237,20 +405,14 @@ public class Menu {
                         break;
 
                     case 2:
-<<<<<<< HEAD
-                        Recepcion recepcion = (Recepcion) MenuLoggin(hotel);
-
-                        if (recepcion != null) {
-                            MenuPrincipalRecepcionista(hotel, recepcion);
-=======
-                        //Recepcion rec = MenuLogginRecepcionista(hotel);
-                        persona = MENULOGGINEMPLEADO(hotel);
+                        persona = menuLoggin(hotel);
                         if (persona != null) {
                             if(persona instanceof Recepcion){
                                 Recepcion recepcion = (Recepcion) persona;
                                 MenuPrincipalRecepcionista(hotel, recepcion);
+                            }else{
+                                System.err.println("El usuario ingresado no esta registrado como recepcionista");
                             }
->>>>>>> e2f4f259e3e19d9edc788471a12e2f99febbb178
                         } else {
                             System.err.println("Error de loggin, intenlo nuevamente");
                         }
@@ -270,41 +432,8 @@ public class Menu {
     }
 
 
-<<<<<<< HEAD
-=======
 
 
-    public static Persona MENULOGGINEMPLEADO(Hotel hotel){
-        Persona persona = null;
-        int control = 0;
-        do{
-            try {
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("Ingrese su dni: ");
-                String dni = scanner.nextLine();
-                System.out.println("Ingrese su contraseña:");
-                String password = scanner.nextLine();
-                persona = hotel.retornarPersonaXDNI(dni);
-                if (persona != null) {
-                    if (persona.getPassword().compareTo(password) == 0) {
-                        return persona;
-                    }
-                    System.err.println("La contraseña es incorrecta");
-                    control++;
-                } else {
-                    System.err.println("El dni no corresponde a ningun recepcionista registrado en el sistema");
-                    control++;
-                }
-            }catch (java.util.InputMismatchException e) {
-                System.err.println("Ingreso una opcion no valida");
-            }
-        }while (control != 3);
-        return persona;
-    }
-
-
-
->>>>>>> e2f4f259e3e19d9edc788471a12e2f99febbb178
     public Recepcion menuRecepcionistaRegistro(Hotel hotel){
         System.out.println("MENU REGISTRO RECEPCIONISTA");
         Recepcion recepcion = null;
@@ -349,7 +478,7 @@ public class Menu {
         return nuevoRecepcionista;
     }
 
-    public static Persona MenuLoggin(Hotel hotel){
+    public static Persona menuLoggin(Hotel hotel){
         Persona persona = null;
 
         int control = 0;
@@ -360,7 +489,7 @@ public class Menu {
                 String dni = scanner.nextLine();
                 System.out.println("Ingrese su contraseña:");
                 String password = scanner.nextLine();
-                persona = hotel.retornarRecepcionistaXDNI(dni);
+                persona = hotel.retornarPersonaXDNI(dni);
                 if (persona != null) {
                     if (persona.getPassword().compareTo(password) == 0) {
                         return persona;
@@ -391,16 +520,15 @@ public class Menu {
 
                 switch (opcion) {
                     case 1:
-
                         break;
 
                     case 2:
-                        Pasajero nuevo = menuPasajeroRegistro(hotel);
-                        ///QUE SE HACE CON EL NUEVO???
+                        Pasajero nuevoPasajero = menuPasajeroRegistro(hotel);
+                        hotel.getPersonas().add(nuevoPasajero);
                         break;
 
                     case 3:
-                        hotel.mostrarUsuarios();
+                        hotel.mostrarPasajeros();
                         break;
 
                     case 4:
@@ -481,7 +609,7 @@ public class Menu {
             try {
                 System.out.println("MENU PRINCIPAL ADMINISTRADOR\n" +
                 "Que accion desea realizar?\n\t1_Nueva reserva\n\t2_Crear Pasajero\n\t3_Crear Recepcionista\n\t4_Crear Administrador" +
-                "\n\t5_Ver lista de Usuarios\n\t6_Ver lista recepcionista\n\t7_Ver lista Administradores\n\t8_Ver perfil" +
+                "\n\t5_Ver lista de Pasajeros\n\t6_Ver lista recepcionista\n\t7_Ver lista Administradores\n\t8_Ver perfil" +
                 "\n\t9_Ver Reservas Vigentes\n\t10_Volver");
                 Scanner scInt = new Scanner(System.in);
                 int opcion = scInt.nextInt();
@@ -492,20 +620,20 @@ public class Menu {
                         break;
 
                     case 2:
-                        Pasajero nuevoP = menuPasajeroRegistro(hotel);
-                        ///falta ver que hacer con este nuevoP
+                        Pasajero nuevoPasajero = menuPasajeroRegistro(hotel);
+                        hotel.getPersonas().add(nuevoPasajero);
                         break;
 
                     case 3:
-                        Recepcion nuevoR = menuRecepcionistaRegistro(hotel);
-                        ///falta ver que hacer con este nuevoR
+                        Recepcion nuevoRecepcionista = menuRecepcionistaRegistro(hotel);
+                        hotel.getPersonas().add(nuevoRecepcionista);
                         break;
                     case 4:
-                        Administrador nuevoA =menuAdministradorRegistro(hotel);
-                        ///falta ver que hacer con este nuevoA
+                        Administrador nuevoAdministrador =menuAdministradorRegistro(hotel);
+                        hotel.getPersonas().add(nuevoAdministrador);
                         break;
                     case 5:
-                        hotel.mostrarUsuarios();
+                        hotel.mostrarPasajeros();
                         break;
                     case 6:
                         hotel.mostrarRecepcionistas();
@@ -524,7 +652,7 @@ public class Menu {
                         break;
 
                     default:
-                        System.err.println("Las opciones son 1-2-3-4-5-6-7-8-9-10-11");
+                        System.err.println("Las opciones son del 1 al 11");
                 }
             }catch (java.util.InputMismatchException e){
                 System.err.println("Ingreso una opcion no valida");

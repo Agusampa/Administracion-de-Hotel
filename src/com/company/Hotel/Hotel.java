@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 
+import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.List;
 
 public class Hotel {
         private List<Persona> personas;
@@ -81,8 +83,8 @@ public class Hotel {
             return (int)cantidadDeDias;
         }
 
-       public List<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin) {
-           List<Habitacion> habitacionesDisponibles = new ArrayList<>();
+       public ArrayList<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin) {
+           ArrayList<Habitacion> habitacionesDisponibles = new ArrayList<>();
            for (Habitacion habitacionAux : this.habitaciones) {
 
                boolean disponible = true;
@@ -97,8 +99,9 @@ public class Hotel {
                     }
                }
                for(Habitacion habitacionAux2: habitacionesDisponibles){
-                   if(habitacionAux2.equals(habitacionAux)){
+                   if(habitacionAux2.getTipoHabitacion() == habitacionAux.getTipoHabitacion() && habitacionAux2.getCapacidad() == habitacionAux.getCapacidad()){
                        disponible = false;
+                       break;
                    }
                }
                if (disponible){
@@ -117,6 +120,14 @@ public class Hotel {
             }
         }
 
+        public Habitacion retornarHabitacionXNumero(int numero){
+            for(Habitacion habitacionAux : this.habitaciones){
+                if(habitacionAux.getNumero() == numero)  {
+                    return habitacionAux;
+                }
+            }
+            return null;
+        }
         //////////METODO PRUEBA
         public Persona retornarPersonaXDNI(String dni){
             for (Persona personaAux : this.personas) {
@@ -160,7 +171,7 @@ public class Hotel {
             return null;
         }
 
-        public void mostrarUsuarios(){
+        public void mostrarPasajeros(){
             for(Persona personaAux : this.personas){
                 if(personaAux instanceof Pasajero){
                     Pasajero pasajeroAux = (Pasajero) personaAux;
@@ -171,7 +182,7 @@ public class Hotel {
 
         public void mostrarReservaActiva(Pasajero pasajero){
             for(Reserva reservaAux : this.reservas){
-                if(reservaAux.getFin().isBefore(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
+                if(reservaAux.getFin().isBefore(LocalDate.now()) | reservaAux.getFin().equals(LocalDate.now())){
                     if(reservaAux.getPasajero().equals(pasajero)) {
                         System.out.println(reservaAux.toString());
                     }
@@ -244,6 +255,20 @@ public class Hotel {
                 System.out.println(administradorAux.toString());
             }
         }
+    }
+    public boolean existeDNI(String dni){
+            for(Persona persona : this.personas){
+                if(persona.getDni().compareTo(dni) == 0){
+                    return true;
+                }
+            }
+            return false;
+    }
+    public boolean comprobarContrasenias(String a, String b){
+            if(a.compareTo(b)==0){
+                return true;
+            }
+            return false;
     }
 
 

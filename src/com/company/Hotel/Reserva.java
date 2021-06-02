@@ -121,8 +121,8 @@ public class Reserva {
     @Override
     public String toString() {
         return "Reserva: " +
-                "\nPasajero=" + this.pasajero +
-                "\nHabitacion=" + this.habitacion +
+                "\n" + this.pasajero +
+                "\nH" + this.habitacion +
                 "\nPago: " + this.pago +
                 "\nInicio: " + this.inicio +
                 "\nFin: " + this.fin +
