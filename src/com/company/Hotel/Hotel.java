@@ -1,23 +1,15 @@
 package com.company.Hotel;
 
 import com.company.Persona.*;
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
 
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Hotel {
-        private List<Persona> personas;
-        private List<Habitacion> habitaciones;
-        private List<Reserva> reservas;
+        private ArrayList<Persona> personas;
+        private ArrayList<Habitacion> habitaciones;
+        private ArrayList<Reserva> reservas;
 
         //Constructor
         public Hotel(){
@@ -26,24 +18,24 @@ public class Hotel {
             this.reservas = new ArrayList<>();
         }
 
-        public List<Persona> getPersonas() {
+        public ArrayList<Persona> getPersonas() {
             return personas;
         }
-        public void setPersonas(List<Persona> personas) {
+        public void setPersonas(ArrayList<Persona> personas) {
             this.personas = personas;
         }
 
-        public List<Habitacion> getHabitaciones() {
+        public ArrayList<Habitacion> getHabitaciones() {
             return habitaciones;
         }
-        public void setHabitaciones(List<Habitacion> habitaciones) {
+        public void setHabitaciones(ArrayList<Habitacion> habitaciones) {
             this.habitaciones = habitaciones;
         }
 
-        public List<Reserva> getReservas() {
+        public ArrayList<Reserva> getReservas() {
             return reservas;
         }
-        public void setReservas(List<Reserva> reservas) {
+        public void setReservas(ArrayList<Reserva> reservas) {
             this.reservas = reservas;
         }
 
@@ -117,6 +109,16 @@ public class Hotel {
             }
         }
 
+        public void actualizarReserva(Reserva reserva){
+            for(Reserva reservaAux : this.reservas){
+                if(reservaAux.getInicio().equals(reserva.getInicio()) && reservaAux.getFin().equals(reserva.getFin())){
+                    if(reservaAux.getPasajero().equals(reserva.getPasajero())){
+                        reservaAux = reserva;
+                    }
+                }
+            }
+        }
+
         //////////METODO PRUEBA
         public Persona retornarPersonaXDNI(String dni){
             for (Persona personaAux : this.personas) {
@@ -169,14 +171,16 @@ public class Hotel {
             }
         }
 
-        public void mostrarReservaActiva(Pasajero pasajero){
+        public ArrayList<Reserva> RetornarReservasActiva(Pasajero pasajero){
+            ArrayList<Reserva> activas = new ArrayList<>();
             for(Reserva reservaAux : this.reservas){
-                if(reservaAux.getFin().isBefore(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
+                if(reservaAux.getFin().isAfter(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
                     if(reservaAux.getPasajero().equals(pasajero)) {
-                        System.out.println(reservaAux.toString());
+                        activas.add(reservaAux);
                     }
                 }
             }
+            return activas;
         }
 
         ///METODOS RECEPCIONISTA

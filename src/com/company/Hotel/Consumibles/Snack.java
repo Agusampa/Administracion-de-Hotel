@@ -18,6 +18,14 @@ public enum Snack {
         this.precio = precio;
     }
 
+    public float getPrecio() {
+        return this.precio;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
+
     @Override
     public String toString() {
         return "Snack: " + this.name() +

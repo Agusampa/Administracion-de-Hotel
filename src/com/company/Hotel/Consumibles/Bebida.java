@@ -17,6 +17,9 @@ public enum Bebida {
         this.precio = precio;
     }
 
+    public float getPrecio() {
+        return this.precio;
+    }
     public void setPrecio(float precio) {
         this.precio = precio;
     }

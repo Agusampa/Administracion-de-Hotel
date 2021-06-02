@@ -1,6 +1,5 @@
 package com.company.Persona;
 
-import java.util.Objects;
 
 public class Administrador extends Recepcion {
 
