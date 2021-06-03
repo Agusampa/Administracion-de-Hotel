@@ -19,7 +19,7 @@ public class Menu {
         Hotel hotel = new Hotel();
         Backup backup = new Backup();
 
-        
+
         public void menuPrincipal() {
             Pasajero pasajero1 = new Pasajero("Peter", "Pan","P1","3","Argentina","Colon 1542");
             this.hotel.getPersonas().add(pasajero1);
