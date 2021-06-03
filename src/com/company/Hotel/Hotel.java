@@ -6,18 +6,20 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+
 public class Hotel {
         private ArrayList<Persona> personas;
         private ArrayList<Habitacion> habitaciones;
         private ArrayList<Reserva> reservas;
 
-        //Constructor
+        ////-----CONSTRUCTOR-----////
         public Hotel(){
             this.personas = new ArrayList<>();
             this.habitaciones = new ArrayList<>();
             this.reservas = new ArrayList<>();
         }
 
+        ////-----GETTER AND SETTER-----////
         public ArrayList<Persona> getPersonas() {
             return personas;
         }
@@ -40,97 +42,19 @@ public class Hotel {
         }
 
 
-        ///Metodos
-       /* public void checkIn(Pasajero pasajero,Habitacion habitacion,float pago){
-            this.actualizarHabitacion(habitacion);
-            Reserva reserva = new Reserva(pasajero,habitacion,pago,Duracion.obtenerDur());
-            this.reservas.add(reserva);
-        }*/
-
-        public void actualizarHabitacion(Habitacion habitacion){
-            for(Habitacion habAux : this.habitaciones){
-                //if(habAux.equals(habitacion)) habAux.setStatus();
-            }
-        }
-/*
-        public void pago(Reserva reserva,float monto){
-            for(Reserva aux : this.reservas){
-                if(aux.equals(reserva)) aux.setPago(monto);
-            }
-        }
-
-        public void chekOut(UUID id){
-            Reserva aux = retResvPorId(id);
-            if(aux != null)this.reservas.remove(aux);
-        }*/
-
-
-
-
-        ///Metodos Reserva
-        public int retornarCantidadDeDias(LocalDate inicio, LocalDate fin){
-            long cantidadDeDias = ChronoUnit.DAYS.between(inicio,fin);
-            return (int)cantidadDeDias;
-        }
-
-       public List<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin) {
-           List<Habitacion> habitacionesDisponibles = new ArrayList<>();
-           for (Habitacion habitacionAux : this.habitaciones) {
-
-               boolean disponible = true;
-
-               for (Reserva reservasAux : this.reservas) {
-                    if (reservasAux.getHabitacion().equals(habitacionAux)) {
-                        if(reservasAux.getInicio().isAfter(inicio) && reservasAux.getInicio().isAfter(fin) || reservasAux.getFin().isBefore(inicio) && reservasAux.getFin().isBefore(fin)) {
-
-                            disponible = false;
-                            break;
-                        }
-                    }
-               }
-               for(Habitacion habitacionAux2: habitacionesDisponibles){
-                   if(habitacionAux2.equals(habitacionAux)){
-                       disponible = false;
-                   }
-               }
-               if (disponible){
-                    habitacionesDisponibles.add(habitacionAux);
-               }
-            }
-            return habitacionesDisponibles;
-        }
-
-
-        public void mostrarReservasVigentes(){
-            for(Reserva reservaAux : this.reservas){
-                if(reservaAux.getFin().isBefore(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
-                    System.out.println(reservaAux.toString());
-                }
-            }
-        }
-
-        public void actualizarReserva(Reserva reserva){
-            for(Reserva reservaAux : this.reservas){
-                if(reservaAux.getInicio().equals(reserva.getInicio()) && reservaAux.getFin().equals(reserva.getFin())){
-                    if(reservaAux.getPasajero().equals(reserva.getPasajero())){
-                        reservaAux = reserva;
-                    }
-                }
-            }
-        }
-
-        //////////METODO PRUEBA
+        //////-----METODOS PERSONA-----//////
         public Persona retornarPersonaXDNI(String dni){
-            for (Persona personaAux : this.personas) {
-                    if (personaAux.getDni().compareToIgnoreCase(dni) == 0) {
-                        return personaAux;
-                    }
+                for (Persona personaAux : this.personas) {
+                        if (personaAux.getDni().compareToIgnoreCase(dni) == 0) {
+                            return personaAux;
+                        }
+                }
+                return null;
             }
-            return null;
-        }
-        ///METODOS PASAJERO
-        public List<Pasajero> reservasDelPasajero(Pasajero pasajero){
-            List reservasPasajero = new ArrayList<>();
+
+        ////-----METODOS PASAJERO-----////
+        public ArrayList<Pasajero> reservasDelPasajero(Pasajero pasajero){
+            ArrayList reservasPasajero = new ArrayList<>();
             for(Reserva reservaAux : this.reservas){
                 if(reservaAux.getPasajero().equals(pasajero)){
                     reservasPasajero.add(reservaAux);
@@ -150,19 +74,7 @@ public class Hotel {
             return false;
         }
 
-        public Pasajero retornarPasajeroXDNI(String dni){
-            for (Persona personasAux : this.personas) {
-                if (personasAux instanceof Pasajero) {
-                    if (personasAux.getDni().compareToIgnoreCase(dni) == 0) {
-                        Pasajero pasajeroAux = (Pasajero) personasAux;
-                        return pasajeroAux;
-                    }
-                }
-            }
-            return null;
-        }
-
-        public void mostrarUsuarios(){
+        public void mostrarPasajeros(){
             for(Persona personaAux : this.personas){
                 if(personaAux instanceof Pasajero){
                     Pasajero pasajeroAux = (Pasajero) personaAux;
@@ -171,10 +83,21 @@ public class Hotel {
             }
         }
 
-        public ArrayList<Reserva> RetornarReservasActiva(Pasajero pasajero){
+        public Reserva reservaActualPasajero(Pasajero pasajero) {
+            for (Reserva reservaAux : this.reservas) {
+                if (reservaAux.getPasajero().equals(pasajero)) {
+                    if (reservaAux.getInicio().isAfter(LocalDate.now()) || reservaAux.getInicio().equals(LocalDate.now())) {
+                        return reservaAux;
+                    }
+                }
+            }
+        return null;
+        }
+
+        public ArrayList<Reserva> retornarReservasActivas(Pasajero pasajero){
             ArrayList<Reserva> activas = new ArrayList<>();
             for(Reserva reservaAux : this.reservas){
-                if(reservaAux.getFin().isAfter(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
+                if(reservaAux.getFin().isAfter(LocalDate.now()) | reservaAux.getFin().equals(LocalDate.now())){
                     if(reservaAux.getPasajero().equals(pasajero)) {
                         activas.add(reservaAux);
                     }
@@ -183,20 +106,20 @@ public class Hotel {
             return activas;
         }
 
-        ///METODOS RECEPCIONISTA
-       public Recepcion retornarRecepcionistaXDNI(String dni){
-           for (Persona personasAux : this.personas) {
-               if (personasAux instanceof Recepcion) {
-                   if (personasAux.getDni().compareToIgnoreCase(dni) == 0) {
-                       Recepcion recepcionAux = (Recepcion) personasAux;
-                       return recepcionAux;
-                   }
-               }
-           }
-           return null;
-       }
+        public ArrayList<Reserva> retornarReservasAntigas(Pasajero pasajero){
+            ArrayList<Reserva> antiguas = new ArrayList<>();
+            for(Reserva reservaAux : this.reservas){
+                if(reservaAux.getFin().isBefore(LocalDate.now())){
+                    if(reservaAux.getPasajero().equals(pasajero)) {
+                        antiguas.add(reservaAux);
+                    }
+                }
+            }
+            return antiguas;
+        }
 
-       public boolean validacionRecepcionista(Recepcion recepcionista){
+        ////-----METODOS RECEPCIONISTA-----////
+        public boolean validacionRecepcionista(Recepcion recepcionista){
            for(Persona pasajeroAux : this.personas) {
                if (pasajeroAux instanceof Recepcion) {
                    if (pasajeroAux.equals(recepcionista)) {
@@ -207,7 +130,7 @@ public class Hotel {
            return false;
        }
 
-       public void mostrarRecepcionistas(){
+        public void mostrarRecepcionistas(){
         for(Persona personaAux : this.personas){
             if(personaAux instanceof Recepcion){
                 Recepcion recepcionistaAux = (Recepcion) personaAux;
@@ -217,20 +140,8 @@ public class Hotel {
     }
 
 
-    ///METODOS ADMINISTRADOR
-       public Administrador retornarAdministradorXDNI(String dni){
-           for (Persona personasAux : this.personas) {
-               if (personasAux instanceof Administrador) {
-                   if (personasAux.getDni().compareToIgnoreCase(dni) == 0) {
-                       Administrador administradorAux = (Administrador) personasAux;
-                       return administradorAux;
-                   }
-               }
-           }
-           return null;
-       }
-
-    public boolean validacionAdministrador(Administrador administrador){
+        ////-----METODOS ADMINISTRADOR-----////
+        public boolean validacionAdministrador(Administrador administrador){
         for(Persona pasajeroAux : this.personas) {
             if (pasajeroAux instanceof Administrador) {
                 if (pasajeroAux.equals(administrador)) {
@@ -241,11 +152,100 @@ public class Hotel {
         return false;
     }
 
-       public void mostrarAdminstradores(){
+        public void mostrarAdminstradores(){
         for(Persona personaAux : this.personas){
             if(personaAux instanceof Administrador){
                 Administrador administradorAux = (Administrador) personaAux;
                 System.out.println(administradorAux.toString());
+            }
+        }
+    }
+
+
+        ////-----METODOS GENERALES-----////
+        public boolean existeDNI(String dni){
+            for(Persona persona : this.personas){
+                if(persona.getDni().compareTo(dni) == 0){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public boolean comprobarContrasenias(String a, String b){
+            if(a.compareTo(b)==0){
+                return true;
+            }
+            return false;
+        }
+
+        ////-----METODOS RESERVA-----////
+        public int retornarCantidadDeDias(LocalDate inicio, LocalDate fin){
+            long cantidadDeDias = ChronoUnit.DAYS.between(inicio,fin);
+            return (int)cantidadDeDias;
+        }
+
+        public void mostrarReservasVigentes(){
+            for(Reserva reservaAux : this.reservas){
+                if(reservaAux.getFin().isBefore(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
+                    System.out.println(reservaAux.toString());
+                }
+            }
+        }
+
+        public void actualizarReserva(Reserva reserva){
+            for(Reserva reservaAux : this.reservas){
+                if(reservaAux.getInicio().equals(reserva.getInicio()) && reservaAux.getFin().equals(reserva.getFin())){
+                    if(reservaAux.getPasajero().equals(reserva.getPasajero())){
+                        reservaAux = reserva;
+                    }
+                }
+            }
+        }
+
+
+        ////-----METODOS HABITACION-----////
+        public Habitacion retornarHabitacionXNumero(int numero){
+            for(Habitacion habitacionAux : this.habitaciones){
+                if(habitacionAux.getNumero() == numero)  {
+                    return habitacionAux;
+                }
+            }
+            return null;
+        }
+
+        public ArrayList<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin) {
+        ArrayList<Habitacion> habitacionesDisponibles = new ArrayList<>();
+        for (Habitacion habitacionAux : this.habitaciones) {
+
+            boolean disponible = true;
+
+            for (Reserva reservasAux : this.reservas) {
+                if (reservasAux.getHabitacion().equals(habitacionAux)) {
+                    if(reservasAux.getInicio().isAfter(inicio) && reservasAux.getInicio().isAfter(fin) || reservasAux.getFin().isBefore(inicio) && reservasAux.getFin().isBefore(fin)) {
+
+                        disponible = false;
+                        break;
+                    }
+                }
+            }
+            for(Habitacion habitacionAux2: habitacionesDisponibles){
+                if(habitacionAux2.getTipoHabitacion() == habitacionAux.getTipoHabitacion() && habitacionAux2.getCapacidad() == habitacionAux.getCapacidad()){
+                    disponible = false;
+                    break;
+                }
+            }
+            if (disponible){
+                habitacionesDisponibles.add(habitacionAux);
+            }
+        }
+        return habitacionesDisponibles;
+    }
+
+        public void actualizarHabitacion(Habitacion habitacion){
+        for(Habitacion habAux : this.habitaciones){
+            if(habAux.equals(habitacion)){
+                habAux = habitacion;
             }
         }
     }
