@@ -9,4 +9,5 @@ public class Servicio extends GastoAdicional {
         public Servicio(LocalDateTime fijo,String nombre, float costo, int cantidad) {
             super(fijo,nombre,costo, cantidad);
         }
+
 }

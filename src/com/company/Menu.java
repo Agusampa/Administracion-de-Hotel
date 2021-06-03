@@ -30,7 +30,7 @@ public class Menu {
                 Habitacion habitacion4 = new Habitacion(Habitacion.TipoHabitacion.Premiun,04,4,2500);
                 Habitacion habitacion5 = new Habitacion(Habitacion.TipoHabitacion.Estandar,05,2,1000);
                 Habitacion habitacion6 = new Habitacion(Habitacion.TipoHabitacion.Estandar,06,4,1500);
-                Habitacion habitacion7 = new Habitacion(Habitacion.TipoHabitacion.Estandar,06,4,1500);
+                Habitacion habitacion7 = new Habitacion(Habitacion.TipoHabitacion.Estandar,07,4,1500);
 
                 this.hotel.getHabitaciones().add(habitacion1);
                 this.hotel.getHabitaciones().add(habitacion2);
