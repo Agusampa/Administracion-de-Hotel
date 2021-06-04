@@ -44,13 +44,22 @@ public class Hotel {
 
         //////-----METODOS PERSONA-----//////
         public Persona retornarPersonaXDNI(String dni){
-                for (Persona personaAux : this.personas) {
-                        if (personaAux.getDni().compareToIgnoreCase(dni) == 0) {
-                            return personaAux;
-                        }
+            for (Persona personaAux : this.personas) {
+                if (personaAux.getDni().compareToIgnoreCase(dni) == 0) {
+                          return personaAux;
                 }
-                return null;
             }
+            return null;
+        }
+
+        public void  actualizarPersonaEnHotel(Persona personaAntes, Persona personaNueva){
+           for(Persona personaAux : this.personas){
+               if(personaAux.equals(personaAntes)){
+                   personaAux = personaNueva;
+               }
+           }
+
+        }
 
         ////-----METODOS PASAJERO-----////
         public ArrayList<Pasajero> reservasDelPasajero(Pasajero pasajero){
@@ -62,7 +71,6 @@ public class Hotel {
             }
             return reservasPasajero;
         }
-
         public boolean validacionPasajero(Pasajero pasajero){
             for(Persona pasajeroAux : this.personas) {
                 if (pasajeroAux instanceof Pasajero) {
