@@ -290,10 +290,11 @@ public class Menu {
                             System.err.println("Ingreso una opcion no valida");
                         }
                     } while (!salir);
+                    this.hotel.actualizarReserva(actual);
                 }else{
-                    System.err.println("NO POSEE RESERVAS ACTUALMENTE TRANSITANDO,POR FAVOR,REALICE UNA INMEDIATAMENTE");
+                    System.err.println("Usted no posee una reserva actualmente!");
                 }
-        this.hotel.actualizarReserva(actual);
+
         }
 
         public void menuPerfilPasajero(Pasajero pasajero){
