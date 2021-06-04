@@ -2,6 +2,7 @@ package com.company.Hotel;
 
 import com.company.Persona.*;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -105,7 +106,7 @@ public class Hotel {
         public ArrayList<Reserva> retornarReservasActivas(Pasajero pasajero){
             ArrayList<Reserva> activas = new ArrayList<>();
             for(Reserva reservaAux : this.reservas){
-                if(reservaAux.getFin().isAfter(LocalDate.now()) | reservaAux.getFin().equals(LocalDate.now())){
+                if(reservaAux.getFin().isAfter(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
                     if(reservaAux.getPasajero().equals(pasajero)) {
                         activas.add(reservaAux);
                     }
@@ -230,8 +231,11 @@ public class Hotel {
 
             for (Reserva reservasAux : this.reservas) {
                 if (reservasAux.getHabitacion().equals(habitacionAux)) {
+                    System.out.println(reservasAux.getInicio().isAfter(inicio));
+                    System.out.println(reservasAux.getInicio().isAfter(fin));
+                    System.out.println(reservasAux.getFin().isBefore(inicio));
+                    System.out.println(reservasAux.getFin().isBefore(fin));
                     if(reservasAux.getInicio().isAfter(inicio) && reservasAux.getInicio().isAfter(fin) || reservasAux.getFin().isBefore(inicio) && reservasAux.getFin().isBefore(fin)) {
-
                         disponible = false;
                         break;
                     }
