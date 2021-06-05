@@ -1,6 +1,7 @@
 package com.company.Hotel;
 
 import com.company.Persona.*;
+import com.google.gson.Gson;
 
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.time.LocalDate;

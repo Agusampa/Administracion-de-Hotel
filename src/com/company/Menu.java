@@ -52,14 +52,14 @@ public class Menu {
 
             LocalDate inicio1 = LocalDate.of(2021,3,25);
             LocalDate finalizacion1 = LocalDate.of(2021,3,29);
-
+/*
             ArrayList<Habitacion> habitacionesDisponibles = this.hotel.listHabitacionesDisponibles(inicio1,finalizacion1);
                 for(Habitacion habitacion : habitacionesDisponibles) {
                     System.out.println(habitacion.toString());
                 }
             System.out.println("\nPress Any Key To Continue...");
             new java.util.Scanner(System.in).nextLine();
-
+*/
             boolean salir = false;
                 do {
                     try {
@@ -220,7 +220,7 @@ public class Menu {
             boolean salir = false;
             do{
                 try {
-                    System.out.println("MENU PRINCIPAL RESERVA PASAJERO: " + pasajero.getNombre() + pasajero.getApellido()+
+                    System.out.println("MENU PRINCIPAL RESERVA PASAJERO: " + pasajero.getNombre() +" "+ pasajero.getApellido()+
                     "\nQue accion desea realizar?\n\t1_Menu Reserva Actual\n\t2_Ver Reservas Activas" +
                     "\n\t3_Ver historial de Reservas\n\t4_Salir");
                     Scanner scInt = new Scanner(System.in);
@@ -257,43 +257,40 @@ public class Menu {
         public void menuReservaActualPasajero(Pasajero pasajero){
             Reserva actual = this.hotel.reservaActualPasajero(pasajero);
             boolean salir = false;
-                if(actual != null) {
-                    do {
-                        try {
-                            System.out.println("MENU RESERVA ACTUAL: " +
-                            "\nQue accion desea realizar?\n\t1_Ver Reserva Actual\n\t2_Solicitar Consumible " +
+            if(actual != null) {
+                do {
+                    try {
+                        System.out.println("MENU RESERVA ACTUAL: " + "\nQue accion desea realizar?\n\t1_Ver Reserva Actual\n\t2_Solicitar Consumible " +
                             "\n\t3_Solicitar Servicio\n\t4_Salir");
-                            Scanner scInt = new Scanner(System.in);
-                            int seleccion = scInt.nextInt();
-                            switch (seleccion) {
+                        Scanner scInt = new Scanner(System.in);
+                        int seleccion = scInt.nextInt();
+                        switch (seleccion) {
+                            case 1:
+                                System.out.println(actual.toString());
+                                break;
+                            case 2:
+                                actual = menuConsumibles(actual);
+                                break;
 
-                                case 1:
-                                    System.out.println(actual.toString());
-                                    break;
+                            case 3:
+                                actual = menuServicios(actual);
+                                break;
 
-                                case 2:
-                                    actual = menuConsumibles(actual);
-                                    break;
+                            case 4:
+                                salir = true;
+                                break;
 
-                                case 3:
-                                    actual = menuServicios(actual);
-                                    break;
-
-                                case 4:
-                                    salir = true;
-                                    break;
-
-                                default:
-                                    System.err.println("Las opciones son 1-2-3-4");
+                            default:
+                                System.err.println("Las opciones son del 1 al 4");
                             }
                         } catch (java.util.InputMismatchException e) {
                             System.err.println("Ingreso una opcion no valida");
                         }
                     } while (!salir);
                     this.hotel.actualizarReserva(actual);
-                }else{
-                    System.err.println("Usted no posee una reserva actualmente!");
-                }
+            }else{
+                System.err.println("Usted no posee una reserva actualmente!");
+            }
 
         }
 
