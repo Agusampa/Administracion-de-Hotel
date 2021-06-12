@@ -1,4 +1,4 @@
-package com.company;
+package com.company.Menus;
 
 import com.company.Hotel.*;
 import com.company.Hotel.Consumibles.*;
@@ -15,7 +15,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
-public class Menu {
+public class MenuPrincipal {
         Hotel hotel = new Hotel();
         Backup backup = new Backup();
 
@@ -43,9 +43,6 @@ public class Menu {
             LocalDate finalizacion = LocalDate.of(2021,3,29);
 
             ArrayList<Habitacion> habitacionesDisponibles = this.hotel.listHabitacionesDisponibles(inicio,finalizacion);
-                for(Habitacion habitacion : habitacionesDisponibles) {
-                    System.out.println(habitacion.toString());
-                }
             System.out.println("\nPress Any Key To Continue...");
             new java.util.Scanner(System.in).nextLine();
 
@@ -278,10 +275,10 @@ public class Menu {
                             System.err.println("Ingreso una opcion no valida");
                         }
                     } while (!salir);
+                    this.hotel.actualizarReserva(actual);
                 }else{
                     System.err.println("NO POSEE RESERVAS ACTUALMENTE TRANSITANDO,POR FAVOR,REALICE UNA INMEDIATAMENTE");
                 }
-        this.hotel.actualizarReserva(actual);
         }
 
         public void menuPerfilPasajero(Pasajero pasajero){

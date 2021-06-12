@@ -13,7 +13,7 @@ public class Hotel {
         private ArrayList<Reserva> reservas;
 
         ////-----CONSTRUCTOR-----////
-        public Hotel(){
+        public Hotel() {
             this.personas = new ArrayList<>();
             this.habitaciones = new ArrayList<>();
             this.reservas = new ArrayList<>();
@@ -23,6 +23,7 @@ public class Hotel {
         public ArrayList<Persona> getPersonas() {
             return personas;
         }
+
         public void setPersonas(ArrayList<Persona> personas) {
             this.personas = personas;
         }
@@ -30,6 +31,7 @@ public class Hotel {
         public ArrayList<Habitacion> getHabitaciones() {
             return habitaciones;
         }
+
         public void setHabitaciones(ArrayList<Habitacion> habitaciones) {
             this.habitaciones = habitaciones;
         }
@@ -37,34 +39,35 @@ public class Hotel {
         public ArrayList<Reserva> getReservas() {
             return reservas;
         }
+
         public void setReservas(ArrayList<Reserva> reservas) {
             this.reservas = reservas;
         }
 
 
         //////-----METODOS PERSONA-----//////
-        public Persona retornarPersonaXDNI(String dni){
-                for (Persona personaAux : this.personas) {
-                        if (personaAux.getDni().compareToIgnoreCase(dni) == 0) {
-                            return personaAux;
-                        }
+        public Persona retornarPersonaXDNI(String dni) {
+            for (Persona personaAux : this.personas) {
+                if (personaAux.getDni().compareToIgnoreCase(dni) == 0) {
+                    return personaAux;
                 }
-                return null;
             }
+            return null;
+        }
 
         ////-----METODOS PASAJERO-----////
-        public ArrayList<Pasajero> reservasDelPasajero(Pasajero pasajero){
+        public ArrayList<Pasajero> reservasDelPasajero(Pasajero pasajero) {
             ArrayList reservasPasajero = new ArrayList<>();
-            for(Reserva reservaAux : this.reservas){
-                if(reservaAux.getPasajero().equals(pasajero)){
+            for (Reserva reservaAux : this.reservas) {
+                if (reservaAux.getPasajero().equals(pasajero)) {
                     reservasPasajero.add(reservaAux);
                 }
             }
             return reservasPasajero;
         }
 
-        public boolean validacionPasajero(Pasajero pasajero){
-            for(Persona pasajeroAux : this.personas) {
+        public boolean validacionPasajero(Pasajero pasajero) {
+            for (Persona pasajeroAux : this.personas) {
                 if (pasajeroAux instanceof Pasajero) {
                     if (pasajeroAux.equals(pasajero)) {
                         return true;
@@ -74,9 +77,9 @@ public class Hotel {
             return false;
         }
 
-        public void mostrarPasajeros(){
-            for(Persona personaAux : this.personas){
-                if(personaAux instanceof Pasajero){
+        public void mostrarPasajeros() {
+            for (Persona personaAux : this.personas) {
+                if (personaAux instanceof Pasajero) {
                     Pasajero pasajeroAux = (Pasajero) personaAux;
                     System.out.println(pasajeroAux.toString());
                 }
@@ -84,20 +87,36 @@ public class Hotel {
         }
 
         public Reserva reservaActualPasajero(Pasajero pasajero) {
+            Reserva masCercana = primeraReservaCercana(pasajero);
+            if (masCercana != null) {
+                for (Reserva reservaAux : this.reservas) {
+                    if (reservaAux.getPasajero().equals(pasajero)) {
+                        if (!reservaAux.equals(masCercana)) {
+                            if (reservaAux.getFin().isBefore(masCercana.getFin())) {
+                                masCercana = reservaAux;
+                            }
+                        }
+                    }
+                }
+            }
+            return masCercana;
+        }
+
+        public Reserva primeraReservaCercana(Pasajero pasajero) {
             for (Reserva reservaAux : this.reservas) {
                 if (reservaAux.getPasajero().equals(pasajero)) {
-                    if (reservaAux.getInicio().isAfter(LocalDate.now()) || reservaAux.getInicio().equals(LocalDate.now())) {
+                    if(reservaAux.getFin().equals(LocalDate.now()) ||reservaAux.getFin().isAfter(LocalDate.now())){
                         return reservaAux;
                     }
                 }
             }
-        return null;
-        }
+            return null;
+        } ///puramente anclado a la funcion anterior
 
         public ArrayList<Reserva> retornarReservasActivas(Pasajero pasajero){
             ArrayList<Reserva> activas = new ArrayList<>();
             for(Reserva reservaAux : this.reservas){
-                if(reservaAux.getFin().isAfter(LocalDate.now()) | reservaAux.getFin().equals(LocalDate.now())){
+                if(reservaAux.getFin().isAfter(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
                     if(reservaAux.getPasajero().equals(pasajero)) {
                         activas.add(reservaAux);
                     }
@@ -187,11 +206,11 @@ public class Hotel {
 
         public void mostrarReservasVigentes(){
             for(Reserva reservaAux : this.reservas){
-                if(reservaAux.getFin().isBefore(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
+                if(reservaAux.getFin().isAfter(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
                     System.out.println(reservaAux.toString());
                 }
             }
-        }
+        }  ///arreglado
 
         public void actualizarReserva(Reserva reserva){
             for(Reserva reservaAux : this.reservas){

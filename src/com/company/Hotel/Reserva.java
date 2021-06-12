@@ -3,7 +3,7 @@ package com.company.Hotel;
 import com.company.Persona.*;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class Reserva {
@@ -12,7 +12,7 @@ public class Reserva {
         private float gastoTotal;
         private LocalDate inicio;
         private LocalDate fin;
-        private List<GastoAdicional> gastosAdicionales;
+        private ArrayList<GastoAdicional> gastosAdicionales;
         private TipoDeReserva reserva;
 
         ////-----CONSTRUCTORES-----////
@@ -22,6 +22,7 @@ public class Reserva {
             this.gastoTotal = pago;
             this.inicio = inicio;
             this.fin = fin;
+            this.gastosAdicionales = new ArrayList<>();
         }
 
         public enum TipoDeReserva{
@@ -69,10 +70,10 @@ public class Reserva {
             this.fin = fin;
         }
 
-        public List<GastoAdicional> getGastosAdicionales() {
+        public ArrayList<GastoAdicional> getGastosAdicionales() {
             return this.gastosAdicionales;
         }
-        public void setGastosAdicionales(List<GastoAdicional> gastosAdicionales) {
+        public void setGastosAdicionales(ArrayList<GastoAdicional> gastosAdicionales) {
             this.gastosAdicionales = gastosAdicionales;
         }
 
@@ -100,7 +101,7 @@ public class Reserva {
         public String toString() {
             return "Reserva: " +
                     "\n" + this.pasajero.toString() +
-                    "\nH" + this.habitacion.toString() +
+                    "\n" + this.habitacion.toString() +
                     "\nPago: " + this.gastoTotal +
                     "\nInicio: " + this.inicio +
                     "\nFin: " + this.fin +

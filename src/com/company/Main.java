@@ -1,13 +1,15 @@
 package com.company;
 
 
+import com.company.Menus.MenuPrincipal;
 
 public class Main {
 
     public static void main(String[] args){
 
-        Menu menu = new Menu();
+        MenuPrincipal menu = new MenuPrincipal();
         menu.menuPrincipal();
+
 
     }
 }
