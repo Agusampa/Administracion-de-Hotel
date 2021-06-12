@@ -1,5 +1,6 @@
 package com.company.Persona;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 public abstract class Persona {

@@ -1,5 +1,7 @@
 package com.company.Hotel;
 
+import java.io.Serializable;
+
 public class Habitacion {
         private TipoHabitacion tipoHabitacion;
         private int numero;
@@ -57,7 +59,7 @@ public class Habitacion {
                     "\nNumero:" + this.numero +
                     "\nTipo de habitacion:"+this.tipoHabitacion +
                     "\nPrecio por noche: "+ this.precioPorNoche +
-                    "\nCapacidad: "+ this.capacidad;
+                    "\nCapacidad: "+ this.capacidad+"\n";
         }
 
 }

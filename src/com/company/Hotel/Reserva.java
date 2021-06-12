@@ -2,7 +2,9 @@ package com.company.Hotel;
 
 import com.company.Persona.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,6 +24,7 @@ public class Reserva {
             this.gastoTotal = pago;
             this.inicio = inicio;
             this.fin = fin;
+            this.gastosAdicionales = new ArrayList<>();
         }
 
         public enum TipoDeReserva{
@@ -95,6 +98,7 @@ public class Reserva {
             }
             return gastosTotales;
         }
+
 
         @Override
         public String toString() {

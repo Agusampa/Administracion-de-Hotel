@@ -7,7 +7,9 @@ import com.company.Hotel.Servicios.*;
 import com.company.Persona.*;
 
 import com.company.Sistema.Backup;
+import com.company.Sistema.ManejoArchivo;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,28 +21,28 @@ public class Menu {
         Hotel hotel = new Hotel();
         Backup backup = new Backup();
 
-        public void menuPrincipal() {
+        public void menuPrincipal() throws IOException {
             Pasajero pasajero1 = new Pasajero("Peter", "Pan","P1","3","Argentina","Colon 1542");
+            Pasajero pasajero2 = new Pasajero("Alfreo", "Perez","P1","3","Mexico","Colon 1542");
             Administrador administrador1 = new Administrador("Agus", "Sampa","1","1");
             this.hotel.getPersonas().add(pasajero1);
             this.hotel.getPersonas().add(administrador1);
 
-                Habitacion habitacion1 = new Habitacion(Habitacion.TipoHabitacion.Suite,01,2,3000);
-                Habitacion habitacion2 = new Habitacion(Habitacion.TipoHabitacion.Suite,02,4,3500);
-                Habitacion habitacion3 = new Habitacion(Habitacion.TipoHabitacion.Premiun,03,2,2000);
-                Habitacion habitacion4 = new Habitacion(Habitacion.TipoHabitacion.Premiun,04,4,2500);
-                Habitacion habitacion5 = new Habitacion(Habitacion.TipoHabitacion.Estandar,05,2,1000);
-                Habitacion habitacion6 = new Habitacion(Habitacion.TipoHabitacion.Estandar,06,4,1500);
-                Habitacion habitacion7 = new Habitacion(Habitacion.TipoHabitacion.Estandar,07,4,1500);
+            Habitacion habitacion1 = new Habitacion(Habitacion.TipoHabitacion.Suite,01,2,3000);
+            Habitacion habitacion2 = new Habitacion(Habitacion.TipoHabitacion.Suite,02,4,3500);
+            Habitacion habitacion3 = new Habitacion(Habitacion.TipoHabitacion.Premiun,03,2,2000);
+            Habitacion habitacion4 = new Habitacion(Habitacion.TipoHabitacion.Premiun,04,4,2500);
+            Habitacion habitacion5 = new Habitacion(Habitacion.TipoHabitacion.Estandar,05,2,1000);
+            Habitacion habitacion6 = new Habitacion(Habitacion.TipoHabitacion.Estandar,06,4,1500);
+            Habitacion habitacion7 = new Habitacion(Habitacion.TipoHabitacion.Estandar,07,4,1500);
 
-                this.hotel.getHabitaciones().add(habitacion1);
-                this.hotel.getHabitaciones().add(habitacion2);
-                this.hotel.getHabitaciones().add(habitacion3);
-                this.hotel.getHabitaciones().add(habitacion4);
-                this.hotel.getHabitaciones().add(habitacion5);
-                this.hotel.getHabitaciones().add(habitacion6);
-                this.hotel.getHabitaciones().add(habitacion7);
-
+            this.hotel.getHabitaciones().add(habitacion1);
+            this.hotel.getHabitaciones().add(habitacion2);
+            this.hotel.getHabitaciones().add(habitacion3);
+            this.hotel.getHabitaciones().add(habitacion4);
+            this.hotel.getHabitaciones().add(habitacion5);
+            this.hotel.getHabitaciones().add(habitacion6);
+            this.hotel.getHabitaciones().add(habitacion7);
 
             LocalDate inicio = LocalDate.of(2021,3,25);
             LocalDate finalizacion = LocalDate.of(2021,3,29);
@@ -48,6 +50,27 @@ public class Menu {
             Reserva reserva1 = new Reserva(pasajero1,habitacion1,0f,inicio,finalizacion);
 
             this.hotel.getReservas().add(reserva1);
+
+            System.out.println(reserva1.getFin());
+            System.out.println(LocalDate.now());
+
+            ManejoArchivo.guardarReservas(hotel.getReservas());
+
+            //ManejoArchivo.guardarPersonas(hotel.getPersonas());
+
+            //ManejoArchivo.guardarHabitaciones(hotel.getHabitaciones());
+
+            ArrayList<Habitacion> habitaciones = ManejoArchivo.leerHabitaciones();
+
+           for(Habitacion habitacionAux : habitaciones){
+                System.out.println(habitacionAux.toString());
+            }
+
+           ArrayList<Reserva> reservas = ManejoArchivo.leerReservas();
+
+            for(Reserva reservaAux : reservas){
+                System.out.println(reservaAux.toString());
+            }
 
 
             LocalDate inicio1 = LocalDate.of(2021,3,25);
@@ -57,9 +80,10 @@ public class Menu {
                 for(Habitacion habitacion : habitacionesDisponibles) {
                     System.out.println(habitacion.toString());
                 }
+               */
             System.out.println("\nPress Any Key To Continue...");
             new java.util.Scanner(System.in).nextLine();
-*/
+
             boolean salir = false;
                 do {
                     try {
@@ -237,7 +261,7 @@ public class Menu {
                             break;
 
                         case 3:
-                           ArrayList<Reserva> antiguos = this.hotel.retornarReservasAntigas(pasajero);
+                           ArrayList<Reserva> antiguos = this.hotel.retornarReservasAntiguas(pasajero);
                             for (Reserva reservaAux : antiguos) { System.out.println(reservaAux.toString()); }
                             break;
 
@@ -754,7 +778,7 @@ public class Menu {
         }
 
 
-                ////-----METODOS GENERALES-----////
+        ////-----METODOS GENERALES-----////
         public Persona menuLoggin(){
             Persona persona = null;
             int control = 0;
@@ -785,25 +809,70 @@ public class Menu {
 
         public void menuNuevaReserva(Pasajero pasajero){
             Scanner sc = new Scanner(System.in);
-            int anio,mes,dia;
+            int anioI,mesI,diaI;
+            int anioF,mesF,diaF;
+
+            do {
                 System.out.println("Ingresar el AÑO en que desea realizar su reserva.");
-                    anio = sc.nextInt();
+                anioI = sc.nextInt();
+                if(anioI < LocalDate.now().getYear()){
+                    System.err.println("Ingreso un año no valido");
+                }
+            }while (anioI >= LocalDate.now().getYear());
+
+            do {
                 System.out.println("Ingresar el numero de MES en que desea realizar su reserva.");
-                    mes = sc.nextInt();
+                mesI = sc.nextInt();
+                if(mesI < LocalDate.now().getYear() && anioI <= LocalDate.now().getYear() )
+                    System.err.println("Ingreso un mes no valido");
+            }while (mesI >= LocalDate.now().getMonthValue() || anioI > LocalDate.now().getYear());
+
+            do {
+
                 System.out.println("Ingresar el DIA en que desea realizar su reserva.");
-                    dia = sc.nextInt();
-                LocalDate inicio = LocalDate.of(anio,mes,dia);
+                diaI = sc.nextInt();
+                if(diaI < LocalDate.now().getDayOfMonth()){
+
+                }
+            }while (diaI > LocalDate.now().getDayOfMonth() && mesI == LocalDate.now().getMonthValue() && anioI == LocalDate.now().getYear() || mesI > LocalDate.now().getMonthValue() && anioI == LocalDate.now().getYear() || anioI > LocalDate.now().getYear());
+
+            LocalDate inicio = LocalDate.of(anioI,mesI,diaI);
+
+            do{
                 System.out.println("Ingresar el AÑO hasta el que se desea hospedar");
-                    anio = sc.nextInt();
+                anioF = sc.nextInt();
+                if(anioF < anioI){
+                    System.out.println("Ingreso un año no valido");
+                }
+            }while (anioF >= anioI);
+
+            do {
                 System.out.println("Ingresar el numero de MES hasta el que se desea hospedar");
-                    mes = sc.nextInt();
+                mesF = sc.nextInt();
+                if(mesF < mesI){
+                    System.out.println("Ingreso un mes no valido");
+                }
+            }while (mesF >= mesI || mesF < mesI && anioF > anioI);
+
+            do {
                 System.out.println("Ingresar el DIA hasta el que se desea hospedar");
-                    dia = sc.nextInt();
-            LocalDate finalizacion = LocalDate.of(anio,mes,dia);
+                diaF = sc.nextInt();
+                if(diaF < diaI) {
+                    System.err.println("Ingreso un dia no valido");
+                }
+            }while (diaF > diaI && mesI == mesF || diaF <= diaI && mesF < mesI);
+
+            LocalDate finalizacion = LocalDate.of(anioF,mesF,diaF);
 
             ArrayList<Habitacion> habitacionesDisponibles = this.hotel.listHabitacionesDisponibles(inicio,finalizacion);
+            int capacidad = 0;
+            do {
                 System.out.println("Ingrese la capacidad de la habitacion que desea alquilar (2 o 4 Personas)");
-            int capacidad = sc.nextInt();
+                capacidad = sc.nextInt();
+                if (capacidad != 2 && capacidad != 4){
+                    System.err.println("Ingreso un valor no valido para la capacidad de la habitacion");
+                }
+            }while (!(capacidad == 2 || capacidad == 4));
 
             for(Habitacion habitacion : habitacionesDisponibles) {
                 if(habitacion.getCapacidad() == capacidad) {
@@ -821,8 +890,7 @@ public class Menu {
             this.hotel.getReservas().add(nuevaReserva);
         }
 
-
-                        //////-----EMPLEADOS-----//////
+        //////-----EMPLEADOS-----//////
 
         ////-----RECEPCIONISTA-----////
         public void menuPrimerolEmpleado(){

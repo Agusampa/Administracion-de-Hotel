@@ -105,7 +105,7 @@ public class Hotel {
         }
 
         public ArrayList<Reserva> retornarReservasActivas(Pasajero pasajero){
-            ArrayList<Reserva> activas = new ArrayList<>();
+            ArrayList<Reserva> activas = null;
             for(Reserva reservaAux : this.reservas){
                 if(reservaAux.getFin().isAfter(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
                     if(reservaAux.getPasajero().equals(pasajero)) {
@@ -116,8 +116,8 @@ public class Hotel {
             return activas;
         }
 
-        public ArrayList<Reserva> retornarReservasAntigas(Pasajero pasajero){
-            ArrayList<Reserva> antiguas = new ArrayList<>();
+        public ArrayList<Reserva> retornarReservasAntiguas(Pasajero pasajero){
+            ArrayList<Reserva> antiguas = null;
             for(Reserva reservaAux : this.reservas){
                 if(reservaAux.getFin().isBefore(LocalDate.now())){
                     if(reservaAux.getPasajero().equals(pasajero)) {
