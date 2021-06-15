@@ -1,5 +1,6 @@
 package com.company.Hotel;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public abstract class GastoAdicional {
@@ -9,6 +10,8 @@ public abstract class GastoAdicional {
         protected int cantidad; ///En  Servicio se cuenta como cantidad de horas y en Consumible como unidad // Aprovechando el polimorfismo de los objetos
 
         ////-----CONSTRUCTOR-----////
+        public GastoAdicional(){
+        }
         public GastoAdicional(LocalDateTime fecha,String nombre,float precio,int cantidad){
             this.fecha = fecha;
             this.nombre = nombre;

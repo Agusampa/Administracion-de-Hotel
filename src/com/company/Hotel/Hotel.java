@@ -1,22 +1,24 @@
 package com.company.Hotel;
 
 import com.company.Persona.*;
+import com.company.Sistema.ManejoArchivo;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 
 public class Hotel {
-        private ArrayList<Persona> personas;
+        private ArrayList<Persona> personas = new ArrayList<>();
         private ArrayList<Habitacion> habitaciones;
         private ArrayList<Reserva> reservas;
 
         ////-----CONSTRUCTOR-----////
-        public Hotel() {
-            this.personas = new ArrayList<>();
-            this.habitaciones = new ArrayList<>();
-            this.reservas = new ArrayList<>();
+        public Hotel() throws IOException {
+            this.personas = ManejoArchivo.leerPersonas();
+            this.habitaciones = ManejoArchivo.leerHabitaciones();
+            this.reservas = ManejoArchivo.leerReservas();
         }
 
         ////-----GETTER AND SETTER-----////
@@ -55,6 +57,15 @@ public class Hotel {
             return null;
         }
 
+        public void  actualizarPersonaEnHotel(Persona personaAntes, Persona personaNueva){
+           for(Persona personaAux : this.personas){
+               if(personaAux.equals(personaAntes)){
+                   personaAux = personaNueva;
+               }
+           }
+
+        }
+
         ////-----METODOS PASAJERO-----////
         public ArrayList<Pasajero> reservasDelPasajero(Pasajero pasajero) {
             ArrayList reservasPasajero = new ArrayList<>();
@@ -90,12 +101,10 @@ public class Hotel {
             Reserva masCercana = primeraReservaCercana(pasajero);
             if (masCercana != null) {
                 for (Reserva reservaAux : this.reservas) {
-                    if (reservaAux.getPasajero().equals(pasajero)) {
-                        if (!reservaAux.equals(masCercana)) {
+                    if (reservaAux.getPasajero().equals(pasajero) && !reservaAux.equals(masCercana)) {
                             if (reservaAux.getFin().isBefore(masCercana.getFin())) {
                                 masCercana = reservaAux;
                             }
-                        }
                     }
                 }
             }
@@ -125,8 +134,8 @@ public class Hotel {
             return activas;
         }
 
-        public ArrayList<Reserva> retornarReservasAntigas(Pasajero pasajero){
-            ArrayList<Reserva> antiguas = new ArrayList<>();
+        public ArrayList<Reserva> retornarReservasAntiguas(Pasajero pasajero){
+            ArrayList<Reserva> antiguas = null;
             for(Reserva reservaAux : this.reservas){
                 if(reservaAux.getFin().isBefore(LocalDate.now())){
                     if(reservaAux.getPasajero().equals(pasajero)) {
@@ -241,8 +250,11 @@ public class Hotel {
 
             for (Reserva reservasAux : this.reservas) {
                 if (reservasAux.getHabitacion().equals(habitacionAux)) {
+                    System.out.println(reservasAux.getInicio().isAfter(inicio));
+                    System.out.println(reservasAux.getInicio().isAfter(fin));
+                    System.out.println(reservasAux.getFin().isBefore(inicio));
+                    System.out.println(reservasAux.getFin().isBefore(fin));
                     if(reservasAux.getInicio().isAfter(inicio) && reservasAux.getInicio().isAfter(fin) || reservasAux.getFin().isBefore(inicio) && reservasAux.getFin().isBefore(fin)) {
-
                         disponible = false;
                         break;
                     }

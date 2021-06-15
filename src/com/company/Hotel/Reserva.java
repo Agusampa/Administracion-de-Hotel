@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 
+
 public class Reserva {
         private Pasajero pasajero;
         private Habitacion habitacion;
@@ -25,7 +26,11 @@ public class Reserva {
             this.gastosAdicionales = new ArrayList<>();
         }
 
-        public enum TipoDeReserva{
+
+    public Reserva(Pasajero pasajero) {
+    }
+
+    public enum TipoDeReserva{
             DISPONIBLE,
             EN_LIMPIEZA,
             EN_REPARACION,
@@ -96,6 +101,7 @@ public class Reserva {
             }
             return gastosTotales;
         }
+
 
         @Override
         public String toString() {

@@ -1,15 +1,61 @@
 package com.company;
 
-
+import com.company.Hotel.Habitacion;
+import com.company.Hotel.Reserva;
 import com.company.Menus.MenuPrincipal;
+import com.company.Persona.Administrador;
+import com.company.Persona.Pasajero;
+import com.company.Persona.Persona;
+import com.company.Persona.Recepcion;
+import com.company.Sistema.ManejoArchivo;
+
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
+        /*try {
+            MenuPrincipal menu = new MenuPrincipal();
+            menu.menuPrincipal();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
-        MenuPrincipal menu = new MenuPrincipal();
-        menu.menuPrincipal();
+        ArrayList<Persona> papu = new ArrayList<>();
+        Pasajero persona = new Pasajero("ernesto","palomita","martin","4584844","Paraguay","Tristaldo 2816");
+        Pasajero persona2 = new Pasajero("rivaldo","uzu","martin","4584844","Paraguay","Tristaldo 2816");
+        Administrador persona3 = new Administrador("pieto","palomita","martin","7897824");
+        Recepcion persona4 = new Recepcion("quista","mitra","martin","4578423");
+        papu.add(persona);
+        papu.add(persona2);
+        papu.add(persona3);
+        papu.add(persona4);
 
+        ManejoArchivo.guardarPersonas(papu);
+
+        ArrayList<Persona> stap = ManejoArchivo.leerPersonas();
+        for(Persona prix : stap){
+            System.out.println(prix.toString());
+            if(prix instanceof Pasajero){
+                Pasajero pasajero = (Pasajero) prix;
+                System.out.println(prix.toString());
+            }
+            if(prix instanceof  Administrador){
+                System.out.println(prix.toString());
+            }
+            if(prix instanceof  Recepcion){
+                System.out.println(prix.toString());
+            }
+        }
+
+        /*ArrayList<Reserva> reserva = ManejoArchivo.leerReservas();
+
+        for(Reserva reserva1 : reserva){
+            System.out.println(reserva1.toString());
+        }*/
 
     }
 }
