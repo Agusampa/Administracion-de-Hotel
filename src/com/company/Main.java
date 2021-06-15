@@ -13,6 +13,13 @@ import com.company.Sistema.ManejoArchivo;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.company.Persona.Pasajero;
+import sun.rmi.server.LoaderHandler;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
 
@@ -38,7 +45,7 @@ public class Main {
 
         ArrayList<Persona> stap = ManejoArchivo.leerPersonas();
         for(Persona prix : stap){
-            System.out.println(prix.toString());
+            //System.out.println(prix.toString());
             if(prix instanceof Pasajero){
                 Pasajero pasajero = (Pasajero) prix;
                 System.out.println(prix.toString());
@@ -56,6 +63,8 @@ public class Main {
         for(Reserva reserva1 : reserva){
             System.out.println(reserva1.toString());
         }*/
+
+
 
     }
 }

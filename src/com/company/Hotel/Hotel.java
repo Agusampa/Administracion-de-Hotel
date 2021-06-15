@@ -4,6 +4,10 @@ import com.company.Persona.*;
 import com.company.Sistema.ManejoArchivo;
 
 import java.io.IOException;
+import com.google.gson.Gson;
+
+import javax.swing.plaf.synth.SynthOptionPaneUI;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -48,6 +52,7 @@ public class Hotel {
 
 
         //////-----METODOS PERSONA-----//////
+
         public Persona retornarPersonaXDNI(String dni) {
             for (Persona personaAux : this.personas) {
                 if (personaAux.getDni().compareToIgnoreCase(dni) == 0) {
@@ -123,7 +128,7 @@ public class Hotel {
         } ///puramente anclado a la funcion anterior
 
         public ArrayList<Reserva> retornarReservasActivas(Pasajero pasajero){
-            ArrayList<Reserva> activas = new ArrayList<>();
+            ArrayList<Reserva> activas = null;
             for(Reserva reservaAux : this.reservas){
                 if(reservaAux.getFin().isAfter(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
                     if(reservaAux.getPasajero().equals(pasajero)) {
@@ -208,6 +213,44 @@ public class Hotel {
         }
 
         ////-----METODOS RESERVA-----////
+        public Reserva ReservaAleatoria(){
+
+            Pasajero pasajero = (Pasajero) this.retornarPersonaXDNI("3");
+
+            boolean flag = true;
+
+            LocalDate inicio = null;
+
+            LocalDate fin = null;
+
+            Habitacion habitacion = null;
+
+            while (flag) {
+
+                inicio = Reserva.fechaAleatoria();
+
+                fin = inicio.plusDays((int) (Math.random() * 10 + 1));
+
+                int i = 0;
+
+                while (i < 20 | flag == true) {
+                    habitacion = retornarHabitacionXNumero((int) (Math.random() * 7 + 1));
+                    boolean disponible = estaDisponible(habitacion, inicio, fin);
+                    if (!disponible) {
+                        flag = false;
+                    }
+                    i++;
+                }
+            }
+            String tipoReserva = Reserva.tipoDeReservaAleatoria();
+
+            Float gastoTotal = (float) Reserva.gastoTotalAleatorio( tipoReserva,retornarCantidadDeDias(inicio,fin));
+
+            Reserva reserva = new Reserva(pasajero,habitacion,gastoTotal,inicio,fin,tipoReserva);
+
+            return reserva;
+        }
+
         public int retornarCantidadDeDias(LocalDate inicio, LocalDate fin){
             long cantidadDeDias = ChronoUnit.DAYS.between(inicio,fin);
             return (int)cantidadDeDias;
@@ -240,6 +283,17 @@ public class Hotel {
                 }
             }
             return null;
+        }
+
+        public  boolean estaDisponible(Habitacion habitacion, LocalDate inicio, LocalDate fin){
+            for (Reserva reservasAux : this.reservas) {
+                if (reservasAux.getHabitacion().equals(habitacion)) {
+                    if(reservasAux.getInicio().isAfter(inicio) && reservasAux.getInicio().isAfter(fin) || reservasAux.getFin().isBefore(inicio) && reservasAux.getFin().isBefore(fin)) {
+                        return  false;
+                    }
+                }
+            }
+            return true;
         }
 
         public ArrayList<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin) {

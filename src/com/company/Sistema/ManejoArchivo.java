@@ -7,6 +7,8 @@ import com.company.Persona.Administrador;
 import com.company.Persona.Pasajero;
 import com.company.Persona.Persona;
 import com.company.Persona.Recepcion;
+import com.company.Hotel.Reserva;
+import com.company.Persona.Persona;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.*;
@@ -31,7 +33,6 @@ public class ManejoArchivo {
     }
 
     public static boolean guardarPersonas(ArrayList<Persona> personas) throws IOException {
-
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("personas"));
 
         try {
@@ -59,16 +60,13 @@ public class ManejoArchivo {
     }
 
     public static boolean guardarBackup(Backup backup) throws IOException {
-
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("backup"));
-
         try {
             Gson gson = new Gson();
             gson.toJson(backup, new TypeToken<Backup>() {}.getType(), bufferedWriter);
         } finally {
             bufferedWriter.close();
         }
-
         return true;
     }
 
@@ -93,7 +91,7 @@ public class ManejoArchivo {
 
         try {
             Gson gson = new Gson();
-personas = gson.fromJson(bufferedReader, new TypeToken<ArrayList<Persona>>(){}.getType());
+            personas = gson.fromJson(bufferedReader, new TypeToken<ArrayList<Persona>>(){}.getType());
         } finally {
             bufferedReader.close();
         }
