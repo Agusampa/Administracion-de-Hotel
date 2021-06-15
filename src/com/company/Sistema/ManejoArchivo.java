@@ -17,7 +17,7 @@ public class ManejoArchivo {
 
         try {
             Gson gson = new Gson();
-            gson.toJson(reservas, new TypeToken<ArrayList<Habitacion>>() {}.getType(), bufferedWriter);
+            gson.toJson(reservas, new TypeToken<ArrayList<Reserva>>() {}.getType(), bufferedWriter);
         } finally {
             bufferedWriter.close();
         }
@@ -31,7 +31,7 @@ public class ManejoArchivo {
 
         try {
             Gson gson = new Gson();
-            gson.toJson(personas, new TypeToken<ArrayList<Habitacion>>() {}.getType(), bufferedWriter);
+            gson.toJson(personas, new TypeToken<ArrayList<Persona>>() {}.getType(), bufferedWriter);
         } finally {
             bufferedWriter.close();
         }
@@ -54,7 +54,7 @@ public class ManejoArchivo {
     }
 
     public static ArrayList<Reserva> leerReservas() throws IOException {
-        ArrayList reservas = new ArrayList<Reserva>();
+        ArrayList<Reserva> reservas = new ArrayList<Reserva>();
         BufferedReader bufferedReader = new BufferedReader(new FileReader("reservas"));
 
         try {
@@ -68,8 +68,8 @@ public class ManejoArchivo {
     }
 
     public static ArrayList<Persona> leerPersonas() throws IOException {
-        ArrayList personas = new ArrayList<Persona>();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("personas"));
+        ArrayList<Persona> personas = new ArrayList<Persona>();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("persona"));
 
         try {
             Gson gson = new Gson();
@@ -82,7 +82,7 @@ public class ManejoArchivo {
     }
 
     public static ArrayList<Habitacion> leerHabitaciones() throws IOException {
-        ArrayList habitaciones = new ArrayList<Habitacion>();
+        ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
         BufferedReader bufferedReader = new BufferedReader(new FileReader("habitaciones"));
 
         try {

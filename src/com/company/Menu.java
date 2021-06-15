@@ -55,7 +55,7 @@ public class Menu {
                 this.hotel.getReservas().add(hotel.ReservaAleatoria());
             }
 
-            menuNuevaReserva(pasajero1);
+            //menuNuevaReserva(pasajero1);
 
             /*for(Reserva reserva : this.hotel.getReservas()){
                 System.out.println(reserva.toString());
@@ -65,8 +65,14 @@ public class Menu {
 
             //ManejoArchivo.guardarReservas(hotel.getReservas());
 
-            //ManejoArchivo.guardarPersonas(hotel.getPersonas());
+            ManejoArchivo.guardarPersonas(hotel.getPersonas());
 
+            ArrayList<Persona>Lista = ManejoArchivo.leerPersonas();
+/*
+            for (Persona persona : Lista){
+                System.out.println(persona.toString());
+            }
+*/
             //ManejoArchivo.guardarHabitaciones(hotel.getHabitaciones());
             /*
             ArrayList<Habitacion> habitaciones = ManejoArchivo.leerHabitaciones();
