@@ -190,6 +190,44 @@ public class Hotel {
         }
 
         ////-----METODOS RESERVA-----////
+        public Reserva ReservaAleatoria(){
+
+            Pasajero pasajero = (Pasajero) this.retornarPersonaXDNI("3");
+
+            boolean flag = true;
+
+            LocalDate inicio = null;
+
+            LocalDate fin = null;
+
+            Habitacion habitacion = null;
+
+            while (flag) {
+
+                inicio = Reserva.fechaAleatoria();
+
+                fin = inicio.plusDays((int) (Math.random() * 10 + 1));
+
+                int i = 0;
+
+                while (i < 20 | flag == true) {
+                    habitacion = retornarHabitacionXNumero((int) (Math.random() * 7 + 1));
+                    boolean disponible = estaDisponible(habitacion, inicio, fin);
+                    if (!disponible) {
+                        flag = false;
+                    }
+                    i++;
+                }
+            }
+            String tipoReserva = Reserva.tipoDeReservaAleatoria();
+
+            Float gastoTotal = (float) Reserva.gastoTotalAleatorio( tipoReserva,retornarCantidadDeDias(inicio,fin));
+
+            Reserva reserva = new Reserva(pasajero,habitacion,gastoTotal,inicio,fin,tipoReserva);
+
+            return reserva;
+        }
+
         public int retornarCantidadDeDias(LocalDate inicio, LocalDate fin){
             long cantidadDeDias = ChronoUnit.DAYS.between(inicio,fin);
             return (int)cantidadDeDias;
@@ -197,10 +235,10 @@ public class Hotel {
 
         public void mostrarReservasVigentes(){
             for(Reserva reservaAux : this.reservas){
-                if(reservaAux.getFin().isBefore(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
-                    System.out.println(reservaAux.toString());
+                if(reservaAux.getFin().isAfter(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
+                 System.out.println(reservaAux.toString());
                 }
-            }
+         }
         }
 
         public void actualizarReserva(Reserva reserva){
@@ -224,6 +262,17 @@ public class Hotel {
             return null;
         }
 
+        public  boolean estaDisponible(Habitacion habitacion, LocalDate inicio, LocalDate fin){
+            for (Reserva reservasAux : this.reservas) {
+                if (reservasAux.getHabitacion().equals(habitacion)) {
+                    if(reservasAux.getInicio().isAfter(inicio) && reservasAux.getInicio().isAfter(fin) || reservasAux.getFin().isBefore(inicio) && reservasAux.getFin().isBefore(fin)) {
+                        return  false;
+                    }
+                }
+            }
+            return true;
+        }
+
         public ArrayList<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin) {
         ArrayList<Habitacion> habitacionesDisponibles = new ArrayList<>();
         for (Habitacion habitacionAux : this.habitaciones) {
@@ -232,10 +281,6 @@ public class Hotel {
 
             for (Reserva reservasAux : this.reservas) {
                 if (reservasAux.getHabitacion().equals(habitacionAux)) {
-                    System.out.println(reservasAux.getInicio().isAfter(inicio));
-                    System.out.println(reservasAux.getInicio().isAfter(fin));
-                    System.out.println(reservasAux.getFin().isBefore(inicio));
-                    System.out.println(reservasAux.getFin().isBefore(fin));
                     if(reservasAux.getInicio().isAfter(inicio) && reservasAux.getInicio().isAfter(fin) || reservasAux.getFin().isBefore(inicio) && reservasAux.getFin().isBefore(fin)) {
                         disponible = false;
                         break;

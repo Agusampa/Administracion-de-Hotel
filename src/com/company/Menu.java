@@ -51,15 +51,24 @@ public class Menu {
 
             this.hotel.getReservas().add(reserva1);
 
-            System.out.println(reserva1.getFin());
-            System.out.println(LocalDate.now());
+            for (int i = 0; i<20; i++) {
+                this.hotel.getReservas().add(hotel.ReservaAleatoria());
+            }
 
-            ManejoArchivo.guardarReservas(hotel.getReservas());
+            menuNuevaReserva(pasajero1);
+
+            /*for(Reserva reserva : this.hotel.getReservas()){
+                System.out.println(reserva.toString());
+            }*/
+
+
+
+            //ManejoArchivo.guardarReservas(hotel.getReservas());
 
             //ManejoArchivo.guardarPersonas(hotel.getPersonas());
 
             //ManejoArchivo.guardarHabitaciones(hotel.getHabitaciones());
-
+            /*
             ArrayList<Habitacion> habitaciones = ManejoArchivo.leerHabitaciones();
 
            for(Habitacion habitacionAux : habitaciones){
@@ -809,23 +818,26 @@ public class Menu {
 
         public void menuNuevaReserva(Pasajero pasajero){
             Scanner sc = new Scanner(System.in);
-            int anioI,mesI,diaI;
-            int anioF,mesF,diaF;
+            int anioI =0,mesI=0,diaI=0;
+            int anioF=0,mesF=0,diaF=0;
+            int control=0;
 
             do {
                 System.out.println("Ingresar el AÑO en que desea realizar su reserva.");
                 anioI = sc.nextInt();
                 if(anioI < LocalDate.now().getYear()){
                     System.err.println("Ingreso un año no valido");
+                    control++;
                 }
-            }while (anioI >= LocalDate.now().getYear());
+            }while (anioI < LocalDate.now().getYear() && control != 3);
 
             do {
                 System.out.println("Ingresar el numero de MES en que desea realizar su reserva.");
                 mesI = sc.nextInt();
-                if(mesI < LocalDate.now().getYear() && anioI <= LocalDate.now().getYear() )
+                if(mesI < LocalDate.now().getMonthValue() && anioI <= LocalDate.now().getYear() )
                     System.err.println("Ingreso un mes no valido");
-            }while (mesI >= LocalDate.now().getMonthValue() || anioI > LocalDate.now().getYear());
+                    control++;
+            }while (mesI < LocalDate.now().getMonthValue() && control != 3 || anioI < LocalDate.now().getYear() && control != 3);
 
             do {
 
@@ -838,13 +850,13 @@ public class Menu {
 
             LocalDate inicio = LocalDate.of(anioI,mesI,diaI);
 
-            do{
+            while (anioF < anioI){
                 System.out.println("Ingresar el AÑO hasta el que se desea hospedar");
                 anioF = sc.nextInt();
                 if(anioF < anioI){
                     System.out.println("Ingreso un año no valido");
                 }
-            }while (anioF >= anioI);
+            }
 
             do {
                 System.out.println("Ingresar el numero de MES hasta el que se desea hospedar");
