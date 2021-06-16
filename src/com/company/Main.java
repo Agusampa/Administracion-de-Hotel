@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.company.Persona.Pasajero;
+import com.company.Sistema.PersonaDeserializer;
 import sun.rmi.server.LoaderHandler;
 
 import java.io.IOException;
@@ -32,10 +33,10 @@ public class Main {
         }*/
 
         ArrayList<Persona> papu = new ArrayList<>();
-        Pasajero persona = new Pasajero("ernesto","palomita","martin","4584844","Paraguay","Tristaldo 2816");
-        Pasajero persona2 = new Pasajero("rivaldo","uzu","martin","4584844","Paraguay","Tristaldo 2816");
-        Administrador persona3 = new Administrador("pieto","palomita","martin","7897824");
-        Recepcion persona4 = new Recepcion("quista","mitra","martin","4578423");
+        Pasajero persona = new Pasajero("ernesto","palomita","345434","4584844","Paraguay","Tristaldo 2816");
+        Pasajero persona2 = new Pasajero("rivaldo","uzu","78973431","4584844","Paraguay","Tristaldo 2816");
+        Administrador persona3 = new Administrador("pieto","543136","martin","7897824");
+        Recepcion persona4 = new Recepcion("quista","mitra","798789","4578423");
         papu.add(persona);
         papu.add(persona2);
         papu.add(persona3);
@@ -43,11 +44,21 @@ public class Main {
 
         ManejoArchivo.guardarPersonas(papu);
 
+
+
         ArrayList<Persona> stap = ManejoArchivo.leerPersonas();
         for(Persona prix : stap){
-            //System.out.println(prix.toString());
+            System.out.println("\n" + prix);
+
+        }
+
+        /*ArrayList<Reserva> reserva = ManejoArchivo.leerReservas();
+
+        for(Reserva reserva1 : reserva){
+            System.out.println(reserva1.toString());
+
+
             if(prix instanceof Pasajero){
-                Pasajero pasajero = (Pasajero) prix;
                 System.out.println(prix.toString());
             }
             if(prix instanceof  Administrador){
@@ -56,12 +67,6 @@ public class Main {
             if(prix instanceof  Recepcion){
                 System.out.println(prix.toString());
             }
-        }
-
-        /*ArrayList<Reserva> reserva = ManejoArchivo.leerReservas();
-
-        for(Reserva reserva1 : reserva){
-            System.out.println(reserva1.toString());
         }*/
 
 
