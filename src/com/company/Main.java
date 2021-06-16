@@ -32,10 +32,6 @@ public class Main {
         int anioF = 0, mesF = 0, diaF = 0;
         boolean control = false;
 
-
-        if(anioI < anioF || diaI < diaF)
-            System.out.println("soy gay");
-
         while (!(anioI >= LocalDate.now().getYear())){
             System.out.println("Ingresar el AÑO en que desea realizar su reserva.");
             anioI = sc.nextInt();
