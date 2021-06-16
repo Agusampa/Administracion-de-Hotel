@@ -2,9 +2,9 @@ package com.company.Hotel;
 
 import com.company.Persona.*;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -17,6 +17,7 @@ public class Reserva {
         private LocalDate fin;
         private List<GastoAdicional> gastosAdicionales;
         private String reserva;
+
 
         ////-----CONSTRUCTORES-----////
         public Reserva(Pasajero pasajero, Habitacion habitacion, float gastoTotal, LocalDate inicio, LocalDate fin) {
@@ -36,8 +37,9 @@ public class Reserva {
             this.inicio = inicio;
             this.fin = fin;
             this.gastosAdicionales = new ArrayList<>();
-            this.reserva =  tipoDeReserva;
         }
+
+        public Reserva(Pasajero pasajero) { }
 
         public static LocalDate fechaAleatoria(){
             LocalDate startDate = LocalDate.of(2021, 7, 1);
@@ -74,6 +76,68 @@ public class Reserva {
             return 2000*cantDias;
         }
 
+        public static boolean controlFecha(int mes,int dia){
+            boolean rt = true;
+            switch (mes){
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    if(dia > 31 || dia <= 0){
+                        rt = false;
+                    }
+                    break;
+                case 2:
+                    if(dia > 28  || dia <= 0){
+                        rt = false;
+                    }
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    if(dia > 30  || dia <= 0){
+                        rt = false;
+                    }
+                    break;
+            }
+            return rt;
+
+        }
+
+        public static boolean controlMesTop(int mes,int dia){
+            boolean rt = true;
+            switch (mes){
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    if(dia == 31){
+                        rt = false;
+                    }
+                    break;
+                case 2:
+                    if(dia == 28){
+                        rt = false;
+                    }
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    if(dia == 30){
+                        rt = false;
+                    }
+                    break;
+            }
+            return rt;
+        }
 
         public enum TipoDeReserva{
             EN_LIMPIEZA,

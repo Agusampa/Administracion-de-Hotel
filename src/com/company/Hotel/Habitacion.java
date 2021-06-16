@@ -1,6 +1,7 @@
 package com.company.Hotel;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Habitacion {
         private TipoHabitacion tipoHabitacion;
@@ -52,7 +53,20 @@ public class Habitacion {
             this.precioPorNoche = precioPorNoche;
         }
 
-        ////METODOS
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Habitacion that = (Habitacion) o;
+        return numero == that.numero && capacidad == that.capacidad && Double.compare(that.precioPorNoche, precioPorNoche) == 0 && tipoHabitacion == that.tipoHabitacion;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tipoHabitacion, numero, capacidad, precioPorNoche);
+    }
+
+    ////METODOS
         @Override
         public String toString() {
             return "\nHabitacion:" +

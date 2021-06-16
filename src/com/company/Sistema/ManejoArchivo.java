@@ -1,16 +1,26 @@
 package com.company.Sistema;
 
 import com.company.Hotel.Habitacion;
+import com.company.Hotel.Hotel;
+import com.company.Hotel.Reserva;
+import com.company.Persona.Administrador;
+import com.company.Persona.Pasajero;
+import com.company.Persona.Persona;
+import com.company.Persona.Recepcion;
 import com.company.Hotel.Reserva;
 import com.company.Persona.Persona;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class ManejoArchivo {
 
+                            ////-----GUARDAR-----////
     public static boolean guardarReservas(ArrayList<Reserva> reservas) throws IOException {
 
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("reservas"));
@@ -26,8 +36,7 @@ public class ManejoArchivo {
     }
 
     public static boolean guardarPersonas(ArrayList<Persona> personas) throws IOException {
-
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("persona"));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("personas"));
 
         try {
             Gson gson = new Gson();
@@ -53,6 +62,18 @@ public class ManejoArchivo {
         return true;
     }
 
+    public static boolean guardarBackup(Backup backup) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("backup"));
+        try {
+            Gson gson = new Gson();
+            gson.toJson(backup, new TypeToken<Backup>() {}.getType(), bufferedWriter);
+        } finally {
+            bufferedWriter.close();
+        }
+        return true;
+    }
+
+                        ////-----LECTURAS-----////
     public static ArrayList<Reserva> leerReservas() throws IOException {
         ArrayList<Reserva> reservas = new ArrayList<Reserva>();
         BufferedReader bufferedReader = new BufferedReader(new FileReader("reservas"));
@@ -68,8 +89,24 @@ public class ManejoArchivo {
     }
 
     public static ArrayList<Persona> leerPersonas() throws IOException {
+
         ArrayList<Persona> personas = new ArrayList<Persona>();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("persona"));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("personas"));
+
+        PersonaDeserializer deserializer = new PersonaDeserializer("className");
+        deserializer.registerBarnType("Pasajero", Pasajero.class);
+        deserializer.registerBarnType("Recepcion", Recepcion.class);
+        deserializer.registerBarnType("Administrador", Administrador.class);
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Persona.class, deserializer)
+                .create();
+
+        personas = gson.fromJson(bufferedReader, new TypeToken<ArrayList<Persona>>(){}.getType());
+
+
+        /*ArrayList<Persona> personas = new ArrayList<Persona>();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("personas"));
+>>>>>>> d4abce9a57d6788a0f38c342f22275837f02174f
 
         try {
             Gson gson = new Gson();
@@ -77,6 +114,8 @@ public class ManejoArchivo {
         } finally {
             bufferedReader.close();
         }
+
+        return personas;*/
 
         return personas;
     }
@@ -94,6 +133,22 @@ public class ManejoArchivo {
 
         return habitaciones ;
     }
+
+    public static Backup leerBackup() throws IOException {
+        Backup backup = new Backup();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("backup"));
+
+        try {
+            Gson gson = new Gson();
+            backup = gson.fromJson(bufferedReader,Backup.class);
+        } finally {
+            bufferedReader.close();
+        }
+
+        return backup ;
+    }
+
+
 
 
 /*

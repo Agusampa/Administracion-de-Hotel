@@ -53,8 +53,8 @@ public abstract class GastoAdicional {
         public String toString(){
             return  this.getClass().getSimpleName() +
                     "\nFecha: " + this.fecha +
-                    "\nNombre:'" + this.nombre +
-                    "\nCantidad=" + this.cantidad +
+                    "\nNombre: " + this.nombre +
+                    "\nCantidad: " + this.cantidad +
                     "\nPrecio Unitario:" + this.precio +
                     "\nPrecio Total:" + this.precio * this.cantidad ;
         }
