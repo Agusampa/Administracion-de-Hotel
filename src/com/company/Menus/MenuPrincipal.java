@@ -26,14 +26,7 @@ public class MenuPrincipal {
 
 
     public void menuPrincipal() throws IOException {
-        /*Pasajero pisa = new Pasajero("pisa","pistola","123","2","TRIVI","Coln 21");
-        hotel.getPersonas().add(pisa);
-        LocalDate inicio = LocalDate.of(2021,8,15);
-        LocalDate fin = LocalDate.of(2021,8,30);
-        Habitacion habitacion = new Habitacion(Habitacion.TipoHabitacion.Estandar,5,4,5000);
-        hotel.getHabitaciones().add(habitacion);
-        Reserva reserva = new Reserva(pisa,hotel.getHabitaciones().get(0),20000,inicio,fin);
-        hotel.getReservas().add(reserva);*/
+
         Backup backup = new Backup();
         Pasajero pasajero1 = new Pasajero("Peter", "Pan", "P1", "3", "Argentina", "Colon 1542");
         Pasajero pasajero2 = new Pasajero("Alfreo", "Perez", "P1", "3", "Mexico", "Colon 1542");
@@ -65,7 +58,7 @@ public class MenuPrincipal {
         this.hotel.getReservas().add(reserva1);
 
         for (int i = 0; i < 20; i++) {
-            this.hotel.getReservas().add(hotel.ReservaAleatoria());
+            this.hotel.getReservas().add(hotel.ReservaAleatoria());System.out.println("hola");
         }
 
         menuNuevaReserva(pasajero1);

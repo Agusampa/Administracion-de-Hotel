@@ -225,21 +225,23 @@ public class Hotel {
 
             Habitacion habitacion = null;
 
+            int i = 0;
             while (flag) {
-
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAA");
                 inicio = Reserva.fechaAleatoria();
 
                 fin = inicio.plusDays((int) (Math.random() * 10 + 1));
 
-                int i = 0;
 
-                while (i < 20 | flag == true) {
+
+                while (i < 20 || flag == true) {
+                    System.out.println("sa");i++;
                     habitacion = retornarHabitacionXNumero((int) (Math.random() * 7 + 1));
                     boolean disponible = estaDisponible(habitacion, inicio, fin);
-                    if (!disponible) {
+                    if (disponible) {
                         flag = false;
                     }
-                    i++;
+
                 }
             }
             String tipoReserva = Reserva.tipoDeReservaAleatoria();

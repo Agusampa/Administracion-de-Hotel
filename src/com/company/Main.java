@@ -24,12 +24,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        /*try {
-            MenuPrincipal menu = new MenuPrincipal();
-            menu.menuPrincipal();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+
+
+        MenuPrincipal menu = new MenuPrincipal();
+        menu.menuPrincipal();
+
 
         ArrayList<Persona> papu = new ArrayList<>();
         Pasajero persona = new Pasajero("ernesto","palomita","martin","4584844","Paraguay","Tristaldo 2816");
@@ -58,11 +57,11 @@ public class Main {
             }
         }
 
-        /*ArrayList<Reserva> reserva = ManejoArchivo.leerReservas();
+        ArrayList<Reserva> reserva = ManejoArchivo.leerReservas();
 
         for(Reserva reserva1 : reserva){
             System.out.println(reserva1.toString());
-        }*/
+        }
 
 
 
