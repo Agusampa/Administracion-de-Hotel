@@ -49,17 +49,20 @@ public class Menu {
 
             Reserva reserva1 = new Reserva(pasajero1,habitacion1,0f,inicio,finalizacion);
 
-            this.hotel.getReservas().add(reserva1);
+            //this.hotel.getReservas().add(reserva1);
 
-            for (int i = 0; i<20; i++) {
-                this.hotel.getReservas().add(hotel.ReservaAleatoria());
-            }
+            this.hotel.getReservas().add(hotel.ReservaAleatoria());
+            this.hotel.getReservas().add(hotel.ReservaAleatoria());
+            this.hotel.getReservas().add(hotel.ReservaAleatoria());
+            this.hotel.getReservas().add(hotel.ReservaAleatoria());
+            this.hotel.getReservas().add(hotel.ReservaAleatoria());
+
 
             //menuNuevaReserva(pasajero1);
 
-            /*for(Reserva reserva : this.hotel.getReservas()){
+            for(Reserva reserva : this.hotel.getReservas()){
                 System.out.println(reserva.toString());
-            }*/
+            }
 
 
 

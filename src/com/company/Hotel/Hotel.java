@@ -202,18 +202,20 @@ public class Hotel {
 
             Habitacion habitacion = null;
 
-            while (flag) {
+            int i = 0;
+            while (flag == true) {
 
                 inicio = Reserva.fechaAleatoria();
 
                 fin = inicio.plusDays((int) (Math.random() * 10 + 1));
 
-                int i = 0;
 
-                while (i < 20 | flag == true) {
+
+                while (flag == true) {
                     habitacion = retornarHabitacionXNumero((int) (Math.random() * 7 + 1));
                     boolean disponible = estaDisponible(habitacion, inicio, fin);
-                    if (!disponible) {
+                    System.out.println(disponible);
+                    if (disponible == true) {
                         flag = false;
                     }
                     i++;
