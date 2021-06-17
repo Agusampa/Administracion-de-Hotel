@@ -1,12 +1,15 @@
 package com.company;
 import com.company.Menus.MenuPrincipal;
+import com.company.Persona.Persona;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
         try {
             MenuPrincipal menu = new MenuPrincipal();
             menu.menuPrincipal();

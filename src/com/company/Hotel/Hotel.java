@@ -10,8 +10,8 @@ import java.util.*;
 
 public class Hotel {
         private ArrayList<Persona> personas = new ArrayList<>();
-        private ArrayList<Habitacion> habitaciones;
-        private ArrayList<Reserva> reservas;
+        private ArrayList<Habitacion> habitaciones = new ArrayList<>();
+        private ArrayList<Reserva> reservas = new ArrayList<>();
 
                 ////-----CONSTRUCTOR-----////
                 public Hotel() throws IOException {
@@ -120,7 +120,7 @@ public class Hotel {
                 } ///puramente anclado a la funcion anterior
 
                 public ArrayList<Reserva> retornarReservasActivas(Pasajero pasajero){
-                    ArrayList<Reserva> activas = null;
+                    ArrayList<Reserva> activas = new ArrayList<>();
                     for(Reserva reservaAux : this.reservas){
                         if(reservaAux.getFin().isAfter(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())){
                             if(reservaAux.getPasajero().equals(pasajero)) {
@@ -186,7 +186,6 @@ public class Hotel {
                     }
                 }
 
-
                 ////-----METODOS GENERALES-----////
                 public boolean existeDNI(String dni){
                     for(Persona persona : this.personas){
@@ -205,8 +204,14 @@ public class Hotel {
                 }
 
                 ////-----METODOS RESERVA-----////
+                public void mostrarTodasReservas(){
+                    for(Reserva reservaAux : this.getReservas()){
+                        System.out.println(reservaAux.toString());
+                    }
+                }
+
                 public Reserva ReservaAleatoria() {
-                    Pasajero pasajero = (Pasajero) this.retornarPersonaXDNI("3");
+                    Pasajero pasajero = (Pasajero) this.retornarPersonaXDNI("33333333");
                     boolean flag = true;
                     LocalDate inicio = null;
                     LocalDate fin = null;
@@ -245,6 +250,17 @@ public class Hotel {
                         }
                     }
                 }  ///arreglado
+
+                public void mostrarReservasAntiguas () {
+                    int i=0;
+                    for (Reserva reservaAux : this.reservas) {
+                        if (reservaAux.getFin().isBefore(LocalDate.now())) {
+                            System.out.println(reservaAux.toString());
+                            i++;
+                        }
+                    }
+                    if(i==0){System.err.println("No hay reservas Antigas");}
+                }
 
                 public void actualizarReserva (Reserva reserva){
                     for (Reserva reservaAux : this.reservas) {

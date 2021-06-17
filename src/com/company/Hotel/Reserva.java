@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Reserva {
@@ -16,7 +15,7 @@ public class Reserva {
         private LocalDate inicio;
         private LocalDate fin;
         private List<GastoAdicional> gastosAdicionales;
-        private String reserva;
+        private String tipoReserva;
 
 
         ////-----CONSTRUCTORES-----////
@@ -27,7 +26,7 @@ public class Reserva {
             this.inicio = inicio;
             this.fin = fin;
             this.gastosAdicionales = new ArrayList<>();
-            this.reserva =  TipoDeReserva.OCUPADO.name();
+            this.tipoReserva =  TipoDeReserva.OCUPADO.name();
         }
 
         public Reserva(Pasajero pasajero, Habitacion habitacion, float gastoTotal, LocalDate inicio, LocalDate fin,String tipoDeReserva) {
@@ -37,6 +36,7 @@ public class Reserva {
             this.inicio = inicio;
             this.fin = fin;
             this.gastosAdicionales = new ArrayList<>();
+            this.tipoReserva = tipoDeReserva;
         }
 
         public Reserva(Pasajero pasajero) { }
@@ -52,6 +52,7 @@ public class Reserva {
             }
             return TipoDeReserva.OCUPADO.name();
         }
+
         public static int gastoTotalAleatorio(String tipoDeReserva, int cantDias){
             if(tipoDeReserva.compareTo(TipoDeReserva.EN_LIMPIEZA.name())==0){
                 return 1000*cantDias;
@@ -115,11 +116,11 @@ public class Reserva {
             this.gastosAdicionales = gastosAdicionales;
         }
 
-        public String getReserva() {
-            return reserva;
+        public String getTipoReserva() {
+            return tipoReserva;
         }
-        public void setReserva(String reserva) {
-            this.reserva = reserva;
+        public void setTipoReserva(String tipoReserva) {
+            this.tipoReserva = tipoReserva;
         }
 
         ////-----METODOS-----////
@@ -141,12 +142,12 @@ public class Reserva {
             return "\n=================================================="+
                     "\nReserva: " +
                     "\n-------------------------------------------------"+
-                    "\n" + this.pasajero.toString()+
+                    "\n" + this.pasajero.toString() +
                     "\n-------------------------------------------------"+
                      this.habitacion.toString() +
                     "-------------------------------------------------"+
                     "\nPago: " + this.gastoTotal +
-                    "\nTipo de reserva: " + this.reserva +
+                    "\nTipo de tipoReserva: " + this.tipoReserva +
                     "\nInicio: " + this.inicio +
                     "\nFin: " + this.fin +
                     "\nGastos adicionales: " + this.gastosAdicionales.toString() +
