@@ -266,7 +266,7 @@ public class Hotel {
                     }
                     return null;
                 }
-                
+
                 public boolean estaDisponible (Habitacion habitacion, LocalDate inicio, LocalDate fin){
                     for (Reserva reservasAux : this.reservas) {
                         if (reservasAux.getHabitacion().equals(habitacion)) {
