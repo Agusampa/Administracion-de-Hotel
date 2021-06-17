@@ -82,4 +82,16 @@ public class Herramientas {
         return rt;
     }
 
+
+    public static boolean controlDNIEsUnINT(String cadena){
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException nfe){
+            return false;
+        }
+    }
+
+
+
 }

@@ -182,9 +182,9 @@ public class Hotel {
                     if(personaAux instanceof Administrador){
                         Administrador administradorAux = (Administrador) personaAux;
                         System.out.println(administradorAux.toString());
+                        }
                     }
                 }
-            }
 
 
                 ////-----METODOS GENERALES-----////
@@ -266,7 +266,7 @@ public class Hotel {
                     }
                     return null;
                 }
-
+                
                 public boolean estaDisponible (Habitacion habitacion, LocalDate inicio, LocalDate fin){
                     for (Reserva reservasAux : this.reservas) {
                         if (reservasAux.getHabitacion().equals(habitacion)) {
@@ -278,36 +278,41 @@ public class Hotel {
                     return true;
                 }
 
-                public ArrayList<Habitacion> listHabitacionesDisponibles (LocalDate inicio, LocalDate fin){
+                public ArrayList<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin) {
+
                     ArrayList<Habitacion> habitacionesDisponibles = new ArrayList<>();
+
                     ArrayList<Habitacion> habitacionesNODisponibles = new ArrayList<>();
+
                     for (Habitacion habitacionAux : this.habitaciones) {
+
                         boolean disponible = false;
+
                         for (Reserva reservasAux : this.reservas) {
                             if (reservasAux.getHabitacion().equals(habitacionAux)) {
-                                if (inicio.isBefore(reservasAux.getInicio()) && fin.isBefore(reservasAux.getInicio()) || inicio.isAfter(reservasAux.getFin()) && fin.isAfter(reservasAux.getFin())) {
+
+                                if(inicio.isBefore(reservasAux.getInicio()) && fin.isBefore(reservasAux.getInicio())  || inicio.isAfter(reservasAux.getFin()) && fin.isAfter(reservasAux.getFin())) {
                                     disponible = true;
-                                } else {
+                                }else{
                                     habitacionesNODisponibles.add(habitacionAux);
                                 }
-                            } else {
+                            }else{
                                 disponible = true;
                             }
                         }
-
-                        for (Habitacion habitacion : habitacionesNODisponibles) {
-                            if (habitacion.equals(habitacionAux)) {
+                        for(Habitacion habitacion : habitacionesNODisponibles){
+                            if(habitacion.equals(habitacionAux)){
                                 disponible = false;
                             }
                         }
 
-                        for (Habitacion habitacionAux2 : habitacionesDisponibles) {
-                            if (habitacionAux2.getTipoHabitacion() == habitacionAux.getTipoHabitacion() && habitacionAux2.getCapacidad() == habitacionAux.getCapacidad()) {
+                        for(Habitacion habitacionAux2: habitacionesDisponibles){
+                            if(habitacionAux2.getTipoHabitacion() == habitacionAux.getTipoHabitacion() && habitacionAux2.getCapacidad() == habitacionAux.getCapacidad()){
                                 disponible = false;
                                 break;
                             }
                         }
-                        if (disponible == true) {
+                        if (disponible == true){
                             habitacionesDisponibles.add(habitacionAux);
                         }
                     }

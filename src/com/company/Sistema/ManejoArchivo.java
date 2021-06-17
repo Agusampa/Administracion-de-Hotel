@@ -71,12 +71,11 @@ public class ManejoArchivo {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("personasBackup"));
             try {
                 Gson gson = new Gson();
-                gson.toJson(personas, new TypeToken<ArrayList<Persona>>() {}.getType(), bufferedWriter);
+                gson.toJson(personas, new TypeToken<ArrayList<Persona>>() {
+                }.getType(), bufferedWriter);
             } finally {
                 bufferedWriter.close();
             }
-        ArrayList<Persona> personasB = new ArrayList<Persona>();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("personas"));
             return true;
         }
 
