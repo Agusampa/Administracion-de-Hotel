@@ -12,21 +12,21 @@ public class PersonaDeserializer implements JsonDeserializer<Persona> {
     private Gson gson;
     private Map<String, Class<? extends Persona>> personaTypeRegistry;
 
-    public PersonaDeserializer(String personaTypeElementName){
-        this.personaTypeElementName = personaTypeElementName;
-        this.gson = new Gson();
-        this.personaTypeRegistry = new HashMap<>();
-    }
+        public PersonaDeserializer(String personaTypeElementName){
+            this.personaTypeElementName = personaTypeElementName;
+            this.gson = new Gson();
+            this.personaTypeRegistry = new HashMap<>();
+        }
 
-    public void registerBarnType(String personaTypeName, Class<? extends Persona> personaType   ) {
-        personaTypeRegistry.put(personaTypeName, personaType);
-    }
-    @Override
-    public Persona deserialize(JsonElement json, Type typeofT, JsonDeserializationContext context){
-        JsonObject personaObject = json.getAsJsonObject();
-        JsonElement personaTypeElement = personaObject.get(personaTypeElementName);
+        public void registerBarnType(String personaTypeName, Class<? extends Persona> personaType   ) {
+            personaTypeRegistry.put(personaTypeName, personaType);
+        }
+        @Override
+        public Persona deserialize(JsonElement json, Type typeofT, JsonDeserializationContext context){
+            JsonObject personaObject = json.getAsJsonObject();
+            JsonElement personaTypeElement = personaObject.get(personaTypeElementName);
 
-        Class<? extends Persona> personaType = personaTypeRegistry.get(personaTypeElement.getAsString());
-        return gson.fromJson(personaObject,personaType);
-    }
+            Class<? extends Persona> personaType = personaTypeRegistry.get(personaTypeElement.getAsString());
+            return gson.fromJson(personaObject,personaType);
+        }
 }

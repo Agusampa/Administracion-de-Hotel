@@ -77,13 +77,13 @@ public class Reserva {
         }
 
 
+
         public enum TipoDeReserva{
             EN_LIMPIEZA,
             EN_REPARACION,
             EN_DESINFECCION,
             OCUPADO
         }
-
 
         ////-----GETTERS AND SETTERS-----////
         public Pasajero getPasajero() {

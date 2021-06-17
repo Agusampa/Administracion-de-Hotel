@@ -3,13 +3,12 @@ package com.company.Sistema;
 import com.company.Hotel.*;
 import com.company.Persona.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Backup {
-    private ArrayList<Persona> personasBackup;
-    private ArrayList<Habitacion> habitacionesBackup;
-    private ArrayList<Reserva> reservasBackup;
+    private ArrayList<Persona> personasBackup = new ArrayList<>();
+    private ArrayList<Habitacion> habitacionesBackup = new ArrayList<>();
+    private ArrayList<Reserva> reservasBackup = new ArrayList<>();
 
     public Backup(){}
     public Backup(ArrayList<Persona> personasBackup, ArrayList<Habitacion> habitacionesBackup, ArrayList<Reserva> reservasBackup) {
@@ -40,15 +39,4 @@ public class Backup {
     }
 
 
-    public ArrayList<Reserva> retornarReservasAntiguas(Pasajero pasajero){
-        ArrayList<Reserva> antiguos = new ArrayList<>();
-        for(Reserva reservaAux : this.reservasBackup){
-            if(reservaAux.getFin().isBefore(LocalDate.now())) {
-                if (reservaAux.getPasajero().equals(pasajero)) {
-                    antiguos.add(reservaAux);
-                }
-            }
-        }
-        return antiguos;
-    }
 }
