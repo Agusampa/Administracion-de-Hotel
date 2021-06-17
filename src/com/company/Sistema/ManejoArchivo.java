@@ -10,9 +10,12 @@ import com.company.Persona.Recepcion;
 import com.company.Hotel.Reserva;
 import com.company.Persona.Persona;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class ManejoArchivo {
@@ -86,8 +89,24 @@ public class ManejoArchivo {
     }
 
     public static ArrayList<Persona> leerPersonas() throws IOException {
+
         ArrayList<Persona> personas = new ArrayList<Persona>();
         BufferedReader bufferedReader = new BufferedReader(new FileReader("personas"));
+
+        PersonaDeserializer deserializer = new PersonaDeserializer("className");
+        deserializer.registerBarnType("Pasajero", Pasajero.class);
+        deserializer.registerBarnType("Recepcion", Recepcion.class);
+        deserializer.registerBarnType("Administrador", Administrador.class);
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Persona.class, deserializer)
+                .create();
+
+        personas = gson.fromJson(bufferedReader, new TypeToken<ArrayList<Persona>>(){}.getType());
+
+
+        /*ArrayList<Persona> personas = new ArrayList<Persona>();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("personas"));
+
 
         try {
             Gson gson = new Gson();
@@ -95,6 +114,8 @@ public class ManejoArchivo {
         } finally {
             bufferedReader.close();
         }
+
+        return personas;*/
 
         return personas;
     }
@@ -126,6 +147,7 @@ public class ManejoArchivo {
 
         return backup ;
     }
+
 
 
 

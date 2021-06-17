@@ -1,13 +1,13 @@
 package com.company.Persona;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class Persona {
+public abstract class Persona {
         protected String nombre;
         protected String apellido;
         protected String password;
         protected String dni;
+        protected String className = "Persona";
 
         ////-----CONSTRUCTOR-----////
         public Persona(){}

@@ -1,6 +1,7 @@
 package com.company.Hotel;
 
 import com.company.Persona.*;
+import com.company.Sistema.Herramientas;
 import com.company.Sistema.ManejoArchivo;
 
 import java.io.IOException;
@@ -213,7 +214,7 @@ public class Hotel {
         }
 
         ////-----METODOS RESERVA-----////
-        public Reserva ReservaAleatoria(){
+        public Reserva reservaAleatoria(){
 
             Pasajero pasajero = (Pasajero) this.retornarPersonaXDNI("3");
 
@@ -224,20 +225,24 @@ public class Hotel {
             LocalDate fin = null;
 
             Habitacion habitacion = null;
+            boolean disponible = true;
 
-            int i = 0;
-            while (flag) {
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAA");
-                inicio = Reserva.fechaAleatoria();
+
+            while (flag == true) {
+
+                inicio = Herramientas.fechaAleatoria();
 
                 fin = inicio.plusDays((int) (Math.random() * 10 + 1));
 
+                disponible = true;
 
-
-                while (i < 20 || flag == true) {
-                    System.out.println("sa");i++;
+                if(disponible) {
                     habitacion = retornarHabitacionXNumero((int) (Math.random() * 7 + 1));
-                    boolean disponible = estaDisponible(habitacion, inicio, fin);
+
+                    disponible = estaDisponible(habitacion, inicio, fin);
+
+                    System.out.println(disponible);
+
                     if (disponible) {
                         flag = false;
                     }
@@ -299,33 +304,45 @@ public class Hotel {
         }
 
         public ArrayList<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin) {
+
         ArrayList<Habitacion> habitacionesDisponibles = new ArrayList<>();
+
+        ArrayList<Habitacion> habitacionesNODisponibles = new ArrayList<>();
+
         for (Habitacion habitacionAux : this.habitaciones) {
 
-            boolean disponible = true;
+            boolean disponible = false;
 
             for (Reserva reservasAux : this.reservas) {
                 if (reservasAux.getHabitacion().equals(habitacionAux)) {
-                    System.out.println(reservasAux.getInicio().isAfter(inicio));
-                    System.out.println(reservasAux.getInicio().isAfter(fin));
-                    System.out.println(reservasAux.getFin().isBefore(inicio));
-                    System.out.println(reservasAux.getFin().isBefore(fin));
-                    if(reservasAux.getInicio().isAfter(inicio) && reservasAux.getInicio().isAfter(fin) || reservasAux.getFin().isBefore(inicio) && reservasAux.getFin().isBefore(fin)) {
-                        disponible = false;
-                        break;
+
+                    if(inicio.isBefore(reservasAux.getInicio()) && fin.isBefore(reservasAux.getInicio())  || inicio.isAfter(reservasAux.getFin()) && fin.isAfter(reservasAux.getFin())) {
+                        disponible = true;
+                    }else{
+                        habitacionesNODisponibles.add(habitacionAux);
                     }
+                }else{
+                    disponible = true;
                 }
             }
-            for(Habitacion habitacionAux2: habitacionesDisponibles){
+            for(Habitacion habitacion : habitacionesNODisponibles){
+              if(habitacion.equals(habitacionAux)){
+                  disponible = false;
+              }
+          }
+
+          for(Habitacion habitacionAux2: habitacionesDisponibles){
                 if(habitacionAux2.getTipoHabitacion() == habitacionAux.getTipoHabitacion() && habitacionAux2.getCapacidad() == habitacionAux.getCapacidad()){
                     disponible = false;
                     break;
                 }
             }
-            if (disponible){
+            if (disponible == true){
                 habitacionesDisponibles.add(habitacionAux);
             }
         }
+        habitacionesDisponibles.removeAll(habitacionesNODisponibles);
+
         return habitacionesDisponibles;
     }
 
