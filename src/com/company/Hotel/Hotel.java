@@ -241,8 +241,6 @@ public class Hotel {
 
                     disponible = estaDisponible(habitacion, inicio, fin);
 
-                    System.out.println(disponible);
-
                     if (disponible) {
                         flag = false;
                     }
