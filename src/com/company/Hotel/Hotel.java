@@ -1,6 +1,7 @@
 package com.company.Hotel;
 
 import com.company.Persona.*;
+import com.company.Sistema.Herramientas;
 import com.company.Sistema.ManejoArchivo;
 
 import java.io.IOException;
@@ -228,7 +229,7 @@ public class Hotel {
 
             while (flag == true) {
 
-                inicio = Reserva.fechaAleatoria();
+                inicio = Herramientas.fechaAleatoria();
 
                 fin = inicio.plusDays((int) (Math.random() * 10 + 1));
 

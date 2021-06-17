@@ -27,10 +27,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
-
-
-
-        /*
         try {
             MenuPrincipal menu = new MenuPrincipal();
             menu.menuPrincipal();
@@ -38,7 +34,7 @@ public class Main {
             e.printStackTrace();
         }
 
-
+/*
         ArrayList<Persona> papu = new ArrayList<>();
         Pasajero persona = new Pasajero("ernesto","palomita","345434","4584844","Paraguay","Tristaldo 2816");
         Pasajero persona2 = new Pasajero("rivaldo","uzu","78973431","4584844","Paraguay","Tristaldo 2816");

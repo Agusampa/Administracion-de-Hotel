@@ -7,6 +7,7 @@ import com.company.Hotel.Servicios.*;
 import com.company.Persona.*;
 
 import com.company.Sistema.Backup;
+import com.company.Sistema.Herramientas;
 import com.company.Sistema.ManejoArchivo;
 import javax.print.attribute.standard.MediaName;
 import java.io.IOException;
@@ -44,6 +45,8 @@ public class MenuPrincipal {
         Habitacion habitacion1 = new Habitacion(Habitacion.TipoHabitacion.Suite, 01, 2, 3000);
         Habitacion habitacion2 = new Habitacion(Habitacion.TipoHabitacion.Suite, 02, 4, 3500);
         Habitacion habitacion8 = new Habitacion(Habitacion.TipoHabitacion.Suite, 8, 2, 3000);
+
+        menuNuevaReserva(pasajero1);
        /*  Habitacion habitacion3 = new Habitacion(Habitacion.TipoHabitacion.Premiun, 03, 2, 2000);
         Habitacion habitacion4 = new Habitacion(Habitacion.TipoHabitacion.Premiun, 04, 4, 2500);
         Habitacion habitacion5 = new Habitacion(Habitacion.TipoHabitacion.Estandar, 05, 2, 1000);
@@ -91,7 +94,6 @@ public class MenuPrincipal {
                 System.out.println(reservaAux.toString());
             }
 */
-        menuNuevaReserva(pasajero1);
         LocalDate inicio = LocalDate.of(2021, 3, 27);
         LocalDate finalizacion = LocalDate.of(2021, 3, 30);
         LocalDate inicio1 = LocalDate.of(2021,3,25);
@@ -846,11 +848,17 @@ public class MenuPrincipal {
     public Persona menuLoggin() {
         Persona persona = null;
         int control = 0;
+        String dni;
         do {
             try {
                 Scanner scanner = new Scanner(System.in);
-                System.out.println("Ingrese su dni: ");
-                String dni = scanner.nextLine();
+                do {
+                    System.out.println("Ingrese su dni: ");
+                    dni = scanner.nextLine();
+                    if(dni.length()!=8){
+                        System.err.println("Ingreso un dni no valido");
+                    }
+                }while (dni.length()==8);
                 System.out.println("Ingrese su contraseña:");
                 String password = scanner.nextLine();
                 persona = this.hotel.retornarPersonaXDNI(dni);
@@ -877,14 +885,22 @@ public class MenuPrincipal {
         int anioF = 0, mesF = 0, diaF = 0;
         boolean control = false;
 
-        while (!(anioI >= LocalDate.now().getYear())){
-            System.out.println("Ingresar el AÑO en que desea realizar su reserva.");
-            anioI = sc.nextInt();
-            if (!(anioI >= LocalDate.now().getYear())){
-                System.err.println("Ingreso un año no valido");
-            }
-        }
+            do {
+                try {
+                System.out.println("Ingresar el AÑO en que desea realizar su reserva.");
 
+                anioI = sc.nextInt();
+                if (!(anioI >= LocalDate.now().getYear())) {
+                        control = true;
+                        break;
+                    }
+                System.err.println("Ingreso un año no valido");
+
+            }catch (NumberFormatException ex) {
+             }
+            }while (control == false);
+
+        control = false;
         do{
             System.out.println("Ingresar el numero de MES en que desea realizar su reserva.");
             mesI = sc.nextInt();
@@ -927,7 +943,7 @@ public class MenuPrincipal {
         do {
             System.out.println("Ingresar el numero de MES hasta el que se desea hospedar");
             mesF = sc.nextInt();
-            if ( mesI != mesF || mesI == mesF && Reserva.controlMesTop(mesI, diaI) == true) {
+            if ( mesI != mesF || mesI == mesF && Herramientas.controlMesTop(mesI, diaI) == true) {
                 if (!(mesF < mesI) || !(anioF < anioI)) {
                     control = true;
                     break;
@@ -943,7 +959,7 @@ public class MenuPrincipal {
         do {
             System.out.println("Ingresar el DIA hasta el que se desea hospedar");
             diaF = sc.nextInt();
-            if(Reserva.controlFecha(mesF, diaF) == true) {
+            if(Herramientas.controlFecha(mesF, diaF) == true) {
                 if (!(diaF > diaI) || !(mesF < mesI) || !(anioI < anioF)) {
                     control = true;
                     break;
