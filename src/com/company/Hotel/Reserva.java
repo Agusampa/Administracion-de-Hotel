@@ -41,19 +41,6 @@ public class Reserva {
 
         public Reserva(Pasajero pasajero) { }
 
-        public static LocalDate fechaAleatoria(){
-            LocalDate startDate = LocalDate.of(2021, 7, 1);
-            long start = startDate.toEpochDay();
-
-            LocalDate endDate = LocalDate.of(2022, 1, 1);
-            long end = endDate.toEpochDay();
-
-            long randomEpochDay = ThreadLocalRandom.current().longs(start, end).findAny().getAsLong();
-
-            LocalDate aleatorio = (LocalDate.ofEpochDay(randomEpochDay));
-
-            return aleatorio;
-        }
         public static String tipoDeReservaAleatoria(){
             int numeroAleatorio = (int)(Math. random()*4+0);
             if(numeroAleatorio == 0){
@@ -151,15 +138,20 @@ public class Reserva {
 
         @Override
         public String toString() {
-            return "\nReserva: " +
-                    "\n" + this.pasajero.toString() +
-                    "\n" + this.habitacion.toString() +
+            return "\n=================================================="+
+                    "\nReserva: " +
+                    "\n-------------------------------------------------"+
+                    "\n" + this.pasajero.toString()+
+                    "\n-------------------------------------------------"+
+                     this.habitacion.toString() +
+                    "-------------------------------------------------"+
                     "\nPago: " + this.gastoTotal +
                     "\nTipo de reserva: " + this.reserva +
                     "\nInicio: " + this.inicio +
                     "\nFin: " + this.fin +
                     "\nGastos adicionales: " + this.gastosAdicionales.toString() +
-                    "\nTotal: " + this.gastoTotal;
+                    "\nTotal: " + this.gastoTotal+
+                    "\n==================================================";
         }
 
 

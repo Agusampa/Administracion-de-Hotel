@@ -1,12 +1,7 @@
 package com.company.Sistema;
 
-import com.company.Hotel.Habitacion;
-import com.company.Hotel.Hotel;
-import com.company.Hotel.Reserva;
-import com.company.Persona.Administrador;
-import com.company.Persona.Pasajero;
-import com.company.Persona.Persona;
-import com.company.Persona.Recepcion;
+import com.company.Hotel.*;
+import com.company.Persona.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -60,7 +55,6 @@ public class ManejoArchivo {
 
                                 ////-----GUARDAR BACKUP-----////
         public static boolean guardarReservasBackup(ArrayList<Reserva> reservas) throws IOException {
-
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("reservasBackup"));
 
             try {
@@ -75,14 +69,14 @@ public class ManejoArchivo {
 
         public static boolean guardarPersonasBackup(ArrayList<Persona> personas) throws IOException {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("personasBackup"));
-
             try {
                 Gson gson = new Gson();
                 gson.toJson(personas, new TypeToken<ArrayList<Persona>>() {}.getType(), bufferedWriter);
             } finally {
                 bufferedWriter.close();
             }
-
+        ArrayList<Persona> personasB = new ArrayList<Persona>();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("personas"));
             return true;
         }
 
@@ -101,10 +95,10 @@ public class ManejoArchivo {
         }
 
         public static boolean guardarBackup(Hotel hotel) throws IOException {
-           ManejoArchivo.guardarPersonasBackup(hotel.getPersonas());
-           ManejoArchivo.guardarHabitacionesBackup(hotel.getHabitaciones());
-           ManejoArchivo.guardarReservasBackup(hotel.getReservas());
-        return true;
+            ManejoArchivo.guardarPersonasBackup(hotel.getPersonas());
+            ManejoArchivo.guardarHabitacionesBackup(hotel.getHabitaciones());
+            ManejoArchivo.guardarReservasBackup(hotel.getReservas());
+            return true;
         }
 
                             ////-----LECTURAS-----////
