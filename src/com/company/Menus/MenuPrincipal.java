@@ -27,14 +27,7 @@ public class MenuPrincipal {
 
 
     public void menuPrincipal() throws IOException {
-        /*Pasajero pisa = new Pasajero("pisa","pistola","123","2","TRIVI","Coln 21");
-        hotel.getPersonas().add(pisa);
-        LocalDate inicio = LocalDate.of(2021,8,15);
-        LocalDate fin = LocalDate.of(2021,8,30);
-        Habitacion habitacion = new Habitacion(Habitacion.TipoHabitacion.Estandar,5,4,5000);
-        hotel.getHabitaciones().add(habitacion);
-        Reserva reserva = new Reserva(pisa,hotel.getHabitaciones().get(0),20000,inicio,fin);
-        hotel.getReservas().add(reserva);*/
+
         Backup backup = new Backup();
         Pasajero pasajero1 = new Pasajero("Peter", "Pan", "P1", "3", "Argentina", "Colon 1542");
         Pasajero pasajero2 = new Pasajero("Alfreo", "Perez", "P1", "3", "Mexico", "Colon 1542");
@@ -46,75 +39,14 @@ public class MenuPrincipal {
         Habitacion habitacion2 = new Habitacion(Habitacion.TipoHabitacion.Suite, 02, 4, 3500);
         Habitacion habitacion8 = new Habitacion(Habitacion.TipoHabitacion.Suite, 8, 2, 3000);
 
-        menuNuevaReserva(pasajero1);
+
        /*  Habitacion habitacion3 = new Habitacion(Habitacion.TipoHabitacion.Premiun, 03, 2, 2000);
         Habitacion habitacion4 = new Habitacion(Habitacion.TipoHabitacion.Premiun, 04, 4, 2500);
         Habitacion habitacion5 = new Habitacion(Habitacion.TipoHabitacion.Estandar, 05, 2, 1000);
         Habitacion habitacion6 = new Habitacion(Habitacion.TipoHabitacion.Estandar, 06, 4, 1500);
         Habitacion habitacion7 = new Habitacion(Habitacion.TipoHabitacion.Estandar, 07, 4, 1500);
-
-
-
-        this.hotel.getHabitaciones().add(habitacion1);
-        this.hotel.getHabitaciones().add(habitacion2);
-        this.hotel.getHabitaciones().add(habitacion8);
-        this.hotel.getHabitaciones().add(habitacion4);
-        this.hotel.getHabitaciones().add(habitacion5);
-        this.hotel.getHabitaciones().add(habitacion6);
-        this.hotel.getHabitaciones().add(habitacion7);*/
-
-
-/*
-        for (int i = 0; i < 20; i++) {
-            this.hotel.getReservas().add(hotel.reservaAleatoria());
-        }
-        this.hotel.mostrarReservasVigentes();*/
-        //menuNuevaReserva(pasajero1);
-
-            /*for(Reserva reserva : this.hotel.getReservas()){
-                System.out.println(reserva.toString());
-            }*/
-
-
-        //ManejoArchivo.guardarReservas(hotel.getReservas());
-
-        //ManejoArchivo.guardarPersonas(hotel.getPersonas());
-
-        //ManejoArchivo.guardarHabitaciones(hotel.getHabitaciones());
-        /*
-            ArrayList<Habitacion> habitaciones = ManejoArchivo.leerHabitaciones();
-
-           for(Habitacion habitacionAux : habitaciones){
-                System.out.println(habitacionAux.toString());
-            }
-
-           ArrayList<Reserva> reservas = ManejoArchivo.leerReservas();
-
-            for(Reserva reservaAux : reservas){
-                System.out.println(reservaAux.toString());
-            }
 */
-        LocalDate inicio = LocalDate.of(2021, 3, 27);
-        LocalDate finalizacion = LocalDate.of(2021, 3, 30);
-        LocalDate inicio1 = LocalDate.of(2021,3,25);
-        LocalDate finalizacion1 = LocalDate.of(2021,3,29);
 
-        Reserva reserva1 = new Reserva(pasajero1, habitacion1, 0f, inicio, finalizacion);
-        Reserva reserva2 = new Reserva(pasajero1, habitacion2, 0f, inicio1, finalizacion1);
-
-        this.hotel.getReservas().add(reserva1);
-        this.hotel.getReservas().add(reserva2);
-
-
-
-        ArrayList<Habitacion> habitacionesDisponibles = this.hotel.listHabitacionesDisponibles(inicio1,finalizacion1);
-
-        for(Habitacion habitacion : habitacionesDisponibles) {
-            System.out.println(habitacion.toString());
-        }
-
-        System.out.println("\nPress Any Key To Continue...");
-        new java.util.Scanner(System.in).nextLine();
         boolean salir = false;
         do {
             try {
@@ -213,8 +145,21 @@ public class MenuPrincipal {
         String nombre = scannerPasajero.nextLine();
         System.out.println("Apellido: ");
         String apellido = scannerPasajero.nextLine();
-        System.out.println("DNI: ");
-        String dni = scannerPasajero.nextLine();
+        String dni;
+        do {
+            boolean control = false;
+            do {
+                System.out.println("DNI: ");
+                dni = scannerPasajero.nextLine();
+                control = true;
+                if(Herramientas.controlDNIEsUnINT(dni) == false ||dni.length() != 8) {
+                    System.err.println("Ingreso un valor no valido");
+                    control = false;
+                }
+            } while (control ==  false);
+
+
+        }while (Herramientas.controlDNIEsUnINT(dni) == false);
         System.out.println("Pais de origen: ");
         String paisOrigen = scannerPasajero.nextLine();
         System.out.println("Domicilio: ");
@@ -879,122 +824,209 @@ public class MenuPrincipal {
         return persona;
     }
 
-    public void menuNuevaReserva(Pasajero pasajero) {
-        Scanner sc = new Scanner(System.in);
-        int anioI = 0, mesI = 0, diaI = 0;
-        int anioF = 0, mesF = 0, diaF = 0;
-        boolean control = false;
-
+    public void menuNuevaReserva(Pasajero pasajero){
+            Scanner sc = new Scanner(System.in);
+            int anioI = 0, mesI = 0, diaI = 0;
+            int anioF = 0, mesF = 0, diaF = 0;
+            boolean control = false;
+            String a;
+            Reserva nuevaReserva = null;
+            do{
             do {
                 try {
-                System.out.println("Ingresar el AÑO en que desea realizar su reserva.");
+                    System.out.println("Ingresar el AÑO en que desea realizar su reserva.");
 
-                anioI = sc.nextInt();
-                if (!(anioI >= LocalDate.now().getYear())) {
+                    anioI = sc.nextInt();
+                    if (anioI <= LocalDate.now().plusYears(2).getYear()) {
+                        if (!(anioI < LocalDate.now().getYear())) {
+                            control = true;
+                            break;
+                        }
+                    }
+                    System.err.println("Ingreso un año no valido");
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+
+
+            } while (control == false);
+
+            control = false;
+            do {
+                try {
+                    System.out.println("Ingresar el numero de MES en que desea realizar su reserva.");
+                    mesI = sc.nextInt();
+                    if (mesI > 0 && mesI <= 12) {
+                        if (!(mesI < LocalDate.now().getMonthValue()) && !(anioI != LocalDate.now().getYear()) || (!(anioI <= LocalDate.now().getYear()))) {
+                            control = true;
+                            break;
+                        }
+                    }
+                    System.err.println("Ingreso un mes no valido");
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            } while (control == false);
+
+            control = false;
+            do {
+                try {
+                    System.out.println("Ingresar el DIA en que desea realizar su reserva.");
+                    diaI = sc.nextInt();
+                    if (Herramientas.controlFecha(mesI, diaI) == true) {
+                        if ((!(diaI < LocalDate.now().getDayOfMonth()) || (!(mesI <= LocalDate.now().getMonthValue()) || (!(anioI <= LocalDate.now().getYear()))))) {
+                            control = true;
+                            break;
+                        }
+                    }
+                    System.err.println("Ingreso un dia no valido");
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            } while (control == false);
+
+            LocalDate inicio = LocalDate.of(anioI, mesI, diaI);
+
+            control = false;
+            do {
+                try {
+                    System.out.println("Ingresar el AÑO hasta el que se desea hospedar");
+                    anioF = sc.nextInt();
+                    if (!(anioF < anioI)) {
                         control = true;
                         break;
                     }
-                System.err.println("Ingreso un año no valido");
+                    System.err.println("Ingreso un año no valido");
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            } while (control == false);
 
-            }catch (NumberFormatException ex) {
-             }
-            }while (control == false);
+            control = false;
 
-        control = false;
-        do{
-            System.out.println("Ingresar el numero de MES en que desea realizar su reserva.");
-            mesI = sc.nextInt();
-            if (!(mesI < LocalDate.now().getMonthValue()) && !(anioI != LocalDate.now().getYear())||(!(anioI <= LocalDate.now().getYear()))) {
-                control = true;
-                break;
+            do {
+                try {
+                    System.out.println("Ingresar el numero de MES hasta el que se desea hospedar");
+                    mesF = sc.nextInt();
+                    if (mesI != mesF || mesI == mesF && Herramientas.controlMesTop(mesI, diaI) == true) {
+                        if ((mesF >= mesI) || !(anioF <= anioI)) {
+                            control = true;
+                            break;
+                        }
+                    }
+                    System.err.println("Ingreso un mes no valido");
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            } while (control == false);
+
+
+            control = false;
+
+            do {
+                try {
+                    System.out.println("Ingresar el DIA hasta el que se desea hospedar");
+                    diaF = sc.nextInt();
+                    if (Herramientas.controlFecha(mesF, diaF) == true) {
+                        if (!(diaF <= diaI) || !(mesF <= mesI) || !(anioF <= anioI)) {
+                            control = true;
+                            break;
+                        }
+                    }
+                    System.err.println("Ingreso un dia no valido");
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            } while (control == false);
+
+            LocalDate finalizacion = LocalDate.of(anioF, mesF, diaF);
+
+            ArrayList<Habitacion> habitacionesDisponibles = this.hotel.listHabitacionesDisponibles(inicio, finalizacion);
+
+            int capacidad = 0;
+            do {
+                try {
+                    System.out.println("Ingrese la capacidad de la habitacion que desea alquilar (2 o 4 Personas)");
+                    capacidad = sc.nextInt();
+                    if (capacidad != 2 && capacidad != 4) {
+                        System.err.println("Ingreso un valor no valido para la capacidad de la habitacion");
+                    }
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            } while (!(capacidad == 2 || capacidad == 4));
+
+            ArrayList<Integer> numerosDisponibles = new ArrayList<>();
+            System.out.println("==========================" +
+                    "\nHabitaciones disponibles:");
+            for (Habitacion habitacion : habitacionesDisponibles) {
+                if (habitacion.getCapacidad() == capacidad) {
+                    System.out.println(habitacion.toString());
+                    numerosDisponibles.add(habitacion.getNumero());
+                }
+            }
+            control = false;
+            int numeroDeHabitacion = 0;
+            do {
+                try {
+
+                    System.out.println("Que numero de habitacion desea alquilar?" +
+                            "\nLos numeros de habitaciones disponibles son : ");
+                    for (int numero : numerosDisponibles) {
+                        System.out.print(numero + " - ");
+                    }
+                    System.out.println("\n");
+                    numeroDeHabitacion = sc.nextInt();
+                    for (int numero : numerosDisponibles) {
+                        if (numero == numeroDeHabitacion) {
+                            control = true;
+                        }
+                    }
+                    if (control == false) {
+                        System.err.println("Ingreso un numero no disponible");
+                    }
+
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puede ingresar números. ");
+                    sc.next();
+                }
+            } while (control == false);
+
+            control = false;
+            Habitacion habitacion1 = this.hotel.retornarHabitacionXNumero(numeroDeHabitacion);
+            nuevaReserva = new Reserva(pasajero, habitacion1, 0f, inicio, finalizacion);
+
+            System.out.println("Su reserva es la siguiente: ");
+            System.out.println(nuevaReserva.toString());
+            System.out.println("Desea confirmar la reserva? (s/n)");
+            Scanner scannerConfirmacion = new Scanner(System.in);
+            a = scannerConfirmacion.nextLine();
+            if(a.compareTo("s")==0){
+                control=true;
+                System.out.println("Su reserva quedo registrada, lo esperamos!");
+                this.hotel.getReservas().add(nuevaReserva);
             }
 
-            System.err.println("Ingreso un mes no valido");
-
-        }while(control == false);
-
-        control = false;
-        do{
-            System.out.println("Ingresar el DIA en que desea realizar su reserva.");
-            diaI = sc.nextInt();
-            if ((!(diaI < LocalDate.now().getDayOfMonth()) || (!(mesI <= LocalDate.now().getMonthValue())  || (!(anioI <= LocalDate.now().getYear()))))){
-                control = true;
-                break;
-            }
-            System.err.println("Ingreso un dia no valido");
-        }while (control == false);
-
-        LocalDate inicio = LocalDate.of(anioI, mesI, diaI);
-        control = false;
-
-        do{
-            System.out.println("Ingresar el AÑO hasta el que se desea hospedar");
-            anioF = sc.nextInt();
-            if (!(anioF < anioI)) {
-                control = true;
-                break;
-            }
-            System.out.println("Ingreso un año no valido");
-
-        }while (control == false);
-
-        control = false;
-
-        do {
-            System.out.println("Ingresar el numero de MES hasta el que se desea hospedar");
-            mesF = sc.nextInt();
-            if ( mesI != mesF || mesI == mesF && Herramientas.controlMesTop(mesI, diaI) == true) {
-                if (!(mesF < mesI) || !(anioF < anioI)) {
-                    control = true;
+            if(a.compareTo("s")!=0){
+                System.out.println("Desea realizar una reserva nuevamente? (s/n)");
+                a = scannerConfirmacion.nextLine();
+                if(a.compareTo("s")!=0){
+                    control=true;
                     break;
                 }
             }
-            System.err.println("Ingreso un mes no valido");
-
         }while (control == false);
 
 
-        control = false;
 
-        do {
-            System.out.println("Ingresar el DIA hasta el que se desea hospedar");
-            diaF = sc.nextInt();
-            if(Herramientas.controlFecha(mesF, diaF) == true) {
-                if (!(diaF > diaI) || !(mesF < mesI) || !(anioI < anioF)) {
-                    control = true;
-                    break;
-                }
-            }
-            System.err.println("Ingreso un dia no valido");
-        }while (control == false);
 
-        LocalDate finalizacion = LocalDate.of(anioF, mesF, diaF);
-
-        ArrayList<Habitacion> habitacionesDisponibles = this.hotel.listHabitacionesDisponibles(inicio, finalizacion);
-
-        int capacidad = 0;
-        do {
-            System.out.println("Ingrese la capacidad de la habitacion que desea alquilar (2 o 4 Personas)");
-            capacidad = sc.nextInt();
-            if (capacidad != 2 && capacidad != 4) {
-                System.err.println("Ingreso un valor no valido para la capacidad de la habitacion");
-            }
-        } while (!(capacidad == 2 || capacidad == 4));
-
-        for (Habitacion habitacion : habitacionesDisponibles) {
-            if (habitacion.getCapacidad() == capacidad) {
-                System.out.println(habitacion.toString());
-            }
-        }
-
-        System.out.println("Que numero de habitacion desea alquilar?");
-        int numeroDeHabitacion = sc.nextInt();
-
-        Habitacion habitacion1 = this.hotel.retornarHabitacionXNumero(numeroDeHabitacion);
-
-        Reserva nuevaReserva = new Reserva(pasajero, habitacion1, 0f, inicio, finalizacion);
-
-        this.hotel.getReservas().add(nuevaReserva);
     }
 
     //////-----EMPLEADOS-----//////

@@ -106,7 +106,7 @@ public class ManejoArchivo {
 
         /*ArrayList<Persona> personas = new ArrayList<Persona>();
         BufferedReader bufferedReader = new BufferedReader(new FileReader("personas"));
->>>>>>> d4abce9a57d6788a0f38c342f22275837f02174f
+
 
         try {
             Gson gson = new Gson();

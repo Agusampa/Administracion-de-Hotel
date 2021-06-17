@@ -341,30 +341,6 @@ public class Hotel {
         }
         habitacionesDisponibles.removeAll(habitacionesNODisponibles);
 
-        /*
-        Iterator<Habitacion> itrD = habitacionesDisponibles.iterator();
-        Iterator<Habitacion> itrND = habitacionesNODisponibles.iterator();
-
-        while (itrD.hasNext()){
-            Habitacion hD = itrD.next();
-            while (itrND.hasNext()){
-                Habitacion hND = itrND.next();
-                    if(hD.equals(hND)) {
-                        habitacionesDisponibles.remove(itrND);
-                        break;
-                    }
-            }
-        }*/
-
-
-        /*for (Habitacion habitacionD : habitacionesDisponibles){
-            for (Habitacion habitacionNoD : habitacionesNODisponibles){
-                if(habitacionD.equals(habitacionNoD)){
-                    habitacionesDisponibles.remove(habitacionNoD);
-                }
-            }
-        }*/
-
         return habitacionesDisponibles;
     }
 
