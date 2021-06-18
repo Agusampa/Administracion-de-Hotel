@@ -380,13 +380,7 @@ public class Hotel {
         return habitacionesDisponibles;
     }
 
-        public void actualizarHabitacion(Habitacion habitacion){
-        for(Habitacion habAux : this.habitaciones){
-            if(habAux.equals(habitacion)){
-                habAux = habitacion;
-            }
-        }
-    }
+
 
 
 }
