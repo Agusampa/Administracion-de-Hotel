@@ -53,7 +53,6 @@ public class Hotel {
                     return null;
                 }
 
-
                 public void  actualizarPersonaEnHotel(Persona personaAntes, Persona personaNueva){
                    for(Persona personaAux : this.personas){
                        if(personaAux.equals(personaAntes)){
@@ -104,8 +103,11 @@ public class Hotel {
                             }
                         }
                     }
-                    return masCercana;
-                }
+                    if(masCercana.getInicio().equals(LocalDate.now())|| masCercana.getInicio().isBefore(LocalDate.now())) {
+                        return masCercana;
+                    }
+                    return null;
+                    }
 
                 public Reserva primeraReservaCercana(Pasajero pasajero) {
                     for (Reserva reservaAux : this.reservas) {
