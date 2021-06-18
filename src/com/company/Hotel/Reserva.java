@@ -16,7 +16,7 @@ public class Reserva {
         private LocalDate inicio;
         private LocalDate fin;
         private List<GastoAdicional> gastosAdicionales;
-        private String reserva;
+        private String tipoDeReserva;
 
 
         ////-----CONSTRUCTORES-----////
@@ -27,7 +27,7 @@ public class Reserva {
             this.inicio = inicio;
             this.fin = fin;
             this.gastosAdicionales = new ArrayList<>();
-            this.reserva =  TipoDeReserva.OCUPADO.name();
+            this.tipoDeReserva =  TipoDeReserva.OCUPADO.name();
         }
 
         public Reserva(Pasajero pasajero, Habitacion habitacion, float gastoTotal, LocalDate inicio, LocalDate fin,String tipoDeReserva) {
@@ -37,6 +37,7 @@ public class Reserva {
             this.inicio = inicio;
             this.fin = fin;
             this.gastosAdicionales = new ArrayList<>();
+            this.tipoDeReserva = tipoDeReserva;
         }
 
         public Reserva(Pasajero pasajero) { }
@@ -116,10 +117,10 @@ public class Reserva {
         }
 
         public String getReserva() {
-            return reserva;
+            return tipoDeReserva;
         }
         public void setReserva(String reserva) {
-            this.reserva = reserva;
+            this.tipoDeReserva = reserva;
         }
 
         ////-----METODOS-----////
@@ -146,7 +147,7 @@ public class Reserva {
                      this.habitacion.toString() +
                     "-------------------------------------------------"+
                     "\nPago: " + this.gastoTotal +
-                    "\nTipo de reserva: " + this.reserva +
+                    "\nTipo de reserva: " + this.tipoDeReserva +
                     "\nInicio: " + this.inicio +
                     "\nFin: " + this.fin +
                     "\nGastos adicionales: " + this.gastosAdicionales.toString() +

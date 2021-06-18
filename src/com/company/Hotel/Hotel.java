@@ -68,7 +68,7 @@ public class Hotel {
                if(personaAux.equals(personaAntes)){
                    personaAux = personaNueva;
                }
-           }
+                          }
 
         }
 
@@ -335,6 +335,42 @@ public class Hotel {
                     break;
                 }
             }
+            if (disponible == true){
+                habitacionesDisponibles.add(habitacionAux);
+            }
+        }
+        habitacionesDisponibles.removeAll(habitacionesNODisponibles);
+
+        return habitacionesDisponibles;
+    }
+    public ArrayList<Habitacion>listHabitacionesDisponiblesTodas(LocalDate inicio, LocalDate fin) {
+
+        ArrayList<Habitacion> habitacionesDisponibles = new ArrayList<>();
+
+        ArrayList<Habitacion> habitacionesNODisponibles = new ArrayList<>();
+
+        for (Habitacion habitacionAux : this.habitaciones) {
+
+            boolean disponible = false;
+
+            for (Reserva reservasAux : this.reservas) {
+                if (reservasAux.getHabitacion().equals(habitacionAux)) {
+
+                    if(inicio.isBefore(reservasAux.getInicio()) && fin.isBefore(reservasAux.getInicio())  || inicio.isAfter(reservasAux.getFin()) && fin.isAfter(reservasAux.getFin())) {
+                        disponible = true;
+                    }else{
+                        habitacionesNODisponibles.add(habitacionAux);
+                    }
+                }else{
+                    disponible = true;
+                }
+            }
+            for(Habitacion habitacion : habitacionesNODisponibles){
+                if(habitacion.equals(habitacionAux)){
+                    disponible = false;
+                }
+            }
+
             if (disponible == true){
                 habitacionesDisponibles.add(habitacionAux);
             }
