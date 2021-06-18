@@ -1401,6 +1401,7 @@ public class MenuPrincipal {
                             pasajeroAEditar = (Pasajero) this.hotel.retornarPersonaXDNI(dni);
                             menuEditarPerfil(pasajeroAEditar);
                                 ManejoArchivo.guardarPersonas(this.hotel.getPersonas());
+                                ManejoArchivo.guardarReservas(this.hotel.getReservas());
                         }else{
                             System.err.println("No hay ningun pasajero registrado con ese dni");
                         }
@@ -1418,9 +1419,11 @@ public class MenuPrincipal {
                         if( this.hotel.retornarPersonaXDNI(dni) instanceof Recepcion){
                             recepcionAEditar = (Recepcion) this.hotel.retornarPersonaXDNI(dni);
                             menuEditarPerfilEmpleado(recepcionAEditar);
+                            ManejoArchivo.guardarPersonas(this.hotel.getPersonas());
                         }else if( this.hotel.retornarPersonaXDNI(dni) instanceof Administrador){
                             administradorAEditar = (Administrador) this.hotel.retornarPersonaXDNI(dni);
                             menuEditarPerfilEmpleado(administradorAEditar);
+                            ManejoArchivo.guardarPersonas(this.hotel.getPersonas());
                         }else {
                             System.err.println("No hay ningun empleado registrado con ese dni");
                             break;
@@ -1460,7 +1463,7 @@ public class MenuPrincipal {
                 e.printStackTrace();
             }
         } while (!salir);
-    }   ///chequeado
+    }
 
     public void menuMostrarReservasAdm() {
         boolean salir = false;
@@ -1909,11 +1912,11 @@ public class MenuPrincipal {
             }
         } while (!salir);
 
-    }   ///chequeado
+    }
 
     public void hacerBackupAministrador(Hotel hotel) throws IOException {
         ManejoArchivo.guardarBackup(hotel);
-    }   ///chequeado
+    }
 
 
 }
