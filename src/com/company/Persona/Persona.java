@@ -51,7 +51,7 @@ public abstract class Persona {
             ////-----METODOS-----////
             @Override
             public String toString() {
-                return this.getClass().getSimpleName()+
+                return "\n"+this.getClass().getSimpleName()+
                        "\nNombre: " + this.nombre +
                        "\nApellido: " + this.apellido +
                        "\nPassword: " + this.password +

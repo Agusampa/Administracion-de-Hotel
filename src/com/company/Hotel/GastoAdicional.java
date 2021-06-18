@@ -51,7 +51,7 @@ public abstract class GastoAdicional {
         ////-----METODOS-----////
         @Override
         public String toString(){
-            return  this.getClass().getSimpleName() +
+            return  "\n" + this.getClass().getSimpleName() +
                     "\nFecha: " + this.fecha +
                     "\nNombre: " + this.nombre +
                     "\nCantidad: " + this.cantidad +

@@ -5,7 +5,6 @@ import com.company.Sistema.Herramientas;
 import com.company.Sistema.ManejoArchivo;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Hotel {
@@ -210,8 +209,28 @@ public class Hotel {
                     }
                 }
 
+                public void mostrarReservasVigentes () {
+        for (Reserva reservaAux : this.reservas) {
+            if (reservaAux.getFin().isAfter(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())) {
+                System.out.println(reservaAux.toString());
+            }
+        }
+    }
+
+                public void mostrarReservasAntiguas () {
+        int i=0;
+        for (Reserva reservaAux : this.reservas) {
+            if (reservaAux.getFin().isBefore(LocalDate.now())) {
+                System.out.println(reservaAux.toString());
+                i++;
+            }
+        }
+        if(i==0){System.err.println("No hay reservas Antigas");}
+    }
+
                 public Reserva ReservaAleatoria() {
-                    Pasajero pasajero = (Pasajero) this.retornarPersonaXDNI("33333333");
+                    Pasajero pasajero = (Pasajero) this.retornarPersonaXDNI(dniAleatorioPasajeros());
+                    Pasajero pHotel = (Pasajero) this.retornarPersonaXDNI("11111111");
                     boolean flag = true;
                     LocalDate inicio = null;
                     LocalDate fin = null;
@@ -231,35 +250,38 @@ public class Hotel {
                                 }
                             }
                         }
-                    String tipoReserva = Reserva.tipoDeReservaAleatoria();
-                    Float gastoTotal = (float) Reserva.gastoTotalAleatorio(tipoReserva, retornarCantidadDeDias(inicio, fin));
-                    Reserva reserva = new Reserva(pasajero, habitacion, gastoTotal, inicio, fin, tipoReserva);
+                        Reserva reserva;
+                        flag = false;
+                        String tipoReserva;
+                        float gastoTotal;
+                        do {
+                            flag=true;
+                            tipoReserva = Reserva.tipoDeReservaAleatoria();
+                            if(pasajero.getDni().compareTo("11111111")==0 && tipoReserva.compareTo(Reserva.TipoDeReserva.OCUPADO.name()) == 0){
+                                flag = false;
+                            }
+                        }while(flag ==false);
+
+                    if (tipoReserva.compareTo(Reserva.TipoDeReserva.OCUPADO.name()) == 0) {
+                        reserva = new Reserva(pasajero, habitacion, inicio, fin);
+                    } else {
+                        gastoTotal = (float) Reserva.gastoTotalAleatorio(tipoReserva, Herramientas.retornarCantidadDeDias(inicio, fin));
+                        reserva = new Reserva(pHotel, habitacion, gastoTotal, inicio, fin, tipoReserva);
+                    }
 
                     return reserva;
                     }
 
-                public int retornarCantidadDeDias (LocalDate inicio, LocalDate fin){
-                   long cantidadDeDias = ChronoUnit.DAYS.between(inicio, fin);
-                return (int) cantidadDeDias;
-                    }
-
-                public void mostrarReservasVigentes () {
-                    for (Reserva reservaAux : this.reservas) {
-                        if (reservaAux.getFin().isAfter(LocalDate.now()) || reservaAux.getFin().equals(LocalDate.now())) {
-                            System.out.println(reservaAux.toString());
+                public String dniAleatorioPasajeros(){
+                    ArrayList<String> dniPasajeros = new ArrayList<>();
+                    for(Persona personaAux : this.personas){
+                        if(personaAux instanceof Pasajero){
+                            dniPasajeros.add(personaAux.getDni());
                         }
                     }
-                }  ///arreglado
+                    Collections.shuffle(dniPasajeros);
+                return dniPasajeros.remove(0);
 
-                public void mostrarReservasAntiguas () {
-                    int i=0;
-                    for (Reserva reservaAux : this.reservas) {
-                        if (reservaAux.getFin().isBefore(LocalDate.now())) {
-                            System.out.println(reservaAux.toString());
-                            i++;
-                        }
-                    }
-                    if(i==0){System.err.println("No hay reservas Antigas");}
                 }
 
                 public void actualizarReserva (Reserva reserva){
@@ -335,14 +357,6 @@ public class Hotel {
                     habitacionesDisponibles.removeAll(habitacionesNODisponibles);
 
                     return habitacionesDisponibles;
-                }
-
-                public void actualizarHabitacion (Habitacion habitacion){
-                    for (Habitacion habAux : this.habitaciones) {
-                        if (habAux.equals(habitacion)) {
-                            habAux = habitacion;
-                        }
-                    }
                 }
 
 }
