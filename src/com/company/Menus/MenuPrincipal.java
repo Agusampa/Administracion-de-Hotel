@@ -26,14 +26,11 @@ public class MenuPrincipal {
     }
 
     public void menuPrincipal() throws IOException {
-        /*
-    public void menuPrincipal() {
-        //menuBorrarUnaReserva((Pasajero) this.hotel.retornarPersonaXDNI("11223344"));
-
+/*
         ////-----CARGA RESERVAS-----////
-        //Pasajero pasajeroBol1 = new Pasajero("Agustin", "Sampaoli", "1", "42455244", "Argentina", "Colon 1542");
+        Pasajero pasajeroBol1 = new Pasajero("Agustin", "Sampaoli", "1", "42455244", "Argentina", "Colon 1542");
 
-        /*Habitacion habitacion1 = new Habitacion(Habitacion.TipoHabitacion.Suite, 1 , 2, 4000);
+        Habitacion habitacion1 = new Habitacion(Habitacion.TipoHabitacion.Suite, 1 , 2, 4000);
         LocalDate inicio = LocalDate.of(2021,06,17);
         LocalDate fin = LocalDate.of(2021,06,29);
         Reserva reserva1 = new Reserva(pasajeroBol1,habitacion1,inicio,fin);
@@ -51,8 +48,8 @@ public class MenuPrincipal {
             for(Reserva reserva : this.hotel.getReservas()){
                 System.out.println(reserva);
             }
-            ManejoArchivo.guardarReservas(this.hotel.getReservas());*/
-
+            ManejoArchivo.guardarReservas(this.hotel.getReservas());
+*/
         boolean salir = false;
         do {
             try {
@@ -1516,7 +1513,7 @@ public class MenuPrincipal {
             do {
                 try {
                     System.out.println("MENU PASAJERO PRIMERO" +
-                            "\nQue accion desea realizar?\n\t1_Ingresar pasajero \n\t2_Registrars pasajero nuevo\n\t3_Volver");
+                            "\nQue accion desea realizar?\n\t1_Ingresar pasajero \n\t2_Registrar pasajero nuevo\n\t3_Volver");
                     Scanner scInt = new Scanner(System.in);
                     int opcion = scInt.nextInt();
                     Pasajero pasajero = null;
@@ -1923,7 +1920,6 @@ public class MenuPrincipal {
         public void hacerBackupAministrador(Hotel hotel) throws IOException {
             ManejoArchivo.guardarBackup(hotel);
         }   ///chequeado
-
 
 }
 

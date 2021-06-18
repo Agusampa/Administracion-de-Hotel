@@ -111,11 +111,8 @@ public class Hotel {
 
                 public Reserva primeraReservaCercana(Pasajero pasajero) {
                     for (Reserva reservaAux : this.reservas) {
-                        System.err.println("1");
                         if (reservaAux.getPasajero().equals(pasajero)) {
-                            System.err.println("2");
                             if(reservaAux.getFin().equals(LocalDate.now()) ||reservaAux.getFin().isAfter(LocalDate.now())){
-                                System.err.println("3");
                                 return reservaAux;
                             }
                         }
