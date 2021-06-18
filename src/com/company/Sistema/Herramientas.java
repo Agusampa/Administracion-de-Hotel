@@ -6,10 +6,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Herramientas {
         public static LocalDate fechaAleatoria(){
-            LocalDate startDate = LocalDate.of(2021, 7, 1);
+            LocalDate startDate = LocalDate.of(2015, 7, 1);
             long start = startDate.toEpochDay();
 
-            LocalDate endDate = LocalDate.of(2022, 1, 1);
+            LocalDate endDate = LocalDate.of(2021, 6, 1);
             long end = endDate.toEpochDay();
 
             long randomEpochDay = ThreadLocalRandom.current().longs(start, end).findAny().getAsLong();

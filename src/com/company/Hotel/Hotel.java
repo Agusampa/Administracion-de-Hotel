@@ -46,6 +46,7 @@ public class Hotel {
 
                public Persona retornarPersonaXDNI(String dni) {
                     for (Persona personaAux : this.personas) {
+                        //System.out.println(personaAux.toString());
                         if (personaAux.getDni().compareToIgnoreCase(dni) == 0) {
                             return personaAux;
                         }
@@ -259,7 +260,6 @@ public class Hotel {
                             inicio = Herramientas.fechaAleatoria();
                             fin = inicio.plusDays((int) (Math.random() * 10 + 1));
                             disponible = true;
-
                             if (disponible) {
                                 habitacion = retornarHabitacionXNumero((int) (Math.random() * 7 + 1));
                                 disponible = estaDisponible(habitacion, inicio, fin);

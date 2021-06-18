@@ -24,8 +24,8 @@ public class Main {
 
 
         ////-----CARGA PASAJEROS-----////
-        /*
-        ArrayList<Persona> personas = new ArrayList<>();
+
+       /* ArrayList<Persona> personas = new ArrayList<>();
         Pasajero pasajeroBol1 = new Pasajero("Agustin", "Sampaoli", "1", "11223344", "Argentina", "Colon 1542");
         personas.add(pasajeroBol1);
         Pasajero pasajeroBol2 = new Pasajero("Misael", "Flores", "1", "22334455", "Argentina", "Henrique Peña 1542");
@@ -33,8 +33,8 @@ public class Main {
         Pasajero pHotel = new Pasajero("ADMINISTRACION","HOTEL","1","11111111","HOTEL","GOMORRA");
         personas.add(pHotel);
 
-        Recepcion recepcionBol1 = new Recepcion("Isaias","Patomero","1","3344556677");  personas.add(recepcionBol1);
-        Recepcion recepcionBol2 = new Recepcion("Leonardo","Da Vinci","1","5566778899");    personas.add(recepcionBol2);
+        Recepcion recepcionBol1 = new Recepcion("Isaias","Patomero","1","33445566");  personas.add(recepcionBol1);
+        Recepcion recepcionBol2 = new Recepcion("Leonardo","Da Vinci","1","55667788");    personas.add(recepcionBol2);
 
         Administrador administrador1 = new Administrador("James", "Sunderland", "1", "10111213");   personas.add(administrador1);
         Administrador administrador2 = new Administrador("Ethan", "Winters", "1", "13141516");    personas.add(administrador2);

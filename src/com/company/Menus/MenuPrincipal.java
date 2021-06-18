@@ -26,9 +26,9 @@ public class MenuPrincipal {
     }
 
     public void menuPrincipal() throws IOException {
-/*
+
         ////-----CARGA RESERVAS-----////
-        Pasajero pasajeroBol1 = new Pasajero("Agustin", "Sampaoli", "1", "42455244", "Argentina", "Colon 1542");
+        /*Pasajero pasajeroBol1 = new Pasajero("Agustin", "Sampaoli", "1", "42455244", "Argentina", "Colon 1542");
 
         Habitacion habitacion1 = new Habitacion(Habitacion.TipoHabitacion.Suite, 1 , 2, 4000);
         LocalDate inicio = LocalDate.of(2021,06,17);
@@ -50,6 +50,7 @@ public class MenuPrincipal {
             }
             ManejoArchivo.guardarReservas(this.hotel.getReservas());
 */
+
         boolean salir = false;
         do {
             try {
@@ -127,7 +128,7 @@ public class MenuPrincipal {
                     e.printStackTrace();
                 }
             } while (!salir);
-        }   ///chequeado
+        }
 
         public Pasajero menuPasajeroRegistro() {
             System.out.println("MENU REGISTRO PASAJERO");
@@ -143,7 +144,7 @@ public class MenuPrincipal {
                 }
             }
             return pasajero;
-        }   ///chequeado
+        }
 
         public Pasajero nuevoPasajero() {
             Scanner scannerPasajero = new Scanner(System.in);
@@ -188,7 +189,7 @@ public class MenuPrincipal {
             Pasajero nuevoPasajero = new Pasajero(nombre, apellido, password, dni, paisOrigen, domicilio);
 
             return nuevoPasajero;
-        }   ///chequeado
+        }
 
         public void menuPrincipalPasajero(Pasajero pasajero) {
             boolean salir = false;
@@ -196,7 +197,7 @@ public class MenuPrincipal {
                 try {
                     System.out.println("MENU PRINCIPAL PASAJERO\n" +
                             "Que accion desea realizar?\n\t1_Perfil\n\t2_Crear nueva reserva" +
-                            "\n\t3_Ingresar a el menu de reserva\n\t4_Salir");
+                            "\n\t3_Menu de reserva\n\t4_Salir");
 
                     Scanner scInt = new Scanner(System.in);
                     int opcion = scInt.nextInt();
@@ -226,7 +227,7 @@ public class MenuPrincipal {
                     System.err.println("Ingreso una opcion no valida");
                 }
             } while (!salir);
-        }   ///chequeado
+        }
 
         public void menuReservaPasajero(Pasajero pasajero) {
             boolean salir = false;
@@ -284,7 +285,7 @@ public class MenuPrincipal {
                     System.err.println("Ingreso una opcion no valida");
                 }
             } while (!salir);
-        }   ///chequeado
+        }
 
         public void menuReservaActualPasajero(Pasajero pasajero) {
             Reserva actual = this.hotel.reservaActualPasajero(pasajero);
@@ -867,7 +868,7 @@ public class MenuPrincipal {
                 }
             } while (control != 3);
             return persona;
-        }   ///chequeado
+        }
 
         public void menuNuevaReserva(Pasajero pasajero){
                 Scanner sc = new Scanner(System.in);
@@ -1060,10 +1061,12 @@ public class MenuPrincipal {
                 a = scannerConfirmacion.nextLine();
                 if (a.compareTo("s") == 0) {
                     control = true;
-                    System.out.println("Su reserva quedo registrada, lo esperamos!");
-                    this.hotel.getReservas().add(nuevaReserva);
                     try {
+                        this.hotel.getReservas().add(nuevaReserva);
                         ManejoArchivo.guardarReservas(this.hotel.getReservas());
+                        System.out.println("Su reserva quedo registrada, lo esperamos!");
+                        System.out.println("\nPresiona cualquier tecla para continuar...");
+                        new java.util.Scanner(System.in).nextLine();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -1089,10 +1092,12 @@ public class MenuPrincipal {
             System.out.println("Estas son sus reservas, que numero desea cancelar?");
             for (Reserva reserva : this.hotel.getReservas()) {
                 if (reserva.getPasajero().equals(pasajero)) {
-                    System.out.println("\n" + i + ":");
-                    numerosDisponibles.add(i);
-                    i++;
-                    System.out.println(reserva.toString());
+                    if (reserva.getFin().isBefore(LocalDate.now())==false) {
+                        System.out.println("\n" + i + ":");
+                        numerosDisponibles.add(i);
+                        i++;
+                        System.out.println(reserva.toString());
+                    }
                 }
             }
 
@@ -1125,18 +1130,23 @@ public class MenuPrincipal {
             i = 1;
             for (Reserva reservaAux : this.hotel.getReservas()) {
                 if (reservaAux.getPasajero().equals(pasajero)) {
-                    if (i == (numero)) {
-                        reservaABorrar = reservaAux;
+                    if(reservaAux.getFin().isBefore(LocalDate.now())==false) {
+                        if (i == (numero)) {
+                            reservaABorrar = reservaAux;
+                        }
+                        i++;
                     }
-                    i++;
                 }
             }
             this.hotel.getReservas().remove(reservaABorrar);
 
-            System.out.println("Sus reservas vigentes son las siguientes:");
+            System.out.println("==================================================\n" +
+                               "Sus reservas vigentes son las siguientes:");
             for (Reserva reserva : this.hotel.getReservas()) {
                 if (reserva.getPasajero().equals(pasajero)) {
-                    System.out.println(reserva.toString());
+                    if (reserva.getFin().isBefore(LocalDate.now()) == false) {
+                        System.out.println(reserva.toString());
+                    }
                 }
             }
         }
@@ -1196,7 +1206,7 @@ public class MenuPrincipal {
                     System.err.println("Ingreso una opcion no valida");
                 }
             } while (!salir);
-        }   ///chequeado
+        }
 
         public Recepcion menuRecepcionistaRegistro() {
             System.out.println("MENU REGISTRO RECEPCIONISTA");
@@ -1212,7 +1222,7 @@ public class MenuPrincipal {
                 }
             }
             return recepcion;
-        }   ///chequeado
+        }
 
         public Recepcion nuevoRecepcionista() {
             Scanner scannerPasajero = new Scanner(System.in);
@@ -1220,8 +1230,16 @@ public class MenuPrincipal {
             String nombre = scannerPasajero.nextLine();
             System.out.println("Ingrese su apellido: ");
             String apellido = scannerPasajero.nextLine();
-            System.out.println("Ingrese su dni: ");/////////////////////////////////////////////////////////////////////////////////
-            String dni = scannerPasajero.nextLine();
+            String dni;
+            boolean control = false;
+            do {
+                System.out.println("Ingrese su dni: ");
+                dni = scannerPasajero.nextLine();
+                control = true;
+                if(Herramientas.controlDNIEsUnINT(dni) == false || dni.length() != 8){
+                    control = false;
+                }
+            }while (control == false);
             String password = null;
 
             boolean aceptada = false;
@@ -1240,11 +1258,12 @@ public class MenuPrincipal {
             Recepcion nuevoRecepcionista = new Recepcion(nombre, apellido, password, dni);
 
             return nuevoRecepcionista;
-        }   ///chequeado
+        }
 
         public void MenuPrincipalRecepcionista(Recepcion recepcion) {
             boolean salir = false;
             Scanner sc = new Scanner(System.in);
+            String dni;
             do {
                 try {
                     System.out.println("MENU PRINCIPAL RECEPCIONISTA\n" +
@@ -1252,18 +1271,26 @@ public class MenuPrincipal {
                             "\n\t3_Ver perfil\n\t4_Ver reservas vigentes\n\t5_Volver");
                     Scanner scInt = new Scanner(System.in);
                     int opcion = scInt.nextInt();
-                    Pasajero pasajero = null;
+                    Pasajero pasajero;
 
                     switch (opcion) {
                         case 1:
-                            System.out.println("Ingrese el dni del pasajero");
-                            pasajero = (Pasajero) this.hotel.retornarPersonaXDNI(sc.nextLine());
+                            boolean control = true;
+                            do {
+                                System.out.println("Ingrese el dni del pasajero");
+                                dni = sc.nextLine();
+                                control =true;
+                                if(Herramientas.controlDNIEsUnINT(dni) == false || dni.length() != 8){
+                                    control = false;
+                                    System.err.println("Ingreso un dni  no  valido");
+                                }
+                            }while (control == false);
+                            pasajero = (Pasajero) this.hotel.retornarPersonaXDNI(dni);
                             if (pasajero != null) {
                                 menuPrincipalPasajero(pasajero);
                             } else {
                                 System.err.println("Error de loggin, intenlo nuevamente");
                             }
-                            salir = true;
                             break;
 
                         case 2:
@@ -1295,7 +1322,7 @@ public class MenuPrincipal {
                     System.err.println("Ingreso una opcion no valida");
                 }
             } while (!salir);
-        }   ///chequeado
+        }
 
 
         ////-----ADMINISTRADOR-----////
@@ -1313,7 +1340,7 @@ public class MenuPrincipal {
                 }
             }
             return administrador;
-        }   ///chequeado
+        }
 
         public Administrador nuevoAdministrador() {
             Scanner scannerPasajero = new Scanner(System.in);
@@ -1321,8 +1348,18 @@ public class MenuPrincipal {
             String nombre = scannerPasajero.nextLine();
             System.out.println("Ingrese su apellido: ");
             String apellido = scannerPasajero.nextLine();
-            System.out.println("Ingrese su dni: ");
-            String dni = scannerPasajero.nextLine();
+            boolean revision = false;
+            String dni;
+            do {
+                System.out.println("Ingrese su dni: ");
+                dni = scannerPasajero.nextLine();
+                revision = true;
+                if (Herramientas.controlDNIEsUnINT(dni) == false || dni.length() != 8) {
+                    System.err.println("Ingreso un dni no valido");
+                    revision = false;
+                    }
+            } while (revision == false);
+
             String password = null;
 
             boolean aceptada = false;
@@ -1341,7 +1378,7 @@ public class MenuPrincipal {
             Administrador nuevoAdministrador = new Administrador(nombre, apellido, password, dni);
 
             return nuevoAdministrador;
-        }   ///chequeado
+        }
 
         public void MenuPrincipalAdministrador(Administrador administrador) {
             boolean salir = false;
@@ -1354,8 +1391,8 @@ public class MenuPrincipal {
                 try {
                     System.out.println("MENU PRINCIPAL ADMINISTRADOR\n" +
                             "Que accion desea realizar?\n\t1_Menu gestion pasajero\n\t2_Crear recepcionista\n\t3_Crear administrador" +
-                            "\n\t4_Ver lista de pasajeros\n\t5_Ver lista recepcionista\n\t6_Ver lista administradores\n\t7_Editar un pasajero\n\t8_Editar un empleado\n\t" +
-                            "9_Ver perfil\n\t10_Menu reservas\n\t11_Crear una reserva especial\n\t12_Hacer Backup\n\t13_Volver");
+                            "\n\t4_Ver lista de pasajeros\n\t5_Ver lista recepcionista\n\t6_Ver lista administradores\n\t7_Editar un empleado\n\t" +
+                            "8_Ver perfil\n\t9_Menu reservas\n\t10_Crear una reserva especial\n\t11_Hacer Backup\n\t12_Volver");
                     Scanner scInt = new Scanner(System.in);
                     int opcion = scInt.nextInt();
 
@@ -1394,24 +1431,7 @@ public class MenuPrincipal {
                             break;
 
                         case 7:
-                            do {
-                                System.out.println("Ingrese el dni del pasajero que desea editar:");
-                                dni = scInt.nextLine();
-                                control = true;
-                                if(Herramientas.controlDNIEsUnINT(dni) || dni.length()!=8){
-                                    control = false;
-                                    System.err.println("Ingreso un dni no valido");
-                                }
-                            }while (control == false);
-                            if( this.hotel.retornarPersonaXDNI(dni) instanceof Pasajero){
-                                pasajeroAEditar = (Pasajero) this.hotel.retornarPersonaXDNI(dni);
-                                menuEditarPerfil(pasajeroAEditar);
-                                    ManejoArchivo.guardarPersonas(this.hotel.getPersonas());
-                            }else{
-                                System.err.println("No hay ningun pasajero registrado con ese dni");
-                            }
-
-                        case 8:
+                            scInt.nextLine();
                             do {
                                 System.out.println("Ingrese el dni del empleado que desea editar:");
                                 dni = scInt.nextLine();
@@ -1424,24 +1444,30 @@ public class MenuPrincipal {
                             if( this.hotel.retornarPersonaXDNI(dni) instanceof Recepcion){
                                 recepcionAEditar = (Recepcion) this.hotel.retornarPersonaXDNI(dni);
                                 menuEditarPerfilEmpleado(recepcionAEditar);
+
                             }else if( this.hotel.retornarPersonaXDNI(dni) instanceof Administrador){
                                 administradorAEditar = (Administrador) this.hotel.retornarPersonaXDNI(dni);
                                 menuEditarPerfilEmpleado(administradorAEditar);
                             }else {
                                 System.err.println("No hay ningun empleado registrado con ese dni");
+
                             }
+                            ManejoArchivo.guardarPersonas(this.hotel.getPersonas());
                             break;
-                        case 9:
+
+                        case 8:
                             menuPerfilEmpleado(administrador);
                             break;
 
-                        case 10:
+
+                        case 9:
                             menuMostrarReservasAdm();
                             break;
 
-                        case 11:
+                        case 10:
                             menuCrearReservaEspecial();
-                        case 12:
+                            break;
+                        case 11:
                             try {
                                 hacerBackupAministrador(this.hotel);
                                 System.out.println("Se ha realizado su backup correctamente");
@@ -1453,11 +1479,11 @@ public class MenuPrincipal {
                             break;
 
 
-                        case 13:
+                        case 12:
                             salir = true;
                             break;
                         default:
-                            System.err.println("Las opciones son del 1 al 13");
+                            System.err.println("Las opciones son del 1 al 12");
                     }
                 } catch (java.util.InputMismatchException e) {
                     System.err.println("Ingreso una opcion no valida");
@@ -1465,7 +1491,7 @@ public class MenuPrincipal {
                     e.printStackTrace();
                 }
             } while (!salir);
-        }   ///chequeado
+        }
 
         public void menuMostrarReservasAdm() {
             boolean salir = false;
@@ -1504,7 +1530,7 @@ public class MenuPrincipal {
                 }
 
             }while(!salir);
-        }   ///chequeado
+        }
 
         public void menuPrimeroGestionPasajero() {
             boolean salir = false;
@@ -1548,7 +1574,7 @@ public class MenuPrincipal {
                     System.err.println("Ingreso una opcion no valida");
                 }
             } while (!salir);
-        }   ///chequeado
+        }
 
         public void menuPerfilEmpleado(Persona persona) {
             boolean salir = false;
@@ -1585,7 +1611,7 @@ public class MenuPrincipal {
                     e.printStackTrace();
                 }
             } while (!salir);
-        }   ///chequeado
+        }
 
         public void menuCrearReservaEspecial(){
             Scanner sc = new Scanner(System.in);
@@ -1806,7 +1832,7 @@ public class MenuPrincipal {
                 a = scannerConfirmacion.nextLine();
                 if(a.compareTo("s")==0){
                     control=true;
-                    System.out.println("Su reserva quedo registrada, lo esperamos!");
+                    System.out.println("Su reserva quedo registrada!");
                     this.hotel.getReservas().add(nuevaReserva);
                     try {
                         ManejoArchivo.guardarReservas(this.hotel.getReservas());
@@ -1863,7 +1889,7 @@ public class MenuPrincipal {
                                 System.out.println("Dni actual: " + persona.getDni() + "\n\tIngrese su nuevo dni: ");
                                 cambios = scString.nextLine();
                                 control = true;
-                                if(Herramientas.controlDNIEsUnINT(cambios) ==false || cambios.length()!=8){
+                                if (Herramientas.controlDNIEsUnINT(cambios) == false || cambios.length() != 8) {
                                     control = false;
                                     System.err.println("Ingreso un valor no valido");
                                 }
@@ -1873,7 +1899,7 @@ public class MenuPrincipal {
                                 } else {
                                     persona.setDni(cambios);
                                 }
-                            }while (control == false);
+                            } while (control == false);
                             System.out.println("DNI cambiado con exito! Nuevo dni: " + persona.getDni());
                             System.out.println("\nPresiona cualquier tecla para continuar...");
                             new java.util.Scanner(System.in).nextLine();
@@ -1901,9 +1927,9 @@ public class MenuPrincipal {
                             }
                             break;
 
-                        case 5:
-                            salir = true;
-                            break;
+                            case 5:
+                                salir = true;
+                                break;
                         default:
                             System.out.println("Las opciones son del 1 al 5");
                     }
@@ -1913,12 +1939,11 @@ public class MenuPrincipal {
                     System.err.println("Ingreso una opcion no valida");
                 }
             } while (!salir);
-
-        }   ///chequeado
+        }
 
         public void hacerBackupAministrador(Hotel hotel) throws IOException {
             ManejoArchivo.guardarBackup(hotel);
-        }   ///chequeado
+        }
 
 }
 
