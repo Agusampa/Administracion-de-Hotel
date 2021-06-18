@@ -25,9 +25,12 @@ public class MenuPrincipal {
     public MenuPrincipal() throws IOException {
     }
 
-    public void menuPrincipal(){
+    public void menuPrincipal() throws IOException {
+
+
+        /*
         ////-----CARGA RESERVAS-----////
-        /*Pasajero pasajeroBol1 = new Pasajero("Agustin", "Sampaoli", "1", "11223344", "Argentina", "Colon 1542");
+        Pasajero pasajeroBol1 = new Pasajero("Agustin", "Sampaoli", "1", "11223344", "Argentina", "Colon 1542");
         Habitacion habitacion1 = new Habitacion(Habitacion.TipoHabitacion.Suite, 1 , 2, 4000);
             LocalDate inicio = LocalDate.of(2021,06,17);
             LocalDate fin = LocalDate.of(2021,06,29);
@@ -868,119 +871,127 @@ public class MenuPrincipal {
             boolean control = false;
             String a;
             Reserva nuevaReserva = null;
+            LocalDate inicio; LocalDate finalizacion;
             do{
                 do {
-                    try {
-                        System.out.println("Ingresar el AÑO en que desea realizar su reserva.");
+                    do {
+                        try {
+                            System.out.println("Ingresar el AÑO en que desea realizar su reserva.");
 
-                        anioI = sc.nextInt();
-                        if (anioI <= LocalDate.now().plusYears(2).getYear()) {
-                            if (!(anioI < LocalDate.now().getYear())) {
+                            anioI = sc.nextInt();
+                            if (anioI <= LocalDate.now().plusYears(2).getYear()) {
+                                if (!(anioI < LocalDate.now().getYear())) {
+                                    control = true;
+                                    break;
+                                }
+                            }
+                            System.err.println("Ingreso un año no valido");
+                        } catch (InputMismatchException ime) {
+                            System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                            sc.next();
+                        }
+                    } while (control == false);
+
+                    control = false;
+                    do {
+                        try {
+                            System.out.println("Ingresar el numero de MES en que desea realizar su reserva.");
+                            mesI = sc.nextInt();
+                            if (mesI > 0 && mesI <= 12) {
+                                if (!(mesI < LocalDate.now().getMonthValue()) && !(anioI != LocalDate.now().getYear()) || (!(anioI <= LocalDate.now().getYear()))) {
+                                    control = true;
+                                    break;
+                                }
+                            }
+                            System.err.println("Ingreso un mes no valido");
+                        } catch (InputMismatchException ime) {
+                            System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                            sc.next();
+                        }
+                    } while (control == false);
+
+                    control = false;
+                    do {
+                        try {
+                            System.out.println("Ingresar el DIA en que desea realizar su reserva.");
+                            diaI = sc.nextInt();
+                            if (Herramientas.controlFecha(mesI, diaI) == true) {
+                                if ((!(diaI < LocalDate.now().getDayOfMonth()) || (!(mesI <= LocalDate.now().getMonthValue()) || (!(anioI <= LocalDate.now().getYear()))))) {
+                                    control = true;
+                                    break;
+                                }
+                            }
+                            System.err.println("Ingreso un dia no valido");
+                        } catch (InputMismatchException ime) {
+                            System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                            sc.next();
+                        }
+                    } while (control == false);
+
+                    inicio = LocalDate.of(anioI, mesI, diaI);
+
+                    control = false;
+                    do {
+                        try {
+                            System.out.println("Ingresar el AÑO hasta el que se desea hospedar");
+                            anioF = sc.nextInt();
+                            if (!(anioF < anioI)) {
                                 control = true;
                                 break;
                             }
+                            System.err.println("Ingreso un año no valido");
+                        } catch (InputMismatchException ime) {
+                            System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                            sc.next();
                         }
-                        System.err.println("Ingreso un año no valido");
-                    } catch (InputMismatchException ime) {
-                        System.err.println("¡Cuidado! Solo puedes insertar números. ");
-                        sc.next();
-                    }
-            } while (control == false);
+                    } while (control == false);
 
-            control = false;
-            do {
-                try {
-                    System.out.println("Ingresar el numero de MES en que desea realizar su reserva.");
-                    mesI = sc.nextInt();
-                    if (mesI > 0 && mesI <= 12) {
-                        if (!(mesI < LocalDate.now().getMonthValue()) && !(anioI != LocalDate.now().getYear()) || (!(anioI <= LocalDate.now().getYear()))) {
-                            control = true;
-                            break;
+                    control = false;
+
+                    do {
+                        try {
+                            System.out.println("Ingresar el numero de MES hasta el que se desea hospedar");
+                            mesF = sc.nextInt();
+                            if (mesI != mesF || mesI == mesF && Herramientas.controlMesTop(mesI, diaI) == true) {
+                                if ((mesF >= mesI) || !(anioF <= anioI)) {
+                                    control = true;
+                                    break;
+                                }
+                            }
+                            System.err.println("Ingreso un mes no valido");
+                        } catch (InputMismatchException ime) {
+                            System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                            sc.next();
                         }
-                    }
-                    System.err.println("Ingreso un mes no valido");
-                } catch (InputMismatchException ime) {
-                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
-                    sc.next();
-                }
-            } while (control == false);
+                    } while (control == false);
 
-            control = false;
-            do {
-                try {
-                    System.out.println("Ingresar el DIA en que desea realizar su reserva.");
-                    diaI = sc.nextInt();
-                    if (Herramientas.controlFecha(mesI, diaI) == true) {
-                        if ((!(diaI < LocalDate.now().getDayOfMonth()) || (!(mesI <= LocalDate.now().getMonthValue()) || (!(anioI <= LocalDate.now().getYear()))))) {
-                            control = true;
-                            break;
+
+                    control = false;
+
+                    do {
+                        try {
+                            System.out.println("Ingresar el DIA hasta el que se desea hospedar");
+                            diaF = sc.nextInt();
+                            if (Herramientas.controlFecha(mesF, diaF) == true) {
+                                if (!(diaF <= diaI) || !(mesF <= mesI) || !(anioF <= anioI)) {
+                                    control = true;
+                                    break;
+                                }
+                            }
+                            System.err.println("Ingreso un dia no valido");
+                        } catch (InputMismatchException ime) {
+                            System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                            sc.next();
                         }
+                    } while (control == false);
+
+                    finalizacion = LocalDate.of(anioF, mesF, diaF);
+
+                    if(this.hotel.comprobarReservaNoTransit(inicio,finalizacion,pasajero) == false){
+                        System.err.println("Usted ya posee una reserva dentro de esas fechas");
                     }
-                    System.err.println("Ingreso un dia no valido");
-                } catch (InputMismatchException ime) {
-                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
-                    sc.next();
-                }
-            } while (control == false);
 
-            LocalDate inicio = LocalDate.of(anioI, mesI, diaI);
-
-            control = false;
-            do {
-                try {
-                    System.out.println("Ingresar el AÑO hasta el que se desea hospedar");
-                    anioF = sc.nextInt();
-                    if (!(anioF < anioI)) {
-                        control = true;
-                        break;
-                    }
-                    System.err.println("Ingreso un año no valido");
-                } catch (InputMismatchException ime) {
-                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
-                    sc.next();
-                }
-            } while (control == false);
-
-            control = false;
-
-            do {
-                try {
-                    System.out.println("Ingresar el numero de MES hasta el que se desea hospedar");
-                    mesF = sc.nextInt();
-                    if (mesI != mesF || mesI == mesF && Herramientas.controlMesTop(mesI, diaI) == true) {
-                        if ((mesF >= mesI) || !(anioF <= anioI)) {
-                            control = true;
-                            break;
-                        }
-                    }
-                    System.err.println("Ingreso un mes no valido");
-                } catch (InputMismatchException ime) {
-                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
-                    sc.next();
-                }
-            } while (control == false);
-
-
-            control = false;
-
-            do {
-                try {
-                    System.out.println("Ingresar el DIA hasta el que se desea hospedar");
-                    diaF = sc.nextInt();
-                    if (Herramientas.controlFecha(mesF, diaF) == true) {
-                        if (!(diaF <= diaI) || !(mesF <= mesI) || !(anioF <= anioI)) {
-                            control = true;
-                            break;
-                        }
-                    }
-                    System.err.println("Ingreso un dia no valido");
-                } catch (InputMismatchException ime) {
-                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
-                    sc.next();
-                }
-            } while (control == false);
-
-            LocalDate finalizacion = LocalDate.of(anioF, mesF, diaF);
+                }while(this.hotel.comprobarReservaNoTransit(inicio,finalizacion,pasajero) == false);
 
             ArrayList<Habitacion> habitacionesDisponibles = this.hotel.listHabitacionesDisponibles(inicio, finalizacion);
 

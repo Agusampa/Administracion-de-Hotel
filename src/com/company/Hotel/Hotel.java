@@ -231,6 +231,20 @@ public class Hotel {
                         if(i==0){System.err.println("No hay reservas Antigas");}
                     }
 
+                public boolean comprobarReservaNoTransit(LocalDate inicio,LocalDate fin,Pasajero pasajero) {
+                    boolean control = true;
+                    for (Reserva reservaAux : this.reservas) {
+                        if (pasajero.equals(reservaAux.getPasajero())) {
+                            if (fin.isBefore(reservaAux.getInicio()) || inicio.isAfter(reservaAux.getFin())) {
+                                control = true;
+                            }else{
+                                return false;
+                            }
+                        }
+                    }
+                    return control;
+                }
+
                 public Reserva ReservaAleatoria() {
                     Pasajero pasajero = (Pasajero) this.retornarPersonaXDNI(dniAleatorioPasajeros());
                     Pasajero pHotel = (Pasajero) this.retornarPersonaXDNI("11111111");
@@ -296,6 +310,8 @@ public class Hotel {
                         }
                     }
                 }
+
+
 
 
                 ////-----METODOS HABITACION-----////

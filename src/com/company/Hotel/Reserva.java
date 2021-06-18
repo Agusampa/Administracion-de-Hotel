@@ -2,7 +2,6 @@ package com.company.Hotel;
 
 import com.company.Persona.*;
 import com.company.Sistema.Herramientas;
-import com.sun.imageio.plugins.wbmp.WBMPImageReader;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -102,7 +101,7 @@ public class Reserva {
                     ////-----METODOS-----////
         public void agregarGastoAdicional(GastoAdicional gastoAdicional){
             this.gastosAdicionales.add(gastoAdicional);
-        }   ///para que esto si tenemos gett + add?
+        }
 
         public float calcularTotalGastosAdicionales(){
             float gastosTotales = 0;
