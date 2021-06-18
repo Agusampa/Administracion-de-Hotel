@@ -188,6 +188,7 @@ public class Hotel {
                     }
                 }
 
+
                 ////-----METODOS GENERALES-----////
                 public boolean existeDNI(String dni){
                     for(Persona persona : this.personas){
@@ -204,6 +205,7 @@ public class Hotel {
                     }
                     return false;
                 }
+
 
                 ////-----METODOS RESERVA-----////
                 public void mostrarTodasReservas(){
@@ -312,8 +314,6 @@ public class Hotel {
                 }
 
 
-
-
                 ////-----METODOS HABITACION-----////
                 public Habitacion retornarHabitacionXNumero ( int numero){
                     for (Habitacion habitacionAux : this.habitaciones) {
@@ -333,6 +333,14 @@ public class Hotel {
                         }
                     }
                     return true;
+                }
+
+                public void actualizarPasajeroaEnReserva(Pasajero nuevo, Pasajero antiguo){
+                    for(Reserva reservaAux : this.reservas){
+                        if(reservaAux.getPasajero().getDni().compareTo(antiguo.getDni())==0){
+                            reservaAux.setPasajero(nuevo);
+                        }
+                    }
                 }
 
                 public ArrayList<Habitacion>listHabitacionesDisponibles(LocalDate inicio, LocalDate fin) {
@@ -387,7 +395,6 @@ public class Hotel {
 
                         for (Reserva reservasAux : this.reservas) {
                             if (reservasAux.getHabitacion().equals(habitacionAux)) {
-
                                 if(inicio.isBefore(reservasAux.getInicio()) && fin.isBefore(reservasAux.getInicio())  || inicio.isAfter(reservasAux.getFin()) && fin.isAfter(reservasAux.getFin())) {
                                     disponible = true;
                                 }else{
@@ -402,6 +409,7 @@ public class Hotel {
                                 disponible = false;
                             }
                         }
+
 
                         if (disponible == true){
                             habitacionesDisponibles.add(habitacionAux);
