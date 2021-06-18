@@ -50,6 +50,19 @@ public abstract class Persona {
 
             ////-----METODOS-----////
             @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (!(o instanceof Persona)) return false;
+                Persona persona = (Persona) o;
+                return nombre.equals(persona.nombre) && apellido.equals(persona.apellido) && password.equals(persona.password) && dni.equals(persona.dni);
+            }
+
+            @Override
+            public int hashCode() {
+                return Objects.hash(nombre, apellido, password, dni);
+            }
+
+            @Override
             public String toString() {
                 return "\n"+this.getClass().getSimpleName()+
                        "\nNombre: " + this.nombre +

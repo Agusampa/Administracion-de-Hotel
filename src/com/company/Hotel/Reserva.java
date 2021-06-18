@@ -19,6 +19,7 @@ public class Reserva {
         private String tipoReserva;
 
 
+
         ////-----CONSTRUCTORES-----////
         public Reserva(Pasajero pasajero, Habitacion habitacion, LocalDate inicio, LocalDate fin) {
             this.pasajero = pasajero;
@@ -38,6 +39,7 @@ public class Reserva {
             this.fin = fin;
             this.gastosAdicionales = new ArrayList<>();
             this.tipoReserva = tipoDeReserva;
+
         }
 
         public enum TipoDeReserva{
@@ -97,7 +99,7 @@ public class Reserva {
             this.tipoReserva = tipoReserva;
         }
 
-        ////-----METODOS-----////
+                    ////-----METODOS-----////
         public void agregarGastoAdicional(GastoAdicional gastoAdicional){
             this.gastosAdicionales.add(gastoAdicional);
         }   ///para que esto si tenemos gett + add?

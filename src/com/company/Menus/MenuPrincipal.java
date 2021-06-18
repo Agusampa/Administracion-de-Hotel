@@ -29,11 +29,8 @@ public class MenuPrincipal {
         ////-----CARGA RESERVAS-----////
         /*Pasajero pasajeroBol1 = new Pasajero("Agustin", "Sampaoli", "1", "11223344", "Argentina", "Colon 1542");
         Habitacion habitacion1 = new Habitacion(Habitacion.TipoHabitacion.Suite, 1 , 2, 4000);
-
-                ////-----CARGA RESERVAS-----////
             LocalDate inicio = LocalDate.of(2021,06,17);
             LocalDate fin = LocalDate.of(2021,06,29);
-
             Reserva reserva1 = new Reserva(pasajeroBol1,habitacion1,inicio,fin);
             this.hotel.getReservas().add(reserva1);
             try {
@@ -1146,7 +1143,7 @@ public class MenuPrincipal {
         String nombre = scannerPasajero.nextLine();
         System.out.println("Ingrese su apellido: ");
         String apellido = scannerPasajero.nextLine();
-        System.out.println("Ingrese su dni: ");
+        System.out.println("Ingrese su dni: ");/////////////////////////////////////////////////////////////////////////////////
         String dni = scannerPasajero.nextLine();
         String password = null;
 
@@ -1281,8 +1278,7 @@ public class MenuPrincipal {
                 System.out.println("MENU PRINCIPAL ADMINISTRADOR\n" +
                         "Que accion desea realizar?\n\t1_Menu gestion pasajero\n\t2_Crear recepcionista\n\t3_Crear administrador" +
                         "\n\t4_Ver lista de pasajeros\n\t5_Ver lista recepcionista\n\t6_Ver lista administradores\n\t7_Editar un pasajero\n\t8_Editar un empleado\n\t" +
-                        "9_Ver perfil\n\t10_Menu ver reservas\n\t11_Hacer Backup\n\t12_Volver");
-
+                        "9_Ver perfil\n\t10_Menu reservas\n\t11_Crear una reserva especial\n\t12_Hacer Backup\n\t13_Volver");
                 Scanner scInt = new Scanner(System.in);
                 int opcion = scInt.nextInt();
 
@@ -1368,6 +1364,8 @@ public class MenuPrincipal {
                         break;
 
                     case 11:
+                        menuCrearReservaEspecial();
+                    case 12:
                         try {
                             hacerBackupAministrador(this.hotel);
                             System.out.println("Se ha realizado su backup correctamente");
@@ -1378,12 +1376,12 @@ public class MenuPrincipal {
                         new java.util.Scanner(System.in).nextLine();
                         break;
 
-                    case 12:
+
+                    case 13:
                         salir = true;
                         break;
-
                     default:
-                        System.err.println("Las opciones son del 1 al 12");
+                        System.err.println("Las opciones son del 1 al 13");
                 }
             } catch (java.util.InputMismatchException e) {
                 System.err.println("Ingreso una opcion no valida");
@@ -1512,6 +1510,247 @@ public class MenuPrincipal {
             }
         } while (!salir);
     }   ///chequeado
+
+    public void menuCrearReservaEspecial(){
+        Scanner sc = new Scanner(System.in);
+        int anioI = 0, mesI = 0, diaI = 0;
+        int anioF = 0, mesF = 0, diaF = 0;
+        boolean control = false;
+        String tipoDeReserva = null;
+        int i;
+        String a;
+        Reserva nuevaReserva = null;
+        do{
+            do {
+                try {
+                    System.out.println("Ingresar el AÑO en que desea programar el cierre de una habitacion para un servicio especial");
+
+                    anioI = sc.nextInt();
+                    if (anioI <= LocalDate.now().plusYears(2).getYear()) {
+                        if (!(anioI < LocalDate.now().getYear())) {
+                            control = true;
+                            break;
+                        }
+                    }
+                    System.err.println("Ingreso un año no valido");
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+
+
+            } while (control == false);
+
+            control = false;
+            do {
+                try {
+                    System.out.println("Ingresar el numero de MES en que desea programar el cierre de una habitacion para un servicio especial");
+                    mesI = sc.nextInt();
+                    if (mesI > 0 && mesI <= 12) {
+                        if (!(mesI < LocalDate.now().getMonthValue()) && !(anioI != LocalDate.now().getYear()) || (!(anioI <= LocalDate.now().getYear()))) {
+                            control = true;
+                            break;
+                        }
+                    }
+                    System.err.println("Ingreso un mes no valido");
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            } while (control == false);
+
+            control = false;
+            do {
+                try {
+                    System.out.println("Ingresar el DIA en que desea programar el cierre de una habitacion para un servicio especial");
+                    diaI = sc.nextInt();
+                    if (Herramientas.controlFecha(mesI, diaI) == true) {
+                        if ((!(diaI < LocalDate.now().getDayOfMonth()) || (!(mesI <= LocalDate.now().getMonthValue()) || (!(anioI <= LocalDate.now().getYear()))))) {
+                            control = true;
+                            break;
+                        }
+                    }
+                    System.err.println("Ingreso un dia no valido");
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            } while (control == false);
+
+            LocalDate inicio = LocalDate.of(anioI, mesI, diaI);
+
+            control = false;
+            do {
+                try {
+                    System.out.println("Ingresar el AÑO hasta el que desea programar el cierre de una habitacion para un servicio especial");
+                    anioF = sc.nextInt();
+                    if (!(anioF < anioI)) {
+                        control = true;
+                        break;
+                    }
+                    System.err.println("Ingreso un año no valido");
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            } while (control == false);
+
+            control = false;
+
+            do {
+                try {
+                    System.out.println("Ingresar el numero de MES hasta el que desea programar el cierre de una habitacion para un servicio especial");
+                    mesF = sc.nextInt();
+                    if (mesI != mesF || mesI == mesF && Herramientas.controlMesTop(mesI, diaI) == true) {
+                        if ((mesF >= mesI) || !(anioF <= anioI)) {
+                            control = true;
+                            break;
+                        }
+                    }
+                    System.err.println("Ingreso un mes no valido");
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            } while (control == false);
+
+
+            control = false;
+
+            do {
+                try {
+                    System.out.println("Ingresar el DIA hasta el que desea programar el cierre de una habitacion para un servicio especial");
+                    diaF = sc.nextInt();
+                    if (Herramientas.controlFecha(mesF, diaF) == true) {
+                        if (!(diaF <= diaI) || !(mesF <= mesI) || !(anioF <= anioI)) {
+                            control = true;
+                            break;
+                        }
+                    }
+                    System.err.println("Ingreso un dia no valido");
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            } while (control == false);
+
+            LocalDate finalizacion = LocalDate.of(anioF, mesF, diaF);
+
+            ArrayList<Habitacion> habitacionesDisponibles = this.hotel.listHabitacionesDisponiblesTodas(inicio, finalizacion);
+
+            int capacidad = 0;
+            do {
+                try {
+                    System.out.println("Ingrese la capacidad de la habitacion que desea programar para un servicio especial (2 o 4 Personas)");
+                    capacidad = sc.nextInt();
+                    if (capacidad != 2 && capacidad != 4) {
+                        System.err.println("Ingreso un valor no valido para la capacidad de la habitacion");
+                    }
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            } while (!(capacidad == 2 || capacidad == 4));
+
+            ArrayList<Integer> numerosDisponibles = new ArrayList<>();
+            System.out.println("=========================================================" +
+                             "\nHabitaciones sin reserva de pasajeros para esas fechas:");
+            for (Habitacion habitacion : habitacionesDisponibles) {
+                if (habitacion.getCapacidad() == capacidad) {
+                    System.out.println(habitacion.toString());
+                    numerosDisponibles.add(habitacion.getNumero());
+                }
+            }
+            control = false;
+            int numeroDeHabitacion = 0;
+            do {
+                try {
+
+                    System.out.println("Que numero de habitacion desea reservar?" +
+                            "\nLos numeros de habitaciones disponibles son : ");
+                    for (int numero : numerosDisponibles) {
+                        System.out.print(numero + " - ");
+                    }
+                    System.out.println("\n");
+                    numeroDeHabitacion = sc.nextInt();
+                    for (int numero : numerosDisponibles) {
+                        if (numero == numeroDeHabitacion) {
+                            control = true;
+                        }
+                    }
+                    if (control == false) {
+                        System.err.println("Ingreso un numero no disponible");
+                    }
+
+                } catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puede ingresar números. ");
+                    sc.next();
+                }
+            } while (control == false);
+
+            control = false;
+
+            do{
+                try {
+                    System.out.println("Que tipo de servicio quiere agendar?\n\t1_Limpieza\n\t2_Reparacion\n\t3_Desinfeccion\n");
+                    i = sc.nextInt();
+                    switch (i) {
+                        case 1:
+                            tipoDeReserva = Reserva.TipoDeReserva.EN_LIMPIEZA.name();
+                            control = true;
+                            break;
+                        case 2:
+                            tipoDeReserva = Reserva.TipoDeReserva.EN_REPARACION.name();
+                            control = true;
+                            break;
+                        case 3:
+                            tipoDeReserva = Reserva.TipoDeReserva.EN_DESINFECCION.name();
+                            control = true;
+                            break;
+
+                        default:
+                            System.err.println("Las opciones son del 1 al 3");
+                    }
+                }catch (InputMismatchException ime) {
+                    System.err.println("¡Cuidado! Solo puedes insertar números. ");
+                    sc.next();
+                }
+            }while (control == false);
+
+            Pasajero pasajeroHotel = (Pasajero) this.hotel.retornarPersonaXDNI("11111111");
+
+            control = false;
+            Habitacion habitacion1 = this.hotel.retornarHabitacionXNumero(numeroDeHabitacion);
+            nuevaReserva = new Reserva(pasajeroHotel, habitacion1,0f, inicio, finalizacion,tipoDeReserva);
+
+            System.out.println("Su reserva es la siguiente: ");
+            System.out.println(nuevaReserva.toString());
+            System.out.println("Desea confirmar la reserva? (s/n)");
+            Scanner scannerConfirmacion = new Scanner(System.in);
+            a = scannerConfirmacion.nextLine();
+            if(a.compareTo("s")==0){
+                control=true;
+                System.out.println("Su reserva quedo registrada, lo esperamos!");
+                this.hotel.getReservas().add(nuevaReserva);
+                try {
+                    ManejoArchivo.guardarReservas(this.hotel.getReservas());
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+
+            if(a.compareTo("s")!=0){
+                System.out.println("Desea realizar una reserva nuevamente? (s/n)");
+                a = scannerConfirmacion.nextLine();
+                if(a.compareTo("s")!=0){
+                    control=true;
+                    break;
+                }
+            }
+        }while (control == false);
+
+    }
+
 
     public void menuEditarPerfilEmpleado(Persona persona) {
         boolean salir = false;
