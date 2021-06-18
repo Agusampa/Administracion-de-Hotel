@@ -1416,7 +1416,7 @@ public class MenuPrincipal {
                                 System.out.println("Ingrese el dni del empleado que desea editar:");
                                 dni = scInt.nextLine();
                                 control = true;
-                                if(Herramientas.controlDNIEsUnINT(dni) || dni.length()!=8){
+                                if(Herramientas.controlDNIEsUnINT(dni) == false || dni.length()!=8){
                                     control = false;
                                     System.err.println("Ingreso un dni no valido");
                                 }
@@ -1429,9 +1429,8 @@ public class MenuPrincipal {
                                 menuEditarPerfilEmpleado(administradorAEditar);
                             }else {
                                 System.err.println("No hay ningun empleado registrado con ese dni");
-                                break;
                             }
-
+                            break;
                         case 9:
                             menuPerfilEmpleado(administrador);
                             break;
