@@ -2,7 +2,6 @@ package com.company.Persona;
 
 
 public class Administrador extends Persona {
-   // int type = 3;
         ////-----CONSTRUCTOR-----////
         public Administrador(String nombre, String apellido, String password, String dni) {
             super(nombre,apellido,password,dni);
@@ -38,7 +37,18 @@ public class Administrador extends Persona {
             this.dni = dni;
         }
 
-        ////-----METODOS-----////
+
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return super.equals(obj);
+        }
+
+    ////-----METODOS-----////
         @Override
         public String toString() {
             return super.toString();
