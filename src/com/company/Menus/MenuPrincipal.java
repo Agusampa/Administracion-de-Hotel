@@ -1063,10 +1063,12 @@ public class MenuPrincipal {
                 a = scannerConfirmacion.nextLine();
                 if (a.compareTo("s") == 0) {
                     control = true;
-                    System.out.println("Su reserva quedo registrada, lo esperamos!");
-                    this.hotel.getReservas().add(nuevaReserva);
                     try {
+                        this.hotel.getReservas().add(nuevaReserva);
                         ManejoArchivo.guardarReservas(this.hotel.getReservas());
+                        System.out.println("Su reserva quedo registrada, lo esperamos!");
+                        System.out.println("\nPresiona cualquier tecla para continuar...");
+                        new java.util.Scanner(System.in).nextLine();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -1516,7 +1518,7 @@ public class MenuPrincipal {
             do {
                 try {
                     System.out.println("MENU PASAJERO PRIMERO" +
-                            "\nQue accion desea realizar?\n\t1_Ingresar pasajero \n\t2_Registrars pasajero nuevo\n\t3_Volver");
+                            "\nQue accion desea realizar?\n\t1_Ingresar pasajero \n\t2_Registrar pasajero nuevo\n\t3_Volver");
                     Scanner scInt = new Scanner(System.in);
                     int opcion = scInt.nextInt();
                     Pasajero pasajero = null;
