@@ -110,7 +110,7 @@ public class MenuPrincipal {
                         case 2:
                             pasajero = menuPasajeroRegistro();
                             this.hotel.getPersonas().add(pasajero);
-                            ManejoArchivo.guardarPersonasBackup(this.hotel.getPersonas());
+                            ManejoArchivo.guardarPersonas(this.hotel.getPersonas());
                             menuPrincipalPasajero(pasajero);
                             salir = true;
                             break;
