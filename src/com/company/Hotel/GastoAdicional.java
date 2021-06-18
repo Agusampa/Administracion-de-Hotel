@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public abstract class GastoAdicional {
-        LocalDateTime fecha;
+        protected String gastoName;
+        protected LocalDateTime fecha;
         protected String nombre;
         protected float precio;
         protected int cantidad; ///En  Servicio se cuenta como cantidad de horas y en Consumible como unidad // Aprovechando el polimorfismo de los objetos
@@ -12,11 +13,12 @@ public abstract class GastoAdicional {
         ////-----CONSTRUCTOR-----////
         public GastoAdicional(){
         }
-        public GastoAdicional(LocalDateTime fecha,String nombre,float precio,int cantidad){
+        public GastoAdicional(LocalDateTime fecha,String nombre,float precio,int cantidad,String gastoName){
             this.fecha = fecha;
             this.nombre = nombre;
             this.precio = precio;
             this.cantidad = cantidad;
+            this.gastoName = gastoName;
         }
 
         ////-----GETTERS AND SETTERS-----////

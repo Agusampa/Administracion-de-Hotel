@@ -109,11 +109,8 @@ public class Hotel {
 
                 public Reserva primeraReservaCercana(Pasajero pasajero) {
                     for (Reserva reservaAux : this.reservas) {
-                        System.err.println("1");
                         if (reservaAux.getPasajero().equals(pasajero)) {
-                            System.err.println("2");
                             if(reservaAux.getFin().equals(LocalDate.now()) ||reservaAux.getFin().isAfter(LocalDate.now())){
-                                System.err.println("3");
                                 return reservaAux;
                             }
                         }
@@ -188,6 +185,7 @@ public class Hotel {
                     }
                 }
 
+
                 ////-----METODOS GENERALES-----////
                 public boolean existeDNI(String dni){
                     for(Persona persona : this.personas){
@@ -204,6 +202,7 @@ public class Hotel {
                     }
                     return false;
                 }
+
 
                 ////-----METODOS RESERVA-----////
                 public void mostrarTodasReservas(){
@@ -231,6 +230,19 @@ public class Hotel {
                         if(i==0){System.err.println("No hay reservas Antigas");}
                     }
 
+                public boolean comprobarReservaNoTransit(LocalDate inicio,LocalDate fin,Pasajero pasajero) {
+                    boolean control = true;
+                    for (Reserva reservaAux : this.reservas) {
+                        if (pasajero.equals(reservaAux.getPasajero())) {
+                            if (fin.isBefore(reservaAux.getInicio()) || inicio.isAfter(reservaAux.getFin())) {
+                                control = true;
+                            }else{
+                                return false;
+                            }
+                        }
+                    }
+                    return control;
+                }
 
                 public Reserva ReservaAleatoria() {
                     Pasajero pasajero = (Pasajero) this.retornarPersonaXDNI(dniAleatorioPasajeros());
@@ -319,6 +331,7 @@ public class Hotel {
                     }
                     return true;
                 }
+
                 public void actualizarPasajeroaEnReserva(Pasajero nuevo, Pasajero antiguo){
                     for(Reserva reservaAux : this.reservas){
                         if(reservaAux.getPasajero().getDni().compareTo(antiguo.getDni())==0){
